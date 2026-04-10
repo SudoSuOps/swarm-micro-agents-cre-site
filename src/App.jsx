@@ -1,14 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
-export default function SwarmAndBeeSite() {
+export default function App() {
   const agents = [
     {
       name: "Capital Markets Agent",
@@ -59,6 +49,96 @@ export default function SwarmAndBeeSite() {
     "Diligence review",
     "Broker packaging",
     "Portfolio monitoring",
+  ];
+
+  const comparison = {
+    generic: [
+      "Broad assistants with loose task boundaries",
+      "Hard to evaluate in production workflows",
+      "Unstructured outputs that require manual cleanup",
+      "Cloud-only assumptions",
+      "Weak alignment with real CRE roles and systems",
+    ],
+    swarm: [
+      "Narrow micro-domain agents for real CRE functions",
+      "Defendable outputs with tighter task boundaries",
+      "Structured intelligence designed for downstream systems",
+      "Cloud, private, dedicated, and edge deployment options",
+      "Built around actual business workflows, not demos",
+    ],
+  };
+
+  const refinerySteps = [
+    {
+      title: "Ingest",
+      desc: "Bring in documents, workflows, templates, and operating context including leases, title files, rent rolls, lender quotes, and diligence materials.",
+    },
+    {
+      title: "Map",
+      desc: "Align the task to the correct micro-domain skill so each workflow routes into a narrow intelligence layer built for that CRE function.",
+    },
+    {
+      title: "Query",
+      desc: "Query the Intelligence Graph for connected domain knowledge, prior workflow patterns, and structured business context.",
+    },
+    {
+      title: "Generate",
+      desc: "Produce structured, workflow-native outputs such as memos, flags, comparisons, JSON, summaries, and action-ready intelligence.",
+    },
+    {
+      title: "Deliver",
+      desc: "Return the output into the client workflow through APIs, batch pipelines, internal tools, dashboards, or sovereign edge deployment.",
+    },
+  ];
+
+  const infrastructureCards = [
+    "High-performance GPU infrastructure",
+    "Sovereign deployment support",
+    "Structured workflow delivery",
+    "Cloud-to-edge architecture",
+  ];
+
+  const productShelf = [
+    {
+      name: "Capital Markets Agent",
+      desc: "Debt quotes, lender comparisons, credit summaries, and investment committee preparation.",
+    },
+    {
+      name: "Title Company Agent",
+      desc: "Commitment review, exception tracking, and structured closing intelligence.",
+    },
+    {
+      name: "Data Room Agent",
+      desc: "Diligence extraction, missing-item detection, and deal-room workflow support.",
+    },
+    {
+      name: "Lease Abstract Agent",
+      desc: "Term extraction, rent logic, options, obligations, and lease structure.",
+    },
+    {
+      name: "Broker Package Agent",
+      desc: "Offering memo support, investment highlights, and marketing-ready package intelligence.",
+    },
+    {
+      name: "Asset Management Agent",
+      desc: "Portfolio monitoring, watchlists, operating intelligence, and variance review.",
+    },
+  ];
+
+  const outcomes = [
+    "Reduce manual review time",
+    "Increase workflow consistency",
+    "Improve structured data capture",
+    "Shorten turnaround on high-value CRE tasks",
+    "Create reusable intelligence across teams and workflows",
+  ];
+
+  const enterprisePoints = [
+    "Structured outputs for downstream systems",
+    "Deployment flexibility across cloud, dedicated, private, and edge",
+    "Workflow-native integration",
+    "Compliance-aware architecture",
+    "Production-oriented delivery model",
   ];
 
   return (
@@ -260,6 +340,78 @@ export default function SwarmAndBeeSite() {
           </div>
         </section>
 
+        <section className="border-y border-white/10 bg-white/[0.02]">
+          <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+            <div className="max-w-3xl">
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Why Swarm & Bee wins</div>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+                Narrow domain intelligence beats broad generic AI in high-value CRE workflows.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-neutral-300">
+                Generic AI tools are broad, impressive, and often misaligned with real commercial
+                workflows. Swarm & Bee is built differently: narrow, defendable, workflow-native
+                intelligence systems designed for measurable business value.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-2">
+              <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
+                <div className="text-sm uppercase tracking-[0.24em] text-neutral-400">Generic AI vendors</div>
+                <div className="mt-4 space-y-4">
+                  {comparison.generic.map((item) => (
+                    <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-300">
+                      <span className="mt-2 h-2 w-2 rounded-full bg-neutral-500" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-amber-300/20 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8">
+                <div className="text-sm uppercase tracking-[0.24em] text-amber-300/75">Swarm & Bee</div>
+                <div className="mt-4 space-y-4">
+                  {comparison.swarm.map((item) => (
+                    <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-200">
+                      <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 rounded-2xl border border-amber-300/20 bg-amber-400/10 p-5 text-sm leading-7 text-amber-50">
+                  Swarm & Bee is not a generic AI wrapper. It is the intelligence layer for narrow,
+                  bankable CRE workflows.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">How the refinery works</div>
+            <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+              From documents and workflows to connected domain intelligence.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-neutral-300">
+              Swarm & Bee turns domain-specific workflows into a compounding intelligence system
+              that grows stronger as more documents, outputs, and operating patterns move through
+              the machine.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-5">
+            {refinerySteps.map((step, index) => (
+              <div key={step.title} className="rounded-[1.75rem] border border-white/10 bg-neutral-900/70 p-6">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-amber-300/20 bg-amber-400/10 text-sm font-medium text-amber-100">
+                  {index + 1}
+                </div>
+                <div className="mt-5 text-lg font-medium text-white">{step.title}</div>
+                <p className="mt-3 text-sm leading-7 text-neutral-400">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section id="deployment" className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-2">
@@ -314,12 +466,7 @@ export default function SwarmAndBeeSite() {
                 afterthought.
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {[
-                  "High-performance GPU systems",
-                  "Dedicated inference options",
-                  "Secure private environments",
-                  "Cloud-to-edge deployment pathways",
-                ].map((item) => (
+                {infrastructureCards.map((item) => (
                   <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-neutral-200">
                     {item}
                   </div>
@@ -356,6 +503,31 @@ export default function SwarmAndBeeSite() {
         <section className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="max-w-3xl">
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Product shelf</div>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+                A growing shelf of CRE intelligence agents.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-neutral-300">
+                Swarm & Bee is building a portfolio of micro-domain agents for commercial real
+                estate. Each product is narrow by design, aligned to a real function, and built for
+                recurring workflow value.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {productShelf.map((item) => (
+                <div key={item.name} className="rounded-[1.75rem] border border-white/10 bg-neutral-900/70 p-6">
+                  <div className="text-lg font-medium text-white">{item.name}</div>
+                  <p className="mt-3 text-sm leading-7 text-neutral-400">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/10 bg-white/[0.02]">
+          <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+            <div className="max-w-3xl">
               <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Use cases</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Micro-domain intelligence for real CRE workflows.
@@ -371,16 +543,58 @@ export default function SwarmAndBeeSite() {
           </div>
         </section>
 
+        <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Commercial outcomes</div>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+                Designed for measurable business leverage.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-neutral-300">
+                Swarm & Bee agents are built to save analyst time, reduce document friction,
+                improve consistency, and accelerate high-value CRE workflows. The goal is not
+                novelty. The goal is operational leverage.
+              </p>
+              <div className="mt-8 space-y-4">
+                {outcomes.map((item) => (
+                  <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-300">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8">
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Built for enterprise environments</div>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
+                Deployment flexibility, privacy, and workflow-native control.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-neutral-300">
+                Swarm & Bee is built for organizations that care about control, compliance,
+                deployment flexibility, and operational reliability. AI should integrate into the
+                business, not sit beside it as a novelty tool.
+              </p>
+              <div className="mt-8 space-y-4">
+                {enterprisePoints.map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/10 bg-neutral-950/60 p-4 text-sm text-neutral-200">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="contact" className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
           <div className="grid gap-10 rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8 lg:grid-cols-[1fr_0.9fr] lg:p-10">
             <div>
               <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Start the conversation</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
-                Build your CRE intelligence layer with Swarm & Bee.
+                Build the CRE intelligence layer your workflow actually needs.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-300">
-                Talk with us about micro-domain agents, sovereign deployment, workflow integration,
-                and production-grade CRE intelligence systems.
+                Talk with Swarm & Bee about micro-domain agents, sovereign deployment, Intelligence Graph workflows, and production-grade CRE systems designed for recurring business value.
               </p>
             </div>
 
@@ -399,4 +613,3 @@ export default function SwarmAndBeeSite() {
     </div>
   );
 }
-
