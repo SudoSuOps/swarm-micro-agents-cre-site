@@ -614,6 +614,29 @@ export default function SwarmAndBeeSite() {
           </div>
         </section>
       </main>
+
+      <footer className="border-t border-white/10 bg-neutral-950/90">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between lg:px-8">
+          <div>
+            <div className="text-sm uppercase tracking-[0.24em] text-amber-300/75">Swarm & Bee</div>
+            <div className="mt-1">Commercial Compute Intelligence Refinery</div>
+          </div>
+
+          <div className="flex flex-col gap-2 md:items-end">
+            <a href="mailto:build@swarmandbee.ai" className="transition hover:text-white">
+              build@swarmandbee.ai
+            </a>
+            <a
+              href="https://x.com/swarmandbee"
+              target="_blank"
+              rel="noreferrer"
+              className="transition hover:text-white"
+            >
+              @swarmandbee
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
