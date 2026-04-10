@@ -173,7 +173,7 @@ export default function SwarmAndBeeSite() {
           </nav>
           <a
             href="#contact"
-            className="rounded-full border border-amber-300/30 bg-amber-400/10 px-4 py-2 text-sm text-amber-100 transition hover:border-amber-200/50 hover:bg-amber-300/15"
+            className="rounded-full border border-amber-200/20 bg-amber-200/10 px-4 py-2 text-sm text-amber-50 transition hover:border-amber-100/30 hover:bg-amber-200/15"
           >
             Book a Demo
           </a>
@@ -197,7 +197,7 @@ export default function SwarmAndBeeSite() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <a
                   href="#contact"
-                  className="rounded-full bg-amber-300 px-6 py-3 text-sm font-medium text-neutral-950 transition hover:bg-amber-200"
+                  className="rounded-full border border-amber-200/20 bg-amber-200/80 px-6 py-3 text-sm font-medium text-neutral-950 transition hover:bg-amber-100 hover:border-amber-100/30 shadow-[0_0_20px_rgba(251,191,36,0.08)]"
                 >
                   Talk to Swarm & Bee
                 </a>
@@ -607,7 +607,7 @@ export default function SwarmAndBeeSite() {
               <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Company" />
               <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Email" />
               <textarea className="min-h-32 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Tell us about your workflow, deployment needs, or micro-domain use case." />
-              <button className="rounded-full bg-amber-300 px-5 py-3 text-sm font-medium text-neutral-950 transition hover:bg-amber-200">
+              <button className="rounded-full border border-amber-200/20 bg-amber-200/80 px-5 py-3 text-sm font-medium text-neutral-950 transition hover:bg-amber-100 hover:border-amber-100/30 shadow-[0_0_20px_rgba(251,191,36,0.08)]">
                 Request a Demo
               </button>
             </form>
