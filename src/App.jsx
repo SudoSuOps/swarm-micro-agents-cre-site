@@ -1,4 +1,4 @@
-export default function App() {
+export default function SwarmAndBeeSite() {
   const agents = [
     {
       name: "Capital Markets Agent",
@@ -141,6 +141,16 @@ export default function App() {
     "Production-oriented delivery model",
   ];
 
+  const graphNodes = [
+    { label: "Capital", pos: "top-8 left-1/2 -translate-x-1/2", glow: "bg-amber-300/18" },
+    { label: "Title", pos: "top-24 left-10", glow: "bg-orange-300/18" },
+    { label: "Leases", pos: "top-24 right-10", glow: "bg-yellow-200/15" },
+    { label: "Data Room", pos: "bottom-28 left-8", glow: "bg-amber-200/15" },
+    { label: "Portfolio", pos: "bottom-28 right-8", glow: "bg-orange-200/15" },
+    { label: "Broker", pos: "bottom-8 left-1/2 -translate-x-1/2", glow: "bg-amber-100/10" },
+    { label: "Underwriting", pos: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", glow: "bg-amber-400/15" },
+  ];
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 selection:bg-amber-500/30 selection:text-white">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -225,42 +235,36 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="relative mt-8 grid min-h-[22rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950">
+                  <div className="relative mt-8 grid min-h-[24rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.16),transparent_42%)]" />
-                    <div className="absolute h-64 w-64 rounded-full border border-white/10" />
+                    <div className="absolute h-64 w-64 rounded-full border border-amber-200/10" />
                     <div className="absolute h-96 w-96 rounded-full border border-white/5" />
+                    <div className="absolute h-[28rem] w-[28rem] rounded-full border border-amber-300/5" />
 
-                    {[
-                      "Capital",
-                      "Title",
-                      "Leases",
-                      "Data Room",
-                      "Portfolio",
-                      "Broker",
-                      "Underwriting",
-                    ].map((label, i) => {
-                      const positions = [
-                        "top-10 left-1/2 -translate-x-1/2",
-                        "top-24 left-12",
-                        "top-24 right-12",
-                        "bottom-28 left-10",
-                        "bottom-28 right-10",
-                        "bottom-10 left-1/2 -translate-x-1/2",
-                        "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-                      ];
-                      return (
-                        <div
-                          key={label}
-                          className={`absolute ${positions[i]} rounded-full border border-amber-300/20 bg-neutral-900/90 px-4 py-2 text-xs text-neutral-200 shadow-lg shadow-black/40`}
-                        >
-                          {label}
-                        </div>
-                      );
-                    })}
+                    <div className="absolute left-1/2 top-1/2 h-px w-72 -translate-x-1/2 -translate-y-1/2 rotate-0 bg-gradient-to-r from-transparent via-amber-300/25 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gradient-to-r from-transparent via-orange-200/20 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-64 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-gradient-to-r from-transparent via-amber-300/20 to-transparent" />
 
-                    <div className="relative rounded-full border border-amber-300/25 bg-amber-300/10 px-6 py-6 text-center backdrop-blur-sm">
+                    {graphNodes.map((node, i) => (
+                      <div
+                        key={node.label}
+                        className={`absolute ${node.pos} rounded-full border border-amber-300/20 bg-neutral-900/90 px-4 py-2 text-xs text-neutral-200 shadow-lg shadow-black/40`}
+                      >
+                        <div className={`absolute inset-0 rounded-full blur-md ${node.glow} ${i % 2 === 0 ? "animate-pulse" : ""}`} />
+                        <div className="relative">{node.label}</div>
+                      </div>
+                    ))}
+
+                    <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/10 blur-2xl animate-pulse" />
+
+                    <div className="relative rounded-full border border-amber-300/25 bg-amber-300/10 px-6 py-6 text-center backdrop-blur-sm shadow-[0_0_40px_rgba(251,191,36,0.12)]">
                       <div className="text-xs uppercase tracking-[0.25em] text-amber-200/80">Query the machine</div>
                       <div className="mt-2 text-lg font-medium text-white">Connected domain skill</div>
+                    </div>
+
+                    <div className="absolute bottom-4 right-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                      Compounding workflow intelligence
                     </div>
                   </div>
                 </div>
