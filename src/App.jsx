@@ -149,31 +149,31 @@ export default function App() {
   ];
 
   const graphNodes = [
-    { label: "Capital", pos: "top-10 left-1/2 -translate-x-1/2", glow: "bg-amber-300/20" },
-    { label: "Title", pos: "top-24 left-12", glow: "bg-orange-300/15" },
-    { label: "Leases", pos: "top-24 right-12", glow: "bg-yellow-200/15" },
-    { label: "Data Room", pos: "bottom-28 left-10", glow: "bg-amber-200/15" },
-    { label: "Portfolio", pos: "bottom-28 right-10", glow: "bg-orange-200/15" },
-    { label: "Broker", pos: "bottom-10 left-1/2 -translate-x-1/2", glow: "bg-amber-100/10" },
-    { label: "Underwriting", pos: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", glow: "bg-amber-400/15" },
+    { label: "Capital", pos: "top-10 left-1/2 -translate-x-1/2", glow: "bg-sky-300/20" },
+    { label: "Title", pos: "top-24 left-12", glow: "bg-blue-300/15" },
+    { label: "Leases", pos: "top-24 right-12", glow: "bg-cyan-200/15" },
+    { label: "Data Room", pos: "bottom-28 left-10", glow: "bg-sky-200/15" },
+    { label: "Portfolio", pos: "bottom-28 right-10", glow: "bg-indigo-200/15" },
+    { label: "Broker", pos: "bottom-10 left-1/2 -translate-x-1/2", glow: "bg-blue-100/10" },
+    { label: "Underwriting", pos: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", glow: "bg-sky-400/15" },
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 selection:bg-amber-500/30 selection:text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-sky-500/30 selection:text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.035]" />
-        <div className="absolute -top-32 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-amber-500/10 blur-3xl" />
-        <div className="absolute top-[30rem] -left-24 h-80 w-80 rounded-full bg-orange-400/10 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-yellow-200/5 blur-3xl" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.04]" />
+        <div className="absolute -top-32 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl" />
+        <div className="absolute top-[30rem] -left-24 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-cyan-300/5 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-neutral-950/75 backdrop-blur-2xl">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/75 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <div>
-            <div className="text-sm uppercase tracking-[0.32em] text-amber-300/80">Swarm & Bee</div>
-            <div className="text-xs text-neutral-400">Commercial Compute Intelligence Refinery</div>
+            <div className="text-sm uppercase tracking-[0.32em] text-sky-200/80">Swarm & Bee</div>
+            <div className="text-xs text-slate-400">Commercial Compute Intelligence Refinery</div>
           </div>
-          <nav className="hidden gap-8 text-sm text-neutral-300 md:flex">
+          <nav className="hidden gap-8 text-sm text-slate-300 md:flex">
             <a href="#agents" className="transition hover:text-white">Agents</a>
             <a href="#graph" className="transition hover:text-white">Intelligence Graph</a>
             <a href="#deployment" className="transition hover:text-white">Deployment</a>
@@ -181,7 +181,7 @@ export default function App() {
           </nav>
           <a
             href="#contact"
-            className="rounded-full border border-amber-200/20 bg-amber-200/10 px-4 py-2 text-sm text-amber-50 transition hover:border-amber-100/30 hover:bg-amber-200/15"
+            className="rounded-full border border-sky-200/20 bg-sky-200/10 px-4 py-2 text-sm text-slate-100 transition hover:border-sky-100/30 hover:bg-sky-200/15"
           >
             Book a Demo
           </a>
@@ -192,7 +192,7 @@ export default function App() {
         <section className="mx-auto max-w-7xl px-6 pb-20 pt-24 lg:px-8 lg:pb-28 lg:pt-32">
           <div className="grid items-center gap-14 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
-              <div className="mb-5 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.22em] text-neutral-300">
+              <div className="mb-5 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.22em] text-slate-300">
                 Sovereign compute · verified intelligence · CRE micro-domains
               </div>
 
@@ -200,7 +200,7 @@ export default function App() {
                 The intelligence layer for commercial real estate micro-domain AI.
               </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-300 md:text-xl">
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">
                 Swarm & Bee builds defendable CRE agents delivered through sovereign compute,
                 production-grade infrastructure, and seamless integration from cloud to edge.
               </p>
@@ -208,7 +208,7 @@ export default function App() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <a
                   href="#contact"
-                  className="rounded-full border border-amber-200/20 bg-amber-200/80 px-6 py-3 text-sm font-medium text-neutral-950 transition hover:border-amber-100/30 hover:bg-amber-100 shadow-[0_0_20px_rgba(251,191,36,0.08)]"
+                  className="rounded-full border border-slate-200/15 bg-slate-100/90 px-6 py-3 text-sm font-medium text-slate-950 transition hover:bg-white shadow-[0_0_20px_rgba(148,163,184,0.08)]"
                 >
                   Talk to Swarm & Bee
                 </a>
@@ -228,7 +228,7 @@ export default function App() {
                 ].map(([title, text]) => (
                   <div key={title} className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
                     <div className="text-sm font-medium text-white">{title}</div>
-                    <p className="mt-2 text-sm leading-6 text-neutral-400">{text}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-400">{text}</p>
                   </div>
                 ))}
               </div>
@@ -236,46 +236,46 @@ export default function App() {
 
             <div className="relative">
               <div className="rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 shadow-2xl shadow-black/30">
-                <div className="rounded-[1.5rem] border border-amber-200/10 bg-neutral-900/90 p-6">
+                <div className="rounded-[1.5rem] border border-sky-200/10 bg-slate-900/90 p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-xs uppercase tracking-[0.24em] text-amber-300/75">Swarm Hive</div>
+                      <div className="text-xs uppercase tracking-[0.24em] text-sky-200/75">Swarm Hive</div>
                       <div className="mt-2 text-2xl font-semibold text-white">Micro-domain agent network</div>
                     </div>
-                    <div className="rounded-full border border-amber-300/20 bg-amber-400/10 px-3 py-1 text-xs text-amber-100">
+                    <div className="rounded-full border border-sky-300/20 bg-sky-400/10 px-3 py-1 text-xs text-sky-100">
                       Live graph
                     </div>
                   </div>
 
-                  <div className="relative mt-8 grid min-h-[25rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.16),transparent_42%)]" />
-                    <div className="absolute h-64 w-64 rounded-full border border-amber-200/10" />
+                  <div className="relative mt-8 grid min-h-[25rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-slate-950">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.16),transparent_42%)]" />
+                    <div className="absolute h-64 w-64 rounded-full border border-sky-200/10" />
                     <div className="absolute h-96 w-96 rounded-full border border-white/5" />
-                    <div className="absolute h-[30rem] w-[30rem] rounded-full border border-amber-300/5" />
+                    <div className="absolute h-[30rem] w-[30rem] rounded-full border border-sky-300/5" />
 
-                    <div className="absolute left-1/2 top-1/2 h-px w-72 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-amber-300/30 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gradient-to-r from-transparent via-orange-200/20 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-64 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-gradient-to-r from-transparent via-amber-300/20 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-72 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-sky-300/30 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-transparent via-cyan-200/20 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gradient-to-r from-transparent via-blue-200/20 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-64 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-gradient-to-r from-transparent via-sky-300/20 to-transparent" />
 
-                    <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/10 blur-2xl animate-pulse" />
+                    <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-300/10 blur-2xl animate-pulse" />
 
                     {graphNodes.map((node, i) => (
                       <div
                         key={node.label}
-                        className={`absolute ${node.pos} rounded-full border border-amber-300/20 bg-neutral-900/90 px-4 py-2 text-xs text-neutral-200 shadow-lg shadow-black/40`}
+                        className={`absolute ${node.pos} rounded-full border border-sky-300/20 bg-slate-900/90 px-4 py-2 text-xs text-slate-200 shadow-lg shadow-black/40`}
                       >
                         <div className={`absolute inset-0 rounded-full blur-md ${node.glow} ${i % 2 === 0 ? "animate-pulse" : ""}`} />
                         <div className="relative">{node.label}</div>
                       </div>
                     ))}
 
-                    <div className="relative rounded-full border border-amber-300/25 bg-amber-300/10 px-6 py-6 text-center backdrop-blur-sm shadow-[0_0_40px_rgba(251,191,36,0.12)]">
-                      <div className="text-xs uppercase tracking-[0.25em] text-amber-200/80">Query the machine</div>
+                    <div className="relative rounded-full border border-sky-300/25 bg-sky-300/10 px-6 py-6 text-center backdrop-blur-sm shadow-[0_0_40px_rgba(56,189,248,0.12)]">
+                      <div className="text-xs uppercase tracking-[0.25em] text-sky-100/80">Query the machine</div>
                       <div className="mt-2 text-lg font-medium text-white">Connected domain skill</div>
                     </div>
 
-                    <div className="absolute bottom-4 right-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                    <div className="absolute bottom-4 right-4 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-slate-400">
                       Compounding workflow intelligence
                     </div>
                   </div>
@@ -288,9 +288,9 @@ export default function App() {
         <section className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 lg:grid-cols-4 lg:px-8">
             {metrics.map((item) => (
-              <div key={item.value} className="rounded-3xl border border-white/10 bg-neutral-900/60 p-5">
+              <div key={item.value} className="rounded-3xl border border-white/10 bg-slate-900/60 p-5">
                 <div className="text-xl font-semibold text-white">{item.value}</div>
-                <div className="mt-2 text-sm leading-6 text-neutral-400">{item.label}</div>
+                <div className="mt-2 text-sm leading-6 text-slate-400">{item.label}</div>
               </div>
             ))}
           </div>
@@ -298,11 +298,11 @@ export default function App() {
 
         <section id="agents" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">What we build</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">What we build</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               Narrow CRE intelligence products, not generic AI wrappers.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-neutral-300">
+            <p className="mt-5 text-lg leading-8 text-slate-300">
               Each Swarm & Bee agent is aligned to a real-world commercial real estate function,
               designed for measurable workflow value, structured outputs, and production use.
             </p>
@@ -312,11 +312,11 @@ export default function App() {
             {agents.map((agent) => (
               <div
                 key={agent.name}
-                className="rounded-[1.75rem] border border-white/10 bg-neutral-900/70 p-6 transition hover:border-amber-200/20 hover:bg-neutral-900 hover:-translate-y-0.5"
+                className="rounded-[1.75rem] border border-white/10 bg-slate-900/70 p-6 transition hover:border-sky-200/20 hover:bg-slate-900 hover:-translate-y-0.5"
               >
                 <div className="text-lg font-medium text-white">{agent.name}</div>
-                <p className="mt-3 text-sm leading-7 text-neutral-400">{agent.desc}</p>
-                <div className="mt-6 inline-flex rounded-full border border-amber-300/20 bg-amber-400/10 px-3 py-1 text-xs text-amber-100">
+                <p className="mt-3 text-sm leading-7 text-slate-400">{agent.desc}</p>
+                <div className="mt-6 inline-flex rounded-full border border-sky-300/20 bg-sky-400/10 px-3 py-1 text-xs text-sky-100">
                   CRE micro-domain
                 </div>
               </div>
@@ -327,10 +327,10 @@ export default function App() {
         <section id="graph" className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-2">
-              <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-                <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Why micro-domain AI wins</div>
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+                <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Why micro-domain AI wins</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Sharper boundaries. Better reliability. Higher ROI.</h3>
-                <ul className="mt-8 space-y-4 text-neutral-300">
+                <ul className="mt-8 space-y-4 text-slate-300">
                   {[
                     "Tighter task boundaries than broad general-purpose assistants",
                     "Clearer evaluation and higher operational trust in real CRE workflows",
@@ -338,29 +338,29 @@ export default function App() {
                     "Higher business value because each agent maps to a real desk, role, or workflow",
                   ].map((item) => (
                     <li key={item} className="flex gap-3 text-sm leading-7">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
+                      <span className="mt-2 h-2 w-2 rounded-full bg-sky-300" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8">
-                <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Intelligence graph</div>
+              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-sky-300/10 via-white/[0.03] to-transparent p-8">
+                <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Intelligence graph</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">A living machine built from real domain skill.</h3>
-                <p className="mt-5 text-neutral-300 leading-8">
+                <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee is not just a collection of models. It is a growing intelligence graph
                   built from real business workflows, structured outputs, connected domain knowledge,
                   and skill-aligned micro-domain agents.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   {graphSkills.map((skill) => (
-                    <div key={skill} className="rounded-full border border-white/10 bg-neutral-950/70 px-4 py-2 text-sm text-neutral-200">
+                    <div key={skill} className="rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm text-slate-200">
                       {skill}
                     </div>
                   ))}
                 </div>
-                <p className="mt-8 text-sm leading-7 text-neutral-400">
+                <p className="mt-8 text-sm leading-7 text-slate-400">
                   Every new workflow, document, and agent adds connected skill to the machine. Users
                   do not just chat with a model — they query a compounding operational graph for
                   retrieval, reasoning, and decision support.
@@ -372,11 +372,11 @@ export default function App() {
 
         <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Why Swarm & Bee wins</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Why Swarm & Bee wins</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               Narrow domain intelligence beats broad generic AI in high-value CRE workflows.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-neutral-300">
+            <p className="mt-5 text-lg leading-8 text-slate-300">
               Generic AI tools are broad, impressive, and often misaligned with real commercial
               workflows. Swarm & Bee is built differently: narrow, defendable, workflow-native
               intelligence systems designed for measurable business value.
@@ -384,29 +384,29 @@ export default function App() {
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-              <div className="text-sm uppercase tracking-[0.24em] text-neutral-400">Generic AI vendors</div>
+            <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+              <div className="text-sm uppercase tracking-[0.24em] text-slate-400">Generic AI vendors</div>
               <div className="mt-4 space-y-4">
                 {comparison.generic.map((item) => (
-                  <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-300">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-neutral-500" />
+                  <div key={item} className="flex gap-3 text-sm leading-7 text-slate-300">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-slate-500" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-amber-300/20 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8">
-              <div className="text-sm uppercase tracking-[0.24em] text-amber-300/75">Swarm & Bee</div>
+            <div className="rounded-[2rem] border border-sky-300/20 bg-gradient-to-br from-sky-300/10 via-white/[0.03] to-transparent p-8">
+              <div className="text-sm uppercase tracking-[0.24em] text-sky-200/75">Swarm & Bee</div>
               <div className="mt-4 space-y-4">
                 {comparison.swarm.map((item) => (
-                  <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-200">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
+                  <div key={item} className="flex gap-3 text-sm leading-7 text-slate-200">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-sky-300" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-8 rounded-2xl border border-amber-300/20 bg-amber-400/10 p-5 text-sm leading-7 text-amber-50">
+              <div className="mt-8 rounded-2xl border border-sky-300/20 bg-sky-400/10 p-5 text-sm leading-7 text-sky-50">
                 Swarm & Bee is not a generic AI wrapper. It is the intelligence layer for narrow,
                 bankable CRE workflows.
               </div>
@@ -417,11 +417,11 @@ export default function App() {
         <section className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="max-w-3xl">
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">How the refinery works</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">How the refinery works</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 From documents and workflows to connected domain intelligence.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-neutral-300">
+              <p className="mt-5 text-lg leading-8 text-slate-300">
                 Swarm & Bee turns domain-specific workflows into a compounding intelligence system
                 that grows stronger as more documents, outputs, and operating patterns move through
                 the machine.
@@ -430,12 +430,12 @@ export default function App() {
 
             <div className="mt-12 grid gap-6 lg:grid-cols-5">
               {refinerySteps.map((step, index) => (
-                <div key={step.title} className="rounded-[1.75rem] border border-white/10 bg-neutral-900/70 p-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-amber-300/20 bg-amber-400/10 text-sm font-medium text-amber-100">
+                <div key={step.title} className="rounded-[1.75rem] border border-white/10 bg-slate-900/70 p-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-sky-300/20 bg-sky-400/10 text-sm font-medium text-sky-100">
                     {index + 1}
                   </div>
                   <div className="mt-5 text-lg font-medium text-white">{step.title}</div>
-                  <p className="mt-3 text-sm leading-7 text-neutral-400">{step.desc}</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-400">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -445,26 +445,26 @@ export default function App() {
         <section id="deployment" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Sovereign deployment</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Sovereign deployment</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 AI that runs where your data lives.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-neutral-300">
+              <p className="mt-5 text-lg leading-8 text-slate-300">
                 Deploy through cloud, dedicated infrastructure, private environments, or edge
                 hardware. Swarm & Bee gives clients a seamless path from prototype to production,
                 with sovereignty, control, and compliance built into the delivery model.
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {deploymentModes.map((mode) => (
-                  <div key={mode} className="rounded-2xl border border-white/10 bg-neutral-900/70 p-5 text-sm text-neutral-200">
+                  <div key={mode} className="rounded-2xl border border-white/10 bg-slate-900/70 p-5 text-sm text-slate-200">
                     {mode}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Defendable intelligence</div>
+            <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Defendable intelligence</div>
               <h3 className="mt-4 text-3xl font-semibold text-white">Verified outputs for real operators.</h3>
               <div className="mt-8 space-y-4">
                 {[
@@ -475,7 +475,7 @@ export default function App() {
                 ].map(([title, body]) => (
                   <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                     <div className="text-sm font-medium text-white">{title}</div>
-                    <div className="mt-2 text-sm leading-7 text-neutral-400">{body}</div>
+                    <div className="mt-2 text-sm leading-7 text-slate-400">{body}</div>
                   </div>
                 ))}
               </div>
@@ -486,27 +486,27 @@ export default function App() {
         <section className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-2">
-              <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-                <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Infrastructure</div>
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+                <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Infrastructure</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Production-grade rails from cloud to edge.</h3>
-                <p className="mt-5 text-neutral-300 leading-8">
+                <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee is backed by serious compute, dedicated inference rails, and hardware
                   designed for reliable production delivery. We do not treat infrastructure as an
                   afterthought.
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
                   {infrastructureCards.map((item) => (
-                    <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-neutral-200">
+                    <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-slate-200">
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-                <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Seamless integration</div>
+              <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+                <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Seamless integration</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Built to fit into existing workflows.</h3>
-                <p className="mt-5 text-neutral-300 leading-8">
+                <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee integrates through APIs, batch pipelines, internal tools, structured
                   outputs, and edge appliances. Clients do not need to rebuild their operations to use
                   narrow, high-value intelligence.
@@ -520,7 +520,7 @@ export default function App() {
                     "Structured outputs",
                     "Edge appliances",
                   ].map((item) => (
-                    <div key={item} className="rounded-full border border-amber-300/20 bg-amber-400/10 px-4 py-2 text-sm text-amber-100">
+                    <div key={item} className="rounded-full border border-sky-300/20 bg-sky-400/10 px-4 py-2 text-sm text-sky-100">
                       {item}
                     </div>
                   ))}
@@ -532,11 +532,11 @@ export default function App() {
 
         <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Product shelf</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Product shelf</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               A growing shelf of CRE intelligence agents.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-neutral-300">
+            <p className="mt-5 text-lg leading-8 text-slate-300">
               Swarm & Bee is building a portfolio of micro-domain agents for commercial real
               estate. Each product is narrow by design, aligned to a real function, and built for
               recurring workflow value.
@@ -545,9 +545,9 @@ export default function App() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {productShelf.map((item) => (
-              <div key={item.name} className="rounded-[1.75rem] border border-white/10 bg-neutral-900/70 p-6">
+              <div key={item.name} className="rounded-[1.75rem] border border-white/10 bg-slate-900/70 p-6">
                 <div className="text-lg font-medium text-white">{item.name}</div>
-                <p className="mt-3 text-sm leading-7 text-neutral-400">{item.desc}</p>
+                <p className="mt-3 text-sm leading-7 text-slate-400">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -556,14 +556,14 @@ export default function App() {
         <section className="border-y border-white/10 bg-white/[0.02]">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
             <div className="max-w-3xl">
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Use cases</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Use cases</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Micro-domain intelligence for real CRE workflows.
               </h2>
             </div>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {useCases.map((item) => (
-                <div key={item} className="rounded-[1.5rem] border border-white/10 bg-neutral-900/70 p-6 text-sm text-neutral-200">
+                <div key={item} className="rounded-[1.5rem] border border-white/10 bg-slate-900/70 p-6 text-sm text-slate-200">
                   {item}
                 </div>
               ))}
@@ -573,39 +573,39 @@ export default function App() {
 
         <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2">
-            <div className="rounded-[2rem] border border-white/10 bg-neutral-900/70 p-8">
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Commercial outcomes</div>
+            <div className="rounded-[2rem] border border-white/10 bg-slate-900/70 p-8">
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Commercial outcomes</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Designed for measurable business leverage.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-neutral-300">
+              <p className="mt-5 text-lg leading-8 text-slate-300">
                 Swarm & Bee agents are built to save analyst time, reduce document friction,
                 improve consistency, and accelerate high-value CRE workflows. The goal is not
                 novelty. The goal is operational leverage.
               </p>
               <div className="mt-8 space-y-4">
                 {outcomes.map((item) => (
-                  <div key={item} className="flex gap-3 text-sm leading-7 text-neutral-300">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-300" />
+                  <div key={item} className="flex gap-3 text-sm leading-7 text-slate-300">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-sky-300" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8">
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Built for enterprise environments</div>
+            <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-sky-300/10 via-white/[0.03] to-transparent p-8">
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Built for enterprise environments</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Deployment flexibility, privacy, and workflow-native control.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-neutral-300">
+              <p className="mt-5 text-lg leading-8 text-slate-300">
                 Swarm & Bee is built for organizations that care about control, compliance,
                 deployment flexibility, and operational reliability. AI should integrate into the
                 business, not sit beside it as a novelty tool.
               </p>
               <div className="mt-8 space-y-4">
                 {enterprisePoints.map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-neutral-950/60 p-4 text-sm text-neutral-200">
+                  <div key={item} className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
                     {item}
                   </div>
                 ))}
@@ -615,25 +615,25 @@ export default function App() {
         </section>
 
         <section id="contact" className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
-          <div className="grid gap-10 rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-300/10 via-white/[0.03] to-transparent p-8 lg:grid-cols-[1fr_0.9fr] lg:p-10">
+          <div className="grid gap-10 rounded-[2rem] border border-white/10 bg-gradient-to-br from-sky-300/10 via-white/[0.03] to-transparent p-8 lg:grid-cols-[1fr_0.9fr] lg:p-10">
             <div>
-              <div className="text-sm uppercase tracking-[0.28em] text-amber-300/75">Start the conversation</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-sky-200/75">Start the conversation</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Build the CRE intelligence layer your workflow actually needs.
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-neutral-300">
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
                 Talk with Swarm & Bee about micro-domain agents, sovereign deployment, Intelligence
                 Graph workflows, and production-grade CRE systems designed for recurring business
                 value.
               </p>
             </div>
 
-            <form className="grid gap-4 rounded-[1.5rem] border border-white/10 bg-neutral-950/70 p-6">
-              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Name" />
-              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Company" />
-              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Email" />
-              <textarea className="min-h-32 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-neutral-500" placeholder="Tell us about your workflow, deployment needs, or micro-domain use case." />
-              <button className="rounded-full border border-amber-200/20 bg-amber-200/80 px-5 py-3 text-sm font-medium text-neutral-950 transition hover:border-amber-100/30 hover:bg-amber-100 shadow-[0_0_20px_rgba(251,191,36,0.08)]">
+            <form className="grid gap-4 rounded-[1.5rem] border border-white/10 bg-slate-950/70 p-6">
+              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Name" />
+              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Company" />
+              <input className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Email" />
+              <textarea className="min-h-32 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Tell us about your workflow, deployment needs, or micro-domain use case." />
+              <button className="rounded-full border border-slate-200/15 bg-slate-100/90 px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-white shadow-[0_0_20px_rgba(148,163,184,0.08)]">
                 Request a Demo
               </button>
             </form>
@@ -641,10 +641,10 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-neutral-950/90">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between lg:px-8">
+      <footer className="border-t border-white/10 bg-slate-950/90">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-amber-300/75">Swarm & Bee</div>
+            <div className="text-sm uppercase tracking-[0.24em] text-sky-200/75">Swarm & Bee</div>
             <div className="mt-1">Commercial Compute Intelligence Refinery</div>
           </div>
 
