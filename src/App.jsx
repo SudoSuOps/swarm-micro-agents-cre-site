@@ -160,27 +160,26 @@ export default function App() {
 
   const sectionClass = "mx-auto max-w-7xl px-6 py-20 lg:px-8";
   const cardClass = "rounded-[1.75rem] border border-white/8 bg-white/[0.03] backdrop-blur-sm";
-  const mutedCardClass = "rounded-[1.75rem] border border-white/8 bg-slate-900/75";
   const primaryBtn =
-    "rounded-full border border-sky-200/18 bg-sky-100/80 px-6 py-3 text-sm font-medium text-slate-950 transition hover:bg-sky-50 shadow-[0_0_20px_rgba(148,163,184,0.06)]";
+    "rounded-full border border-amber-200/18 bg-amber-300/78 px-6 py-3 text-sm font-medium text-[#0b1020] transition hover:bg-amber-200 shadow-[0_0_20px_rgba(217,168,84,0.12)]";
   const secondaryBtn =
     "rounded-full border border-white/12 bg-white/[0.04] px-6 py-3 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.07]";
-  const smallBtn =
-    "rounded-full border border-sky-200/12 bg-sky-100/[0.08] px-4 py-2 text-sm text-slate-100 transition hover:border-sky-100/18 hover:bg-sky-100/[0.12]";
+  const headerBtn =
+    "rounded-full border border-amber-200/14 bg-amber-300/[0.10] px-4 py-2 text-sm text-amber-50 transition hover:border-amber-100/20 hover:bg-amber-300/[0.14]";
 
   return (
-    <div className="min-h-screen bg-[#02050b] text-slate-100 selection:bg-sky-400/25 selection:text-white">
+    <div className="min-h-screen bg-[#020814] text-slate-100 selection:bg-amber-500/25 selection:text-white">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.045]" />
-        <div className="absolute -top-40 left-1/2 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full bg-blue-500/6 blur-3xl" />
-        <div className="absolute top-[26rem] -left-24 h-80 w-80 rounded-full bg-slate-400/5 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[34rem] w-[34rem] rounded-full bg-indigo-500/5 blur-3xl" />
+        <div className="absolute -top-40 left-1/2 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full bg-blue-700/8 blur-3xl" />
+        <div className="absolute top-[24rem] -left-20 h-80 w-80 rounded-full bg-amber-400/5 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[34rem] w-[34rem] rounded-full bg-slate-300/4 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-white/8 bg-[#02050b]/80 backdrop-blur-2xl">
+      <header className="sticky top-0 z-40 border-b border-white/8 bg-[#020814]/82 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <div>
-            <div className="text-sm uppercase tracking-[0.32em] text-slate-200/90">Swarm & Bee</div>
+            <div className="text-sm uppercase tracking-[0.32em] text-amber-100/85">Swarm & Bee</div>
             <div className="text-xs text-slate-500">Commercial Compute Intelligence Refinery</div>
           </div>
 
@@ -191,7 +190,7 @@ export default function App() {
             <a href="#contact" className="transition hover:text-white">Contact</a>
           </nav>
 
-          <a href="#contact" className={smallBtn}>
+          <a href="#contact" className={headerBtn}>
             Book a Demo
           </a>
         </div>
@@ -239,10 +238,10 @@ export default function App() {
 
             <div className="relative">
               <div className="rounded-[2rem] border border-white/8 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-6 shadow-2xl shadow-black/30">
-                <div className="rounded-[1.5rem] border border-white/8 bg-[#07111f]/90 p-6">
+                <div className="rounded-[1.5rem] border border-white/8 bg-[#061120]/92 p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-xs uppercase tracking-[0.24em] text-slate-300/75">Swarm Hive</div>
+                      <div className="text-xs uppercase tracking-[0.24em] text-amber-100/75">Swarm Hive</div>
                       <div className="mt-2 text-2xl font-semibold text-white">Micro-domain agent network</div>
                     </div>
 
@@ -251,31 +250,31 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="relative mt-8 grid min-h-[25rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/8 bg-[#030a14]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(96,165,250,0.08),transparent_42%)]" />
-                    <div className="absolute h-64 w-64 rounded-full border border-slate-200/8" />
+                  <div className="relative mt-8 grid min-h-[25rem] place-items-center overflow-hidden rounded-[1.5rem] border border-white/8 bg-[#030b16]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,168,84,0.08),transparent_42%)]" />
+                    <div className="absolute h-64 w-64 rounded-full border border-amber-200/8" />
                     <div className="absolute h-96 w-96 rounded-full border border-white/5" />
                     <div className="absolute h-[30rem] w-[30rem] rounded-full border border-slate-300/5" />
 
-                    <div className="absolute left-1/2 top-1/2 h-px w-72 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-slate-300/20 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-transparent via-blue-200/16 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gradient-to-r from-transparent via-indigo-200/14 to-transparent" />
-                    <div className="absolute left-1/2 top-1/2 h-px w-64 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-gradient-to-r from-transparent via-slate-300/14 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-72 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent via-amber-200/18 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-transparent via-slate-200/14 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-80 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-gradient-to-r from-transparent via-amber-200/12 to-transparent" />
+                    <div className="absolute left-1/2 top-1/2 h-px w-64 -translate-x-1/2 -translate-y-1/2 rotate-90 bg-gradient-to-r from-transparent via-slate-300/12 to-transparent" />
 
-                    <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-300/6 blur-2xl animate-pulse" />
+                    <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-200/6 blur-2xl animate-pulse" />
 
                     {graphNodes.map((node, i) => (
                       <div
                         key={node.label}
                         className={`absolute ${node.pos} rounded-full border border-white/10 bg-slate-900/90 px-4 py-2 text-xs text-slate-200 shadow-lg shadow-black/40`}
                       >
-                        <div className={`absolute inset-0 rounded-full blur-md ${i % 2 === 0 ? "bg-slate-300/8 animate-pulse" : "bg-blue-200/8"}`} />
+                        <div className={`absolute inset-0 rounded-full blur-md ${i % 2 === 0 ? "bg-amber-200/8 animate-pulse" : "bg-slate-200/8"}`} />
                         <div className="relative">{node.label}</div>
                       </div>
                     ))}
 
-                    <div className="relative rounded-full border border-white/12 bg-white/[0.05] px-6 py-6 text-center backdrop-blur-sm shadow-[0_0_40px_rgba(148,163,184,0.06)]">
-                      <div className="text-xs uppercase tracking-[0.25em] text-slate-300/75">Query the machine</div>
+                    <div className="relative rounded-full border border-amber-200/12 bg-amber-300/[0.08] px-6 py-6 text-center backdrop-blur-sm shadow-[0_0_40px_rgba(217,168,84,0.08)]">
+                      <div className="text-xs uppercase tracking-[0.25em] text-amber-100/75">Query the machine</div>
                       <div className="mt-2 text-lg font-medium text-white">Connected domain skill</div>
                     </div>
 
@@ -302,7 +301,7 @@ export default function App() {
 
         <section id="agents" className={sectionClass}>
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">What we build</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">What we build</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               Narrow CRE intelligence products, not generic AI wrappers.
             </h2>
@@ -316,11 +315,11 @@ export default function App() {
             {agents.map((agent) => (
               <div
                 key={agent.name}
-                className={`${mutedCardClass} p-6 transition hover:border-slate-200/14 hover:bg-slate-900 hover:-translate-y-0.5`}
+                className={`${cardClass} p-6 transition hover:border-amber-200/12 hover:bg-slate-900/80 hover:-translate-y-0.5`}
               >
                 <div className="text-lg font-medium text-white">{agent.name}</div>
                 <p className="mt-3 text-sm leading-7 text-slate-400">{agent.desc}</p>
-                <div className="mt-6 inline-flex rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-slate-200">
+                <div className="mt-6 inline-flex rounded-full border border-amber-200/10 bg-amber-300/[0.07] px-3 py-1 text-xs text-amber-100">
                   CRE micro-domain
                 </div>
               </div>
@@ -331,8 +330,8 @@ export default function App() {
         <section id="graph" className="border-y border-white/8 bg-white/[0.02]">
           <div className={sectionClass}>
             <div className="grid gap-10 lg:grid-cols-2">
-              <div className={`${mutedCardClass} p-8`}>
-                <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Why micro-domain AI wins</div>
+              <div className={`${cardClass} p-8`}>
+                <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Why micro-domain AI wins</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Sharper boundaries. Better reliability. Higher ROI.</h3>
                 <ul className="mt-8 space-y-4 text-slate-300">
                   {[
@@ -342,7 +341,7 @@ export default function App() {
                     "Higher business value because each agent maps to a real desk, role, or workflow",
                   ].map((item) => (
                     <li key={item} className="flex gap-3 text-sm leading-7">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-slate-300" />
+                      <span className="mt-2 h-2 w-2 rounded-full bg-amber-200" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -350,7 +349,7 @@ export default function App() {
               </div>
 
               <div className="rounded-[1.75rem] border border-white/8 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent p-8">
-                <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Intelligence graph</div>
+                <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Intelligence graph</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">A living machine built from real domain skill.</h3>
                 <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee is not just a collection of models. It is a growing intelligence graph
@@ -376,7 +375,7 @@ export default function App() {
 
         <section className={sectionClass}>
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Why Swarm & Bee wins</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Why Swarm & Bee wins</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               Narrow domain intelligence beats broad generic AI in high-value CRE workflows.
             </h2>
@@ -388,7 +387,7 @@ export default function App() {
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <div className={`${mutedCardClass} p-8`}>
+            <div className={`${cardClass} p-8`}>
               <div className="text-sm uppercase tracking-[0.24em] text-slate-500">Generic AI vendors</div>
               <div className="mt-4 space-y-4">
                 {comparison.generic.map((item) => (
@@ -401,16 +400,16 @@ export default function App() {
             </div>
 
             <div className="rounded-[1.75rem] border border-white/8 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent p-8">
-              <div className="text-sm uppercase tracking-[0.24em] text-slate-300/75">Swarm & Bee</div>
+              <div className="text-sm uppercase tracking-[0.24em] text-amber-100/75">Swarm & Bee</div>
               <div className="mt-4 space-y-4">
                 {comparison.swarm.map((item) => (
                   <div key={item} className="flex gap-3 text-sm leading-7 text-slate-200">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-slate-300" />
+                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-200" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-8 rounded-2xl border border-white/8 bg-white/[0.04] p-5 text-sm leading-7 text-slate-100">
+              <div className="mt-8 rounded-2xl border border-amber-200/10 bg-amber-300/[0.07] p-5 text-sm leading-7 text-amber-50">
                 Swarm & Bee is not a generic AI wrapper. It is the intelligence layer for narrow,
                 bankable CRE workflows.
               </div>
@@ -421,7 +420,7 @@ export default function App() {
         <section className="border-y border-white/8 bg-white/[0.02]">
           <div className={sectionClass}>
             <div className="max-w-3xl">
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">How the refinery works</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">How the refinery works</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 From documents and workflows to connected domain intelligence.
               </h2>
@@ -434,7 +433,7 @@ export default function App() {
 
             <div className="mt-12 grid gap-6 lg:grid-cols-5">
               {refinerySteps.map((step, index) => (
-                <div key={step.title} className={`${mutedCardClass} p-6`}>
+                <div key={step.title} className={`${cardClass} p-6`}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/8 bg-white/[0.05] text-sm font-medium text-slate-100">
                     {index + 1}
                   </div>
@@ -449,7 +448,7 @@ export default function App() {
         <section id="deployment" className={sectionClass}>
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Sovereign deployment</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Sovereign deployment</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 AI that runs where your data lives.
               </h2>
@@ -460,15 +459,15 @@ export default function App() {
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {deploymentModes.map((mode) => (
-                  <div key={mode} className={`${mutedCardClass} p-5 text-sm text-slate-200`}>
+                  <div key={mode} className={`${cardClass} p-5 text-sm text-slate-200`}>
                     {mode}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className={`${mutedCardClass} p-8`}>
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Defendable intelligence</div>
+            <div className={`${cardClass} p-8`}>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Defendable intelligence</div>
               <h3 className="mt-4 text-3xl font-semibold text-white">Verified outputs for real operators.</h3>
               <div className="mt-8 space-y-4">
                 {[
@@ -490,8 +489,8 @@ export default function App() {
         <section className="border-y border-white/8 bg-white/[0.02]">
           <div className={sectionClass}>
             <div className="grid gap-10 lg:grid-cols-2">
-              <div className={`${mutedCardClass} p-8`}>
-                <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Infrastructure</div>
+              <div className={`${cardClass} p-8`}>
+                <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Infrastructure</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Production-grade rails from cloud to edge.</h3>
                 <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee is backed by serious compute, dedicated inference rails, and hardware
@@ -507,8 +506,8 @@ export default function App() {
                 </div>
               </div>
 
-              <div className={`${mutedCardClass} p-8`}>
-                <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Seamless integration</div>
+              <div className={`${cardClass} p-8`}>
+                <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Seamless integration</div>
                 <h3 className="mt-4 text-3xl font-semibold text-white">Built to fit into existing workflows.</h3>
                 <p className="mt-5 text-slate-300 leading-8">
                   Swarm & Bee integrates through APIs, batch pipelines, internal tools, structured
@@ -536,7 +535,7 @@ export default function App() {
 
         <section className={sectionClass}>
           <div className="max-w-3xl">
-            <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Product shelf</div>
+            <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Product shelf</div>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
               A growing shelf of CRE intelligence agents.
             </h2>
@@ -549,7 +548,7 @@ export default function App() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {productShelf.map((item) => (
-              <div key={item.name} className={`${mutedCardClass} p-6`}>
+              <div key={item.name} className={`${cardClass} p-6`}>
                 <div className="text-lg font-medium text-white">{item.name}</div>
                 <p className="mt-3 text-sm leading-7 text-slate-400">{item.desc}</p>
               </div>
@@ -560,7 +559,7 @@ export default function App() {
         <section className="border-y border-white/8 bg-white/[0.02]">
           <div className={sectionClass}>
             <div className="max-w-3xl">
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Use cases</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Use cases</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Micro-domain intelligence for real CRE workflows.
               </h2>
@@ -577,8 +576,8 @@ export default function App() {
 
         <section className={sectionClass}>
           <div className="grid gap-10 lg:grid-cols-2">
-            <div className={`${mutedCardClass} p-8`}>
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Commercial outcomes</div>
+            <div className={`${cardClass} p-8`}>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Commercial outcomes</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Designed for measurable business leverage.
               </h2>
@@ -590,7 +589,7 @@ export default function App() {
               <div className="mt-8 space-y-4">
                 {outcomes.map((item) => (
                   <div key={item} className="flex gap-3 text-sm leading-7 text-slate-300">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-slate-300" />
+                    <span className="mt-2 h-2 w-2 rounded-full bg-amber-200" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -598,7 +597,7 @@ export default function App() {
             </div>
 
             <div className="rounded-[1.75rem] border border-white/8 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent p-8">
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Built for enterprise environments</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Built for enterprise environments</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Deployment flexibility, privacy, and workflow-native control.
               </h2>
@@ -621,7 +620,7 @@ export default function App() {
         <section id="contact" className={sectionClass + " pb-24"}>
           <div className="grid gap-10 rounded-[2rem] border border-white/8 bg-gradient-to-br from-white/[0.05] via-white/[0.02] to-transparent p-8 lg:grid-cols-[1fr_0.9fr] lg:p-10">
             <div>
-              <div className="text-sm uppercase tracking-[0.28em] text-slate-300/75">Start the conversation</div>
+              <div className="text-sm uppercase tracking-[0.28em] text-amber-100/75">Start the conversation</div>
               <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
                 Build the CRE intelligence layer your workflow actually needs.
               </h2>
@@ -637,7 +636,7 @@ export default function App() {
               <input className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Company" />
               <input className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Email" />
               <textarea className="min-h-32 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500" placeholder="Tell us about your workflow, deployment needs, or micro-domain use case." />
-              <button className="rounded-full border border-sky-200/18 bg-sky-100/80 px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-sky-50 shadow-[0_0_20px_rgba(148,163,184,0.06)]">
+              <button className="rounded-full border border-amber-200/18 bg-amber-300/78 px-5 py-3 text-sm font-medium text-[#0b1020] transition hover:bg-amber-200 shadow-[0_0_20px_rgba(217,168,84,0.12)]">
                 Request a Demo
               </button>
             </form>
@@ -645,10 +644,10 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="border-t border-white/8 bg-[#02050b]/90">
+      <footer className="border-t border-white/8 bg-[#020814]/92">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-slate-500 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-slate-300/75">Swarm & Bee</div>
+            <div className="text-sm uppercase tracking-[0.24em] text-amber-100/75">Swarm & Bee</div>
             <div className="mt-1">Commercial Compute Intelligence Refinery</div>
           </div>
 
