@@ -3,130 +3,132 @@ import React from "react";
 export default function App() {
   const [selectedNode, setSelectedNode] = React.useState("Scaffold");
 
-  const breakpoints = [
+  const nodes = [
     {
+      id: "scaffold",
       title: "Scaffold",
-      problem: "Leaked answers, porous harnesses, hidden shortcuts.",
-      fix: "Sealed task boundaries and explicit access control.",
-      detail:
-        "The harness itself leaks privileged information, exposes hidden verifier logic, or contaminates the environment before reasoning starts. This breaks legitimacy at the scaffold layer.",
+      short: "Leaked answers, porous harnesses, hidden shortcuts.",
+      fix: "Seal task boundaries and enforce explicit access control.",
+      why: "The system is contaminated before reasoning even begins. Hidden files, verifier logic, or injected answer paths turn the run into theater.",
       receipts: [
         "task boundary manifest",
-        "accessible paths log",
+        "accessible path log",
         "prompt frame hash",
         "tool permission record",
       ],
-      run: [
-        ["01", "Task boundary loaded", "Only declared files and tools exposed to the agent."],
-        ["02", "Prompt frame sealed", "System prompt and role policy hashed before execution."],
-        ["03", "Access attempt checked", "Any out-of-scope file or hidden verifier path is denied."],
+      steps: [
+        ["01", "Task scope loaded", "Only declared files, tools, and permissions are exposed."],
+        ["02", "Boundary check active", "Hidden paths and undeclared answer sources are blocked."],
+        ["03", "Run sealed", "The environment is hashed before execution begins."],
       ],
-      x: "12%",
-      y: "18%",
+      x: 16,
+      y: 18,
     },
     {
+      id: "memory",
       title: "Memory",
-      problem: "Weak facts become permanent truth.",
-      fix: "Scored, sourced, revocable memory with approval states.",
-      detail:
-        "Persistent systems fail when provisional observations silently become trusted facts. SwarmCore treats memory as governed state: attributable, confidence-scored, reviewable, and revocable.",
+      short: "Weak facts become permanent truth.",
+      fix: "Score, source, and gate all memory writes.",
+      why: "If provisional observations silently become truth, every future decision inherits poisoned state. Memory has to be attributable, reviewable, and revocable.",
       receipts: [
         "memory write log",
         "source attribution",
         "confidence score",
         "approval state",
       ],
-      run: [
+      steps: [
         ["01", "Working memory loaded", "Only scoped session memory is brought into context."],
-        ["02", "Fact write proposed", "New memory is tagged as provisional, not truth."],
-        ["03", "Approval boundary enforced", "Promotion to long-term memory requires policy or human approval."],
+        ["02", "Fact write proposed", "New facts remain provisional until promotion rules are satisfied."],
+        ["03", "Approval enforced", "Long-term truth requires policy or human sign-off."],
       ],
-      x: "34%",
-      y: "36%",
+      x: 34,
+      y: 38,
     },
     {
+      id: "retrieval",
       title: "Retrieval",
-      problem: "Untrusted context contaminates decisions.",
-      fix: "Scoped retrieval with attributable source paths.",
-      detail:
-        "Agents should not pull arbitrary context and treat it as legitimate evidence. Retrieval must be task-scoped, source-bound, and visible in the receipt chain.",
+      short: "Untrusted context contaminates decisions.",
+      fix: "Scope retrieval to approved sources and visible paths.",
+      why: "A model should not be able to pull arbitrary context and pass it off as legitimate evidence. Retrieval must be bounded, attributable, and reviewable.",
       receipts: [
         "retrieval scope",
         "source path",
         "document lineage",
         "access policy match",
       ],
-      run: [
-        ["01", "Query scoped", "Retrieval is constrained to approved stores and task policy."],
-        ["02", "Source selected", "Every retrieved document is attributable and logged."],
-        ["03", "Context assembled", "Only approved context enters the decision path."],
+      steps: [
+        ["01", "Query scoped", "Retrieval is limited to approved stores and task policy."],
+        ["02", "Source selected", "Every retrieved item is attributable and logged."],
+        ["03", "Context assembled", "Only approved context enters the reasoning path."],
       ],
-      x: "56%",
-      y: "20%",
+      x: 56,
+      y: 20,
     },
     {
+      id: "verifier",
       title: "Verifier",
-      problem: "Spoofable pass signals and shallow checks.",
-      fix: "Hardened validation tied to intended task completion.",
-      detail:
-        "A verifier that checks cosmetic output instead of true completion can be tricked by prompt injection, mocked outputs, or fake success markers. SwarmCore hardens the validation layer and checks the path, not only the artifact.",
+      short: "Spoofable pass signals and shallow checks.",
+      fix: "Validate intended task completion, not cosmetic outputs.",
+      why: "A verifier that only looks for superficial success markers can be gamed by mocks, injections, and fake artifacts. The path has to be checked, not just the result string.",
       receipts: [
         "verifier version",
         "validation trace",
         "task completion proof",
         "spoof resistance checks",
       ],
-      run: [
-        ["01", "Verifier selected", "Validation version and policy are pinned before run."],
-        ["02", "Output checked", "Verifier tests intended task completion, not cosmetic signals."],
+      steps: [
+        ["01", "Verifier pinned", "Validation policy and version are fixed before the run."],
+        ["02", "Execution reviewed", "Outputs are checked against intended task completion."],
         ["03", "Spoof scan passed", "PASS strings, mocks, and shortcut artifacts are rejected."],
       ],
-      x: "74%",
-      y: "42%",
+      x: 76,
+      y: 42,
     },
     {
+      id: "governance",
       title: "Governance",
-      problem: "Agents drift beyond their authority.",
-      fix: "Role separation, escalation rules, human finality.",
-      detail:
-        "The junior should not act like the senior. The senior should not silently become final authority. SwarmCore binds every role to explicit permissions, escalation paths, and human finality thresholds.",
+      short: "Agents drift beyond their authority.",
+      fix: "Bind roles, escalation, and human finality.",
+      why: "The junior should not act like the senior. The senior should not silently become final authority. Strong systems define role boundaries and escalation thresholds in code and policy.",
       receipts: [
         "role policy",
         "escalation reason",
         "authority class",
         "human review status",
       ],
-      run: [
+      steps: [
         ["01", "Role loaded", "Junior, senior, and human boundaries are explicit."],
-        ["02", "Threshold crossed", "High-risk or ambiguous work triggers escalation."],
-        ["03", "Human finality", "Final authority remains visible and reviewable."],
+        ["02", "Threshold crossed", "Risk or ambiguity triggers escalation."],
+        ["03", "Finality assigned", "Human authority remains visible where it matters."],
       ],
-      x: "46%",
-      y: "68%",
+      x: 46,
+      y: 72,
     },
     {
+      id: "audit",
       title: "Audit",
-      problem: "No receipts, no trust, no finality.",
-      fix: "Full action lineage and reviewable decision traces.",
-      detail:
-        "Without a full record of what ran, what it saw, what policy applied, and whether a human approved the outcome, there is no defendable system. SwarmCore closes the loop with receipts.",
+      short: "No receipts, no trust, no finality.",
+      fix: "Record full lineage and reviewable decision traces.",
+      why: "Without receipts for what ran, what it accessed, what policy applied, and who approved the outcome, there is no defendable system.",
       receipts: [
         "model + version",
         "memory loaded",
         "tools used",
         "final decision lineage",
       ],
-      run: [
-        ["01", "Execution receipt started", "Every run gets an identity and lineage root."],
-        ["02", "Trace appended", "Model, memory, retrieval, verifier, and actions are recorded."],
-        ["03", "Outcome sealed", "Final path is reviewable and survives scrutiny."],
+      steps: [
+        ["01", "Receipt started", "Each run gets an identity and lineage root."],
+        ["02", "Trace appended", "Model, memory, retrieval, verifier, and action events are recorded."],
+        ["03", "Outcome sealed", "The final path is reviewable and survives scrutiny."],
       ],
-      x: "81%",
-      y: "72%",
+      x: 84,
+      y: 74,
     },
   ];
 
-  const principles = [
+  const active = nodes.find((node) => node.title === selectedNode) || nodes[0];
+
+  const buildStandard = [
     "Sealed task boundaries",
     "Role-defined agents",
     "Memory discipline",
@@ -136,7 +138,7 @@ export default function App() {
     "Full receipts",
   ];
 
-  const rails = [
+  const stack = [
     {
       name: "Detect",
       text: "Find breaks in the chain before they become false confidence.",
@@ -159,340 +161,1082 @@ export default function App() {
     },
   ];
 
-  const evidence = [
-    "Answer leakage through scaffolds",
-    "Memory poisoning and unverified persistence",
-    "Retrieval contamination from untrusted context",
-    "Verifier spoofing through shallow pass signals",
-    "Role drift in autonomous systems",
-    "Benchmark wins without mechanical legitimacy",
-  ];
-
-  const activeNode =
-    breakpoints.find((node) => node.title === selectedNode) || breakpoints[0];
-
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.10),transparent_28%),radial-gradient(circle_at_80%_20%,rgba(251,191,36,0.10),transparent_18%),linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent_20%)]" />
+    <>
+      <style>{`
+        :root {
+          --bg: #07090d;
+          --panel: rgba(14, 17, 22, 0.82);
+          --panel-strong: rgba(11, 13, 18, 0.94);
+          --panel-soft: rgba(255,255,255,0.04);
+          --line: rgba(255,255,255,0.10);
+          --line-soft: rgba(255,255,255,0.06);
+          --text: #f8fafc;
+          --muted: #9ba3af;
+          --muted-2: #7b8491;
+          --accent: #f4c24f;
+          --accent-soft: rgba(244,194,79,0.12);
+          --green: #7ee7b1;
+          --green-soft: rgba(126,231,177,0.12);
+          --red: #fca5a5;
+          --red-soft: rgba(252,165,165,0.12);
+          --shadow: 0 24px 80px rgba(0,0,0,0.42);
+          --radius-xl: 28px;
+          --radius-lg: 22px;
+          --radius-md: 18px;
+        }
 
-      <main className="relative mx-auto max-w-[1400px] px-6 py-10 md:px-10 lg:px-12">
-        <section className="grid gap-10">
-          <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 px-3 py-1 text-xs tracking-[0.25em] text-amber-200 uppercase">
+        * { box-sizing: border-box; }
+        html, body, #root { min-height: 100%; margin: 0; }
+        body {
+          background:
+            radial-gradient(circle at top, rgba(244,194,79,0.12), transparent 25%),
+            radial-gradient(circle at 82% 18%, rgba(251,191,36,0.10), transparent 16%),
+            linear-gradient(180deg, rgba(255,255,255,0.03), transparent 18%),
+            var(--bg);
+          color: var(--text);
+          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .app {
+          max-width: 1460px;
+          margin: 0 auto;
+          padding: 28px 20px 88px;
+          position: relative;
+        }
+
+        .hero {
+          display: grid;
+          grid-template-columns: 1.05fr 0.95fr;
+          gap: 18px;
+          align-items: stretch;
+          margin-bottom: 18px;
+        }
+
+        .hero-copy,
+        .hero-side,
+        .workspace,
+        .section,
+        .footer {
+          border: 1px solid var(--line);
+          background: var(--panel);
+          backdrop-filter: blur(18px);
+          border-radius: var(--radius-xl);
+          box-shadow: var(--shadow);
+        }
+
+        .hero-copy {
+          padding: 28px;
+        }
+
+        .hero-side {
+          padding: 18px;
+          display: grid;
+          gap: 12px;
+          align-content: start;
+          min-height: 100%;
+        }
+
+        .pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          width: fit-content;
+          border-radius: 999px;
+          border: 1px solid rgba(244,194,79,0.24);
+          background: rgba(244,194,79,0.10);
+          color: #f6db8f;
+          padding: 10px 14px;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.24em;
+        }
+
+        .dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 999px;
+          background: var(--accent);
+          display: inline-block;
+        }
+
+        h1 {
+          margin: 16px 0 0;
+          max-width: 920px;
+          font-size: clamp(3rem, 6vw, 6.25rem);
+          line-height: 0.95;
+          letter-spacing: -0.055em;
+        }
+
+        h1 .accent {
+          display: block;
+          color: var(--accent);
+        }
+
+        .lead {
+          margin: 22px 0 0;
+          max-width: 780px;
+          color: var(--muted);
+          font-size: 1.1rem;
+          line-height: 1.95;
+        }
+
+        .cta-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 24px;
+        }
+
+        .btn {
+          appearance: none;
+          border: 1px solid var(--line);
+          background: rgba(255,255,255,0.04);
+          color: white;
+          border-radius: 18px;
+          padding: 14px 18px;
+          font-size: 0.95rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: transform .18s ease, border-color .18s ease, background .18s ease;
+        }
+
+        .btn:hover {
+          transform: translateY(-1px);
+          background: rgba(255,255,255,0.08);
+        }
+
+        .btn.primary {
+          color: #121212;
+          background: var(--accent);
+          border-color: rgba(244,194,79,0.32);
+          box-shadow: 0 16px 32px rgba(244,194,79,0.18);
+        }
+
+        .mini-cards {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          margin-top: 28px;
+        }
+
+        .mini-card,
+        .side-card,
+        .inspector-block,
+        .trace-step,
+        .standard-card,
+        .stack-card,
+        .system-card,
+        .ask-card {
+          border: 1px solid var(--line-soft);
+          background: var(--panel-soft);
+          border-radius: var(--radius-lg);
+        }
+
+        .mini-card {
+          padding: 16px;
+        }
+
+        .mini-card h3,
+        .side-card h3,
+        .inspector-title,
+        .system-card h3,
+        .stack-card h3 {
+          margin: 0;
+          font-size: 1rem;
+          font-weight: 700;
+        }
+
+        .mini-card p,
+        .side-card p,
+        .stack-card p,
+        .system-card p,
+        .ask-card,
+        .inspector-copy,
+        .receipt-item,
+        .trace-text {
+          margin: 0;
+          color: var(--muted);
+          line-height: 1.75;
+          font-size: 0.94rem;
+        }
+
+        .side-card {
+          padding: 16px;
+        }
+
+        .side-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 10px;
+        }
+
+        .status {
+          border-radius: 999px;
+          border: 1px solid rgba(126,231,177,0.2);
+          background: var(--green-soft);
+          color: var(--green);
+          padding: 7px 10px;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.22em;
+        }
+
+        .side-metric {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .metric {
+          border: 1px solid var(--line-soft);
+          background: rgba(255,255,255,0.03);
+          border-radius: 16px;
+          padding: 14px;
+        }
+
+        .metric-label {
+          color: var(--muted-2);
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+        }
+
+        .metric-value {
+          margin-top: 8px;
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: white;
+        }
+
+        .workspace {
+          padding: 16px;
+          display: grid;
+          gap: 14px;
+          margin-bottom: 22px;
+        }
+
+        .workspace-topbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 12px 16px;
+          border-radius: 18px;
+          border: 1px solid var(--line-soft);
+          background: rgba(255,255,255,0.03);
+          color: var(--muted-2);
+          font-size: 12px;
+        }
+
+        .workspace-grid {
+          display: grid;
+          grid-template-columns: 260px minmax(0, 1fr) 400px;
+          gap: 14px;
+          min-height: 720px;
+        }
+
+        .rail,
+        .graph-stage,
+        .inspector {
+          border-radius: 24px;
+          border: 1px solid var(--line-soft);
+          background: var(--panel-strong);
+          overflow: hidden;
+        }
+
+        .rail,
+        .inspector {
+          padding: 16px;
+        }
+
+        .rail-title,
+        .inspector-eyebrow,
+        .section-eyebrow {
+          color: var(--accent);
+          font-size: 11px;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+        }
+
+        .rail-list {
+          display: grid;
+          gap: 10px;
+          margin-top: 14px;
+        }
+
+        .rail-item {
+          text-align: left;
+          appearance: none;
+          width: 100%;
+          padding: 14px;
+          border-radius: 18px;
+          border: 1px solid var(--line-soft);
+          background: rgba(255,255,255,0.03);
+          color: white;
+          cursor: pointer;
+          transition: transform .18s ease, border-color .18s ease, background .18s ease;
+        }
+
+        .rail-item:hover {
+          transform: translateY(-1px);
+          border-color: rgba(244,194,79,0.22);
+          background: rgba(255,255,255,0.05);
+        }
+
+        .rail-item.active {
+          border-color: rgba(244,194,79,0.35);
+          background: rgba(244,194,79,0.10);
+        }
+
+        .rail-item-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+        }
+
+        .rail-item-title {
+          font-size: 0.97rem;
+          font-weight: 700;
+        }
+
+        .break-badge {
+          border-radius: 999px;
+          padding: 5px 8px;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          border: 1px solid rgba(252,165,165,0.18);
+          background: var(--red-soft);
+          color: var(--red);
+          white-space: nowrap;
+        }
+
+        .rail-item.active .break-badge {
+          border-color: rgba(244,194,79,0.22);
+          background: rgba(244,194,79,0.14);
+          color: #f6db8f;
+        }
+
+        .rail-item p {
+          margin-top: 10px;
+          color: var(--muted);
+          line-height: 1.65;
+          font-size: 0.9rem;
+        }
+
+        .graph-stage {
+          position: relative;
+          min-height: 720px;
+          background:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(12,15,21,0.98), rgba(8,10,15,0.96));
+          background-size: 34px 34px, 34px 34px, cover;
+        }
+
+        .graph-stage svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+        }
+
+        .node {
+          position: absolute;
+          width: 230px;
+          transform: translate(-50%, -50%);
+        }
+
+        .node button {
+          width: 100%;
+          appearance: none;
+          border: 0;
+          background: transparent;
+          padding: 0;
+          text-align: left;
+          cursor: pointer;
+        }
+
+        .node-card {
+          border-radius: 22px;
+          border: 1px solid var(--line-soft);
+          background: rgba(12,14,19,0.85);
+          padding: 16px;
+          box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+          backdrop-filter: blur(12px);
+          transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+        }
+
+        .node-card:hover {
+          transform: translateY(-2px);
+          border-color: rgba(244,194,79,0.24);
+          background: rgba(16,19,25,0.94);
+        }
+
+        .node-card.active {
+          border-color: rgba(244,194,79,0.38);
+          background: rgba(18,22,28,0.96);
+          box-shadow: 0 18px 40px rgba(244,194,79,0.08);
+        }
+
+        .node-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
+
+        .node-title {
+          font-size: 0.95rem;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+        }
+
+        .node-card p {
+          margin: 0;
+          color: var(--muted);
+          font-size: 0.9rem;
+          line-height: 1.7;
+        }
+
+        .node-fix {
+          margin-top: 12px;
+          padding: 10px 12px;
+          border-radius: 16px;
+          border: 1px solid rgba(244,194,79,0.16);
+          background: var(--accent-soft);
+          color: #f7e7b9;
+          font-size: 0.82rem;
+          line-height: 1.55;
+        }
+
+        .core-pulse {
+          position: absolute;
+          left: 49%;
+          top: 48%;
+          width: 14px;
+          height: 14px;
+          transform: translate(-50%, -50%);
+          border-radius: 999px;
+          background: var(--accent);
+          box-shadow: 0 0 28px rgba(244,194,79,0.9);
+        }
+
+        .inspector {
+          display: grid;
+          gap: 12px;
+          align-content: start;
+        }
+
+        .inspector-title {
+          font-size: 1.6rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .inspector-block {
+          padding: 14px;
+        }
+
+        .inspector-label {
+          color: var(--muted-2);
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+        }
+
+        .inspector-copy {
+          line-height: 1.8;
+        }
+
+        .receipt-list {
+          display: grid;
+          gap: 8px;
+          margin-top: 10px;
+        }
+
+        .receipt-item {
+          padding: 11px 12px;
+          border-radius: 14px;
+          border: 1px solid rgba(244,194,79,0.14);
+          background: var(--accent-soft);
+          color: #f6e3a4;
+        }
+
+        .trace-list {
+          display: grid;
+          gap: 10px;
+        }
+
+        .trace-step {
+          padding: 14px;
+        }
+
+        .trace-row {
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
+        }
+
+        .trace-num {
+          width: 34px;
+          height: 34px;
+          border-radius: 999px;
+          border: 1px solid rgba(244,194,79,0.18);
+          background: var(--accent-soft);
+          color: #f6db8f;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          font-weight: 700;
+          flex: 0 0 auto;
+        }
+
+        .trace-title {
+          margin: 0;
+          font-size: 0.95rem;
+          font-weight: 700;
+        }
+
+        .trace-text {
+          margin-top: 4px;
+        }
+
+        .sections {
+          display: grid;
+          gap: 20px;
+        }
+
+        .two-col {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+        }
+
+        .section {
+          padding: 26px;
+        }
+
+        .section h2 {
+          margin: 12px 0 0;
+          font-size: clamp(2rem, 4vw, 3rem);
+          line-height: 1.08;
+          letter-spacing: -0.04em;
+        }
+
+        .section-copy {
+          margin-top: 18px;
+          color: var(--muted);
+          line-height: 1.9;
+          font-size: 1rem;
+        }
+
+        .evidence-list,
+        .standard-grid,
+        .stack-grid,
+        .system-grid,
+        .ask-grid {
+          display: grid;
+          gap: 10px;
+          margin-top: 20px;
+        }
+
+        .evidence-item {
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
+          padding: 14px 16px;
+          border-radius: 18px;
+          border: 1px solid var(--line-soft);
+          background: rgba(255,255,255,0.03);
+          color: var(--muted);
+          line-height: 1.7;
+          font-size: 0.95rem;
+        }
+
+        .evidence-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 999px;
+          background: var(--accent);
+          margin-top: 6px;
+          flex: 0 0 auto;
+        }
+
+        .standard-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .standard-card,
+        .system-card,
+        .stack-card,
+        .ask-card {
+          padding: 18px;
+        }
+
+        .std-num,
+        .stack-num {
+          font-size: 11px;
+          color: var(--muted-2);
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+        }
+
+        .std-title {
+          margin-top: 8px;
+          color: white;
+          font-size: 1rem;
+          font-weight: 700;
+        }
+
+        .stack-grid {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        .stack-card p,
+        .system-card p {
+          margin-top: 8px;
+        }
+
+        .system-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .ask-grid {
+          margin-top: 16px;
+        }
+
+        .ask-card {
+          color: white;
+          line-height: 1.75;
+        }
+
+        .closing {
+          text-align: center;
+        }
+
+        .closing h2 {
+          max-width: 900px;
+          margin: 12px auto 0;
+          font-size: clamp(2.1rem, 4.8vw, 4rem);
+          line-height: 1.05;
+          letter-spacing: -0.05em;
+        }
+
+        .closing h2 .accent {
+          color: var(--accent);
+          display: block;
+        }
+
+        .closing .section-copy {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .footer {
+          margin-top: 20px;
+          padding: 22px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+        }
+
+        .footer-brand {
+          display: grid;
+          gap: 4px;
+        }
+
+        .footer-brand strong {
+          font-size: 1rem;
+        }
+
+        .footer a,
+        .footer span {
+          color: var(--muted);
+          text-decoration: none;
+          font-size: 0.94rem;
+        }
+
+        .footer a:hover {
+          color: var(--accent);
+        }
+
+        @media (max-width: 1260px) {
+          .hero,
+          .two-col,
+          .workspace-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .workspace-grid {
+            min-height: auto;
+          }
+
+          .graph-stage {
+            min-height: 720px;
+          }
+
+          .stack-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (max-width: 860px) {
+          .mini-cards,
+          .standard-grid,
+          .system-grid,
+          .stack-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .graph-stage {
+            min-height: auto;
+            padding: 12px;
+          }
+
+          .graph-stage svg,
+          .core-pulse {
+            display: none;
+          }
+
+          .node {
+            position: relative;
+            inset: auto !important;
+            transform: none;
+            width: 100%;
+            left: auto !important;
+            top: auto !important;
+            margin-bottom: 10px;
+          }
+
+          .footer {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+      `}</style>
+
+      <div className="app">
+        <section className="hero">
+          <div className="hero-copy">
+            <div className="pill">
               SwarmCore
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
+              <span className="dot" />
               Audit Layer for Serious AI
             </div>
 
-            <h1 className="max-w-5xl text-5xl font-semibold leading-[0.95] tracking-tight text-white md:text-7xl">
+            <h1>
               AI is breaking in the
-              <span className="block text-amber-300">layers around the model.</span>
+              <span className="accent">layers around the model.</span>
             </h1>
 
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-300 md:text-xl">
+            <p className="lead">
               SwarmCore is the mechanics and audit layer for building agent systems that can survive scrutiny. It exposes breaks in the chain, constrains authority, hardens verification, and leaves receipts.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button className="rounded-2xl bg-amber-300 px-5 py-3 text-sm font-semibold text-neutral-950 shadow-lg shadow-amber-500/20 transition hover:-translate-y-0.5">
-                Enter the Graph
-              </button>
-              <button className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
-                Read the Doctrine
-              </button>
+            <div className="cta-row">
+              <button className="btn primary">Enter the Graph</button>
+              <button className="btn">Read the Doctrine</button>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            <div className="mini-cards">
               {[
                 ["System failure", "Scaffold, memory, retrieval, verifier, governance."],
                 ["Defendable build", "Bounded agents with real mechanics and finality."],
                 ["Traceable outcomes", "Receipts for what ran, what it saw, and why."],
               ].map(([title, text]) => (
-                <div key={title} className="rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                  <div className="text-sm font-semibold text-white">{title}</div>
-                  <div className="mt-2 text-sm leading-6 text-neutral-400">{text}</div>
+                <div key={title} className="mini-card">
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-neutral-900/80 p-4 shadow-2xl shadow-black/30">
-            <div className="mb-3 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-neutral-400">
-              <span>swarm-core / graph</span>
-              <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-1 text-emerald-300">integrity map</span>
+          <aside className="hero-side">
+            <div className="side-card">
+              <div className="side-top">
+                <h3>swarm-core / graph</h3>
+                <span className="status">integrity map</span>
+              </div>
+              <p>
+                A real AI system fails in the shell around the model. SwarmCore makes those breaks visible, attributable, and fixable.
+              </p>
             </div>
 
-            <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
-              <div className="relative h-[560px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]">
-                <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 700" preserveAspectRatio="none">
-                  <path d="M130 140 C 260 160, 260 250, 360 255 S 560 120, 620 165 S 750 240, 785 285" stroke="rgba(251,191,36,0.55)" strokeWidth="3" fill="none" strokeDasharray="8 8" />
-                  <path d="M355 255 C 420 360, 460 410, 505 470" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
-                  <path d="M505 470 C 620 470, 690 520, 790 505" stroke="rgba(251,191,36,0.35)" strokeWidth="2.5" fill="none" />
-                  <path d="M625 165 C 690 210, 740 235, 790 285" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
-                  <path d="M140 140 C 220 240, 310 420, 500 470" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
-                </svg>
+            <div className="side-metric">
+              {[
+                ["Primary focus", "mechanics"],
+                ["Truth mode", "receipts"],
+                ["Control layer", "human finality"],
+                ["Build posture", "defendable"],
+              ].map(([label, value]) => (
+                <div className="metric" key={label}>
+                  <div className="metric-label">{label}</div>
+                  <div className="metric-value">{value}</div>
+                </div>
+              ))}
+            </div>
 
-                {breakpoints.map((node, idx) => {
-                  const active = selectedNode === node.title;
+            <div className="side-card">
+              <div className="side-top">
+                <h3>Active thesis</h3>
+              </div>
+              <p>
+                AI does not only need stronger models. It needs sealed boundaries, role control, hardened verification, and reviewable lineage.
+              </p>
+            </div>
+          </aside>
+        </section>
+
+        <section className="workspace">
+          <div className="workspace-topbar">
+            <span>swarm-core / graph</span>
+            <span>integrity map · execution surface · receipt inspector</span>
+          </div>
+
+          <div className="workspace-grid">
+            <aside className="rail">
+              <div className="rail-title">Breakpoints</div>
+              <div className="rail-list">
+                {nodes.map((node, idx) => {
+                  const activeNode = node.title === selectedNode;
                   return (
                     <button
-                      key={node.title}
+                      key={node.id}
+                      className={`rail-item ${activeNode ? "active" : ""}`}
                       onClick={() => setSelectedNode(node.title)}
-                      className="absolute w-[240px] -translate-x-1/2 -translate-y-1/2 text-left"
-                      style={{ left: node.x, top: node.y }}
                     >
-                      <div
-                        className={`rounded-[1.4rem] border p-4 shadow-xl shadow-black/20 backdrop-blur-md transition ${
-                          active
-                            ? "border-amber-300/40 bg-neutral-900/95 ring-1 ring-amber-300/20"
-                            : "border-white/10 bg-neutral-950/80 hover:border-amber-300/30 hover:bg-neutral-900/90"
-                        }`}
-                      >
-                        <div className="mb-3 flex items-center justify-between">
-                          <div className="text-sm font-semibold tracking-wide text-white">{node.title}</div>
-                          <div
-                            className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] ${
-                              active
-                                ? "border border-amber-300/25 bg-amber-300/10 text-amber-200"
-                                : "border border-red-400/20 bg-red-400/10 text-red-300"
-                            }`}
-                          >
-                            break {idx + 1}
-                          </div>
-                        </div>
-                        <p className="text-sm leading-6 text-neutral-300">{node.problem}</p>
-                        <div className="mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-xs leading-5 text-amber-100">
-                          SwarmCore fix: {node.fix}
-                        </div>
+                      <div className="rail-item-top">
+                        <div className="rail-item-title">{node.title}</div>
+                        <div className="break-badge">break {idx + 1}</div>
                       </div>
+                      <p>{node.short}</p>
                     </button>
                   );
                 })}
+              </div>
+            </aside>
 
-                <div className="absolute left-[46%] top-[68%] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300 shadow-[0_0_30px_rgba(251,191,36,0.9)]" />
+            <div className="graph-stage">
+              <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M130 140 C 250 155, 282 250, 360 270 S 560 120, 625 165 S 735 245, 792 290" stroke="rgba(244,194,79,0.56)" strokeWidth="3" fill="none" strokeDasharray="8 10" />
+                <path d="M350 270 C 430 360, 465 430, 510 505" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
+                <path d="M510 505 C 620 510, 700 535, 836 518" stroke="rgba(244,194,79,0.34)" strokeWidth="2.5" fill="none" />
+                <path d="M620 168 C 690 210, 752 250, 810 300" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
+                <path d="M140 140 C 220 260, 320 442, 510 505" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
+              </svg>
+
+              {nodes.map((node, idx) => {
+                const activeNode = node.title === selectedNode;
+                return (
+                  <div
+                    key={node.id}
+                    className="node"
+                    style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  >
+                    <button onClick={() => setSelectedNode(node.title)}>
+                      <div className={`node-card ${activeNode ? "active" : ""}`}>
+                        <div className="node-top">
+                          <div className="node-title">{node.title}</div>
+                          <div className="break-badge">break {idx + 1}</div>
+                        </div>
+                        <p>{node.short}</p>
+                        <div className="node-fix">SwarmCore fix: {node.fix}</div>
+                      </div>
+                    </button>
+                  </div>
+                );
+              })}
+
+              <div className="core-pulse" />
+            </div>
+
+            <aside className="inspector">
+              <div className="inspector-eyebrow">Selected breakpoint</div>
+              <h3 className="inspector-title">{active.title}</h3>
+
+              <div className="inspector-block">
+                <div className="inspector-label">Failure mode</div>
+                <p className="inspector-copy">{active.short}</p>
               </div>
 
-              <div className="grid gap-4">
-                <div className="rounded-[1.5rem] border border-white/10 bg-neutral-950/70 p-5">
-                  <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Selected breakpoint</div>
-                  <h3 className="mt-3 text-2xl font-semibold text-white">{activeNode.title}</h3>
+              <div className="inspector-block">
+                <div className="inspector-label">SwarmCore fix</div>
+                <p className="inspector-copy">{active.fix}</p>
+              </div>
 
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Failure mode</div>
-                    <p className="text-sm leading-7 text-neutral-300">{activeNode.problem}</p>
-                  </div>
+              <div className="inspector-block">
+                <div className="inspector-label">Why it breaks trust</div>
+                <p className="inspector-copy">{active.why}</p>
+              </div>
 
-                  <div className="mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/10 p-4">
-                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-amber-200/80">SwarmCore fix</div>
-                    <p className="text-sm leading-7 text-amber-100">{activeNode.fix}</p>
-                  </div>
-
-                  <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Why it breaks trust</div>
-                    <p className="text-sm leading-7 text-neutral-300">{activeNode.detail}</p>
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="mb-3 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Receipts SwarmCore logs</div>
-                    <div className="grid gap-2">
-                      {activeNode.receipts.map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-sm text-amber-100"
-                        >
-                          {item}
-                        </div>
-                      ))}
+              <div className="inspector-block">
+                <div className="inspector-label">Receipts SwarmCore logs</div>
+                <div className="receipt-list">
+                  {active.receipts.map((item) => (
+                    <div key={item} className="receipt-item">
+                      {item}
                     </div>
-                  </div>
+                  ))}
                 </div>
+              </div>
 
-                <div className="rounded-[1.5rem] border border-white/10 bg-neutral-950/70 p-5">
-                  <div className="flex items-center justify-between">
-                    <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Run trace</div>
-                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-300">
-                      execution
-                    </div>
-                  </div>
-
-                  <div className="mt-4 space-y-3">
-                    {activeNode.run.map(([step, title, text], idx) => (
-                      <div key={step + title} className="relative rounded-2xl border border-white/10 bg-white/5 p-4">
-                        {idx < activeNode.run.length - 1 && (
-                          <div className="absolute left-[23px] top-[54px] h-10 w-px bg-gradient-to-b from-amber-300/50 to-transparent" />
-                        )}
-                        <div className="flex gap-3">
-                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-300/20 bg-amber-300/10 text-[11px] font-semibold text-amber-200">
-                            {step}
-                          </div>
-                          <div>
-                            <div className="text-sm font-semibold text-white">{title}</div>
-                            <div className="mt-1 text-sm leading-6 text-neutral-400">{text}</div>
-                          </div>
+              <div className="inspector-block">
+                <div className="inspector-label">Run trace</div>
+                <div className="trace-list">
+                  {active.steps.map(([num, title, text]) => (
+                    <div key={num + title} className="trace-step">
+                      <div className="trace-row">
+                        <div className="trace-num">{num}</div>
+                        <div>
+                          <div className="trace-title">{title}</div>
+                          <div className="trace-text">{text}</div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4">
-                    <div className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">Execution summary</div>
-                    <div className="mt-2 text-sm leading-7 text-neutral-300">
-                      SwarmCore does not only ask whether an answer was produced. It asks whether the path was sealed, attributable, policy-bound, and mechanically valid.
                     </div>
+                  ))}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <div className="sections">
+          <div className="two-col">
+            <section className="section">
+              <div className="section-eyebrow">Why SwarmCore exists</div>
+              <h2>Benchmarks can be passed through contaminated paths.</h2>
+              <p className="section-copy">
+                A system can look powerful while being structurally unsound. SwarmCore treats intelligence as an operating environment problem: what the agent can access, how memory mutates, what retrieval was allowed, whether the verifier was spoofable, and whether a human remained the real authority boundary.
+              </p>
+
+              <div className="evidence-list">
+                {[
+                  "Answer leakage through scaffolds",
+                  "Memory poisoning and unverified persistence",
+                  "Retrieval contamination from untrusted context",
+                  "Verifier spoofing through shallow pass signals",
+                  "Role drift in autonomous systems",
+                  "Benchmark wins without mechanical legitimacy",
+                ].map((item) => (
+                  <div key={item} className="evidence-item">
+                    <div className="evidence-dot" />
+                    <div>{item}</div>
                   </div>
-                </div>
+                ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section className="mt-24 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">Why SwarmCore exists</div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Benchmarks can be passed through contaminated paths.
-            </h2>
-            <p className="mt-5 text-base leading-8 text-neutral-300">
-              A system can look powerful while being structurally unsound. SwarmCore treats intelligence as an operating environment problem: what the agent can access, how memory mutates, what retrieval was allowed, whether the verifier was spoofable, and whether a human remained the real authority boundary.
-            </p>
-
-            <div className="mt-8 space-y-3">
-              {evidence.map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-neutral-950/60 px-4 py-3">
-                  <div className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-amber-300" />
-                  <div className="text-sm leading-6 text-neutral-300">{item}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-white/10 bg-neutral-900/80 p-8 shadow-xl shadow-black/20">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">The build standard</div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {principles.map((item, i) => (
-                <div key={item} className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <div className="text-xs tracking-[0.25em] text-neutral-500">0{i + 1}</div>
-                  <div className="mt-2 text-lg font-medium text-white">{item}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-24 rounded-[2rem] border border-white/10 bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 md:p-10">
-          <div className="max-w-3xl">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">How it works</div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              SwarmCore turns brittle agent chains into reviewable systems.
-            </h2>
-          </div>
-
-          <div className="mt-10 grid gap-4 md:grid-cols-5">
-            {rails.map((rail, idx) => (
-              <div key={rail.name} className="relative rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="text-xs tracking-[0.3em] text-neutral-500">0{idx + 1}</span>
-                  {idx < rails.length - 1 && <span className="hidden text-neutral-600 md:block">→</span>}
-                </div>
-                <div className="text-lg font-semibold text-white">{rail.name}</div>
-                <div className="mt-3 text-sm leading-6 text-neutral-400">{rail.text}</div>
+            <section className="section">
+              <div className="section-eyebrow">The build standard</div>
+              <h2>Bound the system. Verify the path. Leave receipts.</h2>
+              <div className="standard-grid">
+                {buildStandard.map((item, i) => (
+                  <div key={item} className="standard-card">
+                    <div className="std-num">0{i + 1}</div>
+                    <div className="std-title">{item}</div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </section>
           </div>
-        </section>
 
-        <section className="mt-24 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">System shape</div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              Junior. Senior. Human. Receipts.
-            </h2>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-neutral-300">
-              SwarmCore is built for role-defined systems. Junior agents intake, classify, and package. Senior agents review, interpret, and escalate. Humans retain final authority when risk, ambiguity, or policy thresholds are crossed.
-            </p>
-
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {[
-                ["Junior", "Bounded worker for intake, triage, extraction, and routing."],
-                ["Senior", "Reviewer for judgment, correction, exception handling, and policy-sensitive decisions."],
-                ["Human CEO", "Final authority with visibility into evidence, memory, policy, and action history."],
-              ].map(([title, text]) => (
-                <div key={title} className="rounded-3xl border border-white/10 bg-neutral-950/60 p-5">
-                  <div className="text-lg font-semibold text-white">{title}</div>
-                  <div className="mt-3 text-sm leading-6 text-neutral-400">{text}</div>
+          <section className="section">
+            <div className="section-eyebrow">How it works</div>
+            <h2>SwarmCore turns brittle agent chains into reviewable systems.</h2>
+            <div className="stack-grid">
+              {stack.map((item, idx) => (
+                <div key={item.name} className="stack-card">
+                  <div className="stack-num">0{idx + 1}</div>
+                  <h3>{item.name}</h3>
+                  <p>{item.text}</p>
                 </div>
               ))}
             </div>
+          </section>
+
+          <div className="two-col">
+            <section className="section">
+              <div className="section-eyebrow">System shape</div>
+              <h2>Junior. Senior. Human. Receipts.</h2>
+              <p className="section-copy">
+                SwarmCore is built for role-defined systems. Junior agents intake, classify, and package. Senior agents review, interpret, and escalate. Humans retain final authority when risk, ambiguity, or policy thresholds are crossed.
+              </p>
+
+              <div className="system-grid">
+                {[
+                  ["Junior", "Bounded worker for intake, triage, extraction, and routing."],
+                  ["Senior", "Reviewer for judgment, correction, exception handling, and policy-sensitive decisions."],
+                  ["Human CEO", "Final authority with visibility into evidence, memory, policy, and action history."],
+                ].map(([title, text]) => (
+                  <div key={title} className="system-card">
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="section">
+              <div className="section-eyebrow">SwarmCore asks</div>
+              <h2>Did the system earn the answer?</h2>
+              <div className="ask-grid">
+                {[
+                  "Was the task boundary sealed?",
+                  "Was memory legitimate, sourced, and revocable?",
+                  "Was retrieval allowed for this task?",
+                  "Was the verifier mechanically valid?",
+                  "Did the agent act within its authority?",
+                  "Can the entire path survive scrutiny?",
+                ].map((item) => (
+                  <div key={item} className="ask-card">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
 
-          <div className="rounded-[2rem] border border-amber-300/20 bg-amber-300/10 p-8">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-100">SwarmCore asks</div>
-            <div className="mt-4 space-y-4 text-white">
-              {[
-                "Was the task boundary sealed?",
-                "Was memory legitimate, sourced, and revocable?",
-                "Was retrieval allowed for this task?",
-                "Was the verifier mechanically valid?",
-                "Did the agent act within its authority?",
-                "Can the entire path survive scrutiny?",
-              ].map((q) => (
-                <div key={q} className="rounded-2xl border border-white/10 bg-neutral-950/40 px-4 py-4 text-sm leading-6">
-                  {q}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-24 rounded-[2.2rem] border border-white/10 bg-white/5 px-8 py-10 text-center backdrop-blur-sm md:px-12">
-          <div className="mx-auto max-w-3xl">
-            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">Closing statement</div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+          <section className="section closing">
+            <div className="section-eyebrow">Closing statement</div>
+            <h2>
               AI does not just need better outputs.
-              <span className="block text-amber-300">It needs better construction.</span>
+              <span className="accent">It needs better construction.</span>
             </h2>
-            <p className="mt-6 text-base leading-8 text-neutral-300 md:text-lg">
+            <p className="section-copy">
               SwarmCore is the audit and mechanics layer for serious AI systems — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <button className="rounded-2xl bg-amber-300 px-5 py-3 text-sm font-semibold text-neutral-950 shadow-lg shadow-amber-500/20">
-                Launch SwarmCore
-              </button>
-              <button className="rounded-2xl border border-white/15 bg-neutral-950/60 px-5 py-3 text-sm font-semibold text-white">
-                Open the doctrine
-              </button>
+            <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
+              <button className="btn primary">Launch SwarmCore</button>
+              <button className="btn">Open the doctrine</button>
             </div>
+          </section>
+        </div>
+
+        <footer className="footer">
+          <div className="footer-brand">
+            <strong>Swarm & Bee</strong>
+            <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>
           </div>
-        </section>
-
-        <footer className="relative mt-16 border-t border-white/10 pt-8 pb-4">
-          <div className="flex flex-col gap-4 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-col gap-1">
-              <div className="text-base font-semibold tracking-wide text-white">Swarm & Bee</div>
-              <a
-                href="mailto:build@swarmandbee.ai"
-                className="transition hover:text-amber-300"
-              >
-                build@swarmandbee.ai
-              </a>
-            </div>
-
-            <div className="flex flex-col gap-1 md:items-end">
-              <a
-                href="https://x.com/swarmandbee"
-                target="_blank"
-                rel="noreferrer"
-                className="transition hover:text-amber-300"
-              >
-                x.com/swarmandbee
-              </a>
-              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-                SwarmCore by design
-              </div>
-            </div>
+          <div className="footer-brand" style={{ textAlign: "right" }}>
+            <a href="https://x.com/swarmandbee" target="_blank" rel="noreferrer">
+              x.com/swarmandbee
+            </a>
+            <span>SwarmCore by design</span>
           </div>
         </footer>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }
