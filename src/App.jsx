@@ -1106,7 +1106,7 @@ export default function App() {
             </h1>
 
             <p className="lead">
-              SwarmCore is the mechanics and audit layer for building agent systems that can survive scrutiny. It exposes breaks in the chain, constrains authority, hardens verification, and leaves receipts.
+              SwarmCore is the mechanics and audit layer for building agent systems that can survive scrutiny. It is built on sovereign compute, treats data as a high-value asset, runs where the data lives, and verifies every path before trust is earned.
             </p>
 
             <div className="cta-row">
@@ -1146,9 +1146,9 @@ export default function App() {
             <div className="side-metric">
               {[
                 ["Primary focus", "mechanics"],
-                ["Truth mode", "receipts"],
-                ["Control layer", "human finality"],
-                ["Build posture", "defendable"],
+                ["Compute posture", "sovereign"],
+                ["Deployment shape", "edge-first"],
+                ["Data stance", "high-value"],
               ].map(([label, value]) => (
                 <div className="metric" key={label}>
                   <div className="metric-label">{label}</div>
@@ -1356,6 +1356,30 @@ export default function App() {
                   <div className="stack-num">0{idx + 1}</div>
                   <h3>{item.name}</h3>
                   <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="section">
+            <div className="section-eyebrow">How we build</div>
+            <h2>Own the compute. Value the data. Run at the edge.</h2>
+            <p className="section-copy">
+              Swarm & Bee builds on sovereign compute because trust cannot be rented. We treat data as a high-value asset, keep intelligence close to where the data lives, and design systems that remain inspectable, controllable, and defendable under real operational pressure.
+            </p>
+
+            <div className="system-grid">
+              {[
+                ["Own the compute", "The infrastructure is part of the product. We do not outsource the trust boundary."],
+                ["Value the data", "Data is not exhaust. It is a strategic asset that deserves controls, lineage, and care."],
+                ["Edge-first by design", "AI should run where the data lives whenever possible, not force the data to travel."],
+                ["Sovereignty before convenience", "Control, auditability, and finality matter more than easy defaults."],
+                ["Verify everything", "Every meaningful action should leave receipts that survive scrutiny."],
+                ["Human finality", "The human remains the executive boundary when risk, ambiguity, or policy thresholds rise."],
+              ].map(([title, text]) => (
+                <div key={title} className="system-card">
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </div>
               ))}
             </div>
