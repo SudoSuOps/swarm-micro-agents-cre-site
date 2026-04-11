@@ -3,7 +3,8 @@ import React from "react";
 export default function App() {
   const [selectedNode, setSelectedNode] = React.useState("Scaffold");
   const [search, setSearch] = React.useState("");
-  const workspaceRef = React.useRef(null);
+
+  const graphRef = React.useRef(null);
   const doctrineRef = React.useRef(null);
 
   const nodes = [
@@ -12,7 +13,7 @@ export default function App() {
       title: "Scaffold",
       short: "Leaked answers, porous harnesses, hidden shortcuts.",
       fix: "Seal task boundaries and enforce explicit access control.",
-      why: "The system is contaminated before reasoning even begins. Hidden files, verifier logic, or injected answer paths turn the run into theater.",
+      why: "The system is contaminated before reasoning even begins. Hidden files, verifier logic, or injected answer paths turn the run into theater instead of legitimate execution.",
       receipts: [
         "task boundary manifest",
         "accessible path log",
@@ -32,7 +33,7 @@ export default function App() {
       title: "Memory",
       short: "Weak facts become permanent truth.",
       fix: "Score, source, and gate all memory writes.",
-      why: "If provisional observations silently become truth, every future decision inherits poisoned state. Memory has to be attributable, reviewable, and revocable.",
+      why: "If provisional observations silently become truth, every future decision inherits poisoned state. Memory must be attributable, reviewable, and revocable.",
       receipts: [
         "memory write log",
         "source attribution",
@@ -52,7 +53,7 @@ export default function App() {
       title: "Retrieval",
       short: "Untrusted context contaminates decisions.",
       fix: "Scope retrieval to approved sources and visible paths.",
-      why: "A model should not be able to pull arbitrary context and pass it off as legitimate evidence. Retrieval must be bounded, attributable, and reviewable.",
+      why: "A model should not pull arbitrary context and pass it off as legitimate evidence. Retrieval has to be bounded, attributable, and visible in the receipt chain.",
       receipts: [
         "retrieval scope",
         "source path",
@@ -84,8 +85,8 @@ export default function App() {
         ["02", "Execution reviewed", "Outputs are checked against intended task completion."],
         ["03", "Spoof scan passed", "PASS strings, mocks, and shortcut artifacts are rejected."],
       ],
-      x: 76,
-      y: 42,
+      x: 77,
+      y: 43,
     },
     {
       id: "governance",
@@ -130,36 +131,12 @@ export default function App() {
   ];
 
   const edges = [
-    {
-      id: "e1",
-      d: "M130 140 C 250 155, 282 250, 360 270",
-      nodes: ["Scaffold", "Memory"],
-    },
-    {
-      id: "e2",
-      d: "M360 270 C 430 360, 465 430, 510 505",
-      nodes: ["Memory", "Governance"],
-    },
-    {
-      id: "e3",
-      d: "M130 140 C 320 120, 470 110, 625 165",
-      nodes: ["Scaffold", "Retrieval"],
-    },
-    {
-      id: "e4",
-      d: "M625 165 C 690 210, 752 250, 810 300",
-      nodes: ["Retrieval", "Verifier"],
-    },
-    {
-      id: "e5",
-      d: "M510 505 C 620 510, 700 535, 836 518",
-      nodes: ["Governance", "Audit"],
-    },
-    {
-      id: "e6",
-      d: "M140 140 C 220 260, 320 442, 510 505",
-      nodes: ["Scaffold", "Governance"],
-    },
+    { id: "e1", d: "M145 150 C 245 165, 300 225, 355 265", nodes: ["Scaffold", "Memory"] },
+    { id: "e2", d: "M355 265 C 420 355, 470 430, 510 500", nodes: ["Memory", "Governance"] },
+    { id: "e3", d: "M150 145 C 310 125, 470 120, 620 165", nodes: ["Scaffold", "Retrieval"] },
+    { id: "e4", d: "M620 165 C 700 220, 760 255, 805 300", nodes: ["Retrieval", "Verifier"] },
+    { id: "e5", d: "M510 500 C 635 520, 730 535, 845 520", nodes: ["Governance", "Audit"] },
+    { id: "e6", d: "M150 155 C 245 300, 360 430, 510 500", nodes: ["Scaffold", "Governance"] },
   ];
 
   const buildStandard = [
@@ -173,26 +150,11 @@ export default function App() {
   ];
 
   const stack = [
-    {
-      name: "Detect",
-      text: "Find breaks in the chain before they become false confidence.",
-    },
-    {
-      name: "Bound",
-      text: "Constrain what agents can see, do, store, and claim.",
-    },
-    {
-      name: "Verify",
-      text: "Validate the path, not just the output.",
-    },
-    {
-      name: "Escalate",
-      text: "Route meaningful risk to stronger reviewers and humans.",
-    },
-    {
-      name: "Seal",
-      text: "Leave receipts that survive scrutiny.",
-    },
+    { name: "Detect", text: "Find breaks in the chain before they become false confidence." },
+    { name: "Bound", text: "Constrain what agents can see, do, store, and claim." },
+    { name: "Verify", text: "Validate the path, not just the output." },
+    { name: "Escalate", text: "Route meaningful risk to stronger reviewers and humans." },
+    { name: "Seal", text: "Leave receipts that survive scrutiny." },
   ];
 
   const active = nodes.find((node) => node.title === selectedNode) || nodes[0];
@@ -208,6 +170,13 @@ export default function App() {
     );
   });
 
+  const isConnectedToActive = (title) => {
+    if (title === selectedNode) return true;
+    return edges.some(
+      (edge) => edge.nodes.includes(selectedNode) && edge.nodes.includes(title)
+    );
+  };
+
   const scrollToRef = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -216,52 +185,123 @@ export default function App() {
     <>
       <style>{`
         :root {
-          --bg: #07090d;
-          --panel: rgba(14, 17, 22, 0.82);
-          --panel-strong: rgba(11, 13, 18, 0.94);
-          --panel-soft: rgba(255,255,255,0.04);
-          --line: rgba(255,255,255,0.10);
-          --line-soft: rgba(255,255,255,0.06);
-          --text: #f8fafc;
-          --muted: #9ba3af;
-          --muted-2: #7b8491;
-          --accent: #f4c24f;
-          --accent-soft: rgba(244,194,79,0.12);
-          --green: #7ee7b1;
-          --green-soft: rgba(126,231,177,0.12);
-          --red: #fca5a5;
-          --red-soft: rgba(252,165,165,0.12);
-          --shadow: 0 24px 80px rgba(0,0,0,0.42);
+          --bg: #f7f6f2;
+          --bg-2: #f3f1eb;
+          --panel: rgba(255,255,255,0.82);
+          --panel-strong: rgba(255,255,255,0.96);
+          --panel-soft: rgba(255,255,255,0.74);
+          --line: #e8e2d7;
+          --line-2: #ece7de;
+          --text: #171717;
+          --muted: #5f6670;
+          --muted-2: #8b93a0;
+          --accent: #c8951f;
+          --accent-soft: #f7edd1;
+          --accent-line: rgba(200,149,31,0.22);
+          --danger: #c37b7b;
+          --danger-soft: #f6e5e5;
+          --success: #6f9b7d;
+          --success-soft: #e9f3ec;
+          --shadow: 0 20px 60px rgba(32, 28, 20, 0.08);
+          --shadow-soft: 0 10px 28px rgba(32, 28, 20, 0.05);
           --radius-xl: 28px;
           --radius-lg: 22px;
           --radius-md: 18px;
+          --radius-sm: 14px;
         }
 
         * { box-sizing: border-box; }
         html, body, #root { min-height: 100%; margin: 0; }
         html { scroll-behavior: smooth; }
+
         body {
           background:
-            radial-gradient(circle at top, rgba(244,194,79,0.12), transparent 25%),
-            radial-gradient(circle at 82% 18%, rgba(251,191,36,0.10), transparent 16%),
-            linear-gradient(180deg, rgba(255,255,255,0.03), transparent 18%),
-            var(--bg);
+            radial-gradient(circle at top, rgba(200,149,31,0.10), transparent 24%),
+            radial-gradient(circle at 80% 14%, rgba(200,149,31,0.08), transparent 14%),
+            linear-gradient(180deg, rgba(255,255,255,0.65), transparent 20%),
+            linear-gradient(180deg, var(--bg), var(--bg-2));
           color: var(--text);
           font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        *:focus-visible {
+          outline: 2px solid rgba(200,149,31,0.35);
+          outline-offset: 2px;
         }
 
         .app {
           max-width: 1460px;
           margin: 0 auto;
-          padding: 28px 20px 88px;
-          position: relative;
+          padding: 18px 18px 72px;
+        }
+
+        .topbar {
+          position: sticky;
+          top: 12px;
+          z-index: 20;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 14px;
+          padding: 14px 18px;
+          border: 1px solid rgba(255,255,255,0.5);
+          background: rgba(255,255,255,0.78);
+          backdrop-filter: blur(18px);
+          border-radius: 20px;
+          box-shadow: var(--shadow-soft);
+          margin-bottom: 18px;
+        }
+
+        .brand {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+        }
+
+        .brand-mark {
+          width: 12px;
+          height: 12px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #d3a53e, #f1d37e);
+          box-shadow: 0 0 0 6px rgba(200,149,31,0.08);
+        }
+
+        .nav {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .nav button,
+        .nav a {
+          appearance: none;
+          border: 1px solid var(--line);
+          background: white;
+          color: var(--text);
+          padding: 10px 14px;
+          border-radius: 999px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all .18s ease;
+        }
+
+        .nav button:hover,
+        .nav a:hover {
+          border-color: var(--accent-line);
+          background: #fffdf8;
+          color: #111;
+          transform: translateY(-1px);
         }
 
         .hero {
           display: grid;
           grid-template-columns: 1.05fr 0.95fr;
           gap: 18px;
-          align-items: stretch;
           margin-bottom: 18px;
         }
 
@@ -270,9 +310,9 @@ export default function App() {
         .workspace,
         .section,
         .footer {
-          border: 1px solid var(--line);
+          border: 1px solid rgba(255,255,255,0.52);
           background: var(--panel);
-          backdrop-filter: blur(18px);
+          backdrop-filter: blur(16px);
           border-radius: var(--radius-xl);
           box-shadow: var(--shadow);
         }
@@ -286,7 +326,6 @@ export default function App() {
           display: grid;
           gap: 12px;
           align-content: start;
-          min-height: 100%;
         }
 
         .pill {
@@ -295,13 +334,14 @@ export default function App() {
           gap: 10px;
           width: fit-content;
           border-radius: 999px;
-          border: 1px solid rgba(244,194,79,0.24);
-          background: rgba(244,194,79,0.10);
-          color: #f6db8f;
+          border: 1px solid var(--accent-line);
+          background: var(--accent-soft);
+          color: #9a6d12;
           padding: 10px 14px;
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 0.24em;
+          font-weight: 700;
         }
 
         .dot {
@@ -313,24 +353,24 @@ export default function App() {
         }
 
         h1 {
-          margin: 16px 0 0;
+          margin: 18px 0 0;
           max-width: 920px;
-          font-size: clamp(3rem, 6vw, 6.25rem);
+          font-size: clamp(3rem, 6vw, 6rem);
           line-height: 0.95;
           letter-spacing: -0.055em;
         }
 
         h1 .accent {
           display: block;
-          color: var(--accent);
+          color: #b88317;
         }
 
         .lead {
           margin: 22px 0 0;
-          max-width: 780px;
+          max-width: 760px;
           color: var(--muted);
-          font-size: 1.1rem;
-          line-height: 1.95;
+          font-size: 1.08rem;
+          line-height: 1.9;
         }
 
         .cta-row {
@@ -343,26 +383,28 @@ export default function App() {
         .btn {
           appearance: none;
           border: 1px solid var(--line);
-          background: rgba(255,255,255,0.04);
-          color: white;
-          border-radius: 18px;
+          background: white;
+          color: var(--text);
+          border-radius: 16px;
           padding: 14px 18px;
           font-size: 0.95rem;
           font-weight: 700;
           cursor: pointer;
-          transition: transform .18s ease, border-color .18s ease, background .18s ease;
+          transition: all .18s ease;
+          box-shadow: 0 2px 0 rgba(0,0,0,0.01);
         }
 
         .btn:hover {
           transform: translateY(-1px);
-          background: rgba(255,255,255,0.08);
+          border-color: var(--accent-line);
+          background: #fffdf8;
         }
 
         .btn.primary {
-          color: #121212;
-          background: var(--accent);
-          border-color: rgba(244,194,79,0.32);
-          box-shadow: 0 16px 32px rgba(244,194,79,0.18);
+          color: #111;
+          background: linear-gradient(180deg, #f2d381, #e8bb49);
+          border-color: rgba(200,149,31,0.26);
+          box-shadow: 0 12px 30px rgba(200,149,31,0.16);
         }
 
         .mini-cards {
@@ -380,8 +422,8 @@ export default function App() {
         .stack-card,
         .system-card,
         .ask-card {
-          border: 1px solid var(--line-soft);
-          background: var(--panel-soft);
+          border: 1px solid var(--line-2);
+          background: rgba(255,255,255,0.88);
           border-radius: var(--radius-lg);
         }
 
@@ -427,13 +469,14 @@ export default function App() {
 
         .status {
           border-radius: 999px;
-          border: 1px solid rgba(126,231,177,0.2);
-          background: var(--green-soft);
-          color: var(--green);
+          border: 1px solid rgba(111,155,125,0.18);
+          background: var(--success-soft);
+          color: #52755d;
           padding: 7px 10px;
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 0.22em;
+          font-weight: 700;
         }
 
         .side-metric {
@@ -443,8 +486,8 @@ export default function App() {
         }
 
         .metric {
-          border: 1px solid var(--line-soft);
-          background: rgba(255,255,255,0.03);
+          border: 1px solid var(--line-2);
+          background: rgba(255,255,255,0.94);
           border-radius: 16px;
           padding: 14px;
         }
@@ -458,9 +501,9 @@ export default function App() {
 
         .metric-value {
           margin-top: 8px;
-          font-size: 1.2rem;
+          font-size: 1.18rem;
           font-weight: 700;
-          color: white;
+          color: var(--text);
         }
 
         .workspace {
@@ -477,24 +520,24 @@ export default function App() {
           gap: 12px;
           padding: 12px 16px;
           border-radius: 18px;
-          border: 1px solid var(--line-soft);
-          background: rgba(255,255,255,0.03);
+          border: 1px solid var(--line-2);
+          background: rgba(255,255,255,0.88);
           color: var(--muted-2);
           font-size: 12px;
         }
 
         .workspace-grid {
           display: grid;
-          grid-template-columns: 260px minmax(0, 1fr) 400px;
+          grid-template-columns: 280px minmax(0, 1fr) 410px;
           gap: 14px;
-          min-height: 720px;
+          min-height: 740px;
         }
 
         .rail,
         .graph-stage,
         .inspector {
           border-radius: 24px;
-          border: 1px solid var(--line-soft);
+          border: 1px solid var(--line-2);
           background: var(--panel-strong);
           overflow: hidden;
         }
@@ -507,10 +550,11 @@ export default function App() {
         .rail-title,
         .inspector-eyebrow,
         .section-eyebrow {
-          color: var(--accent);
+          color: #b88317;
           font-size: 11px;
           letter-spacing: 0.28em;
           text-transform: uppercase;
+          font-weight: 700;
         }
 
         .search-wrap {
@@ -519,18 +563,19 @@ export default function App() {
 
         .search-input {
           width: 100%;
-          border: 1px solid var(--line-soft);
-          background: rgba(255,255,255,0.03);
-          color: white;
-          border-radius: 16px;
+          border: 1px solid var(--line);
+          background: #fff;
+          color: var(--text);
+          border-radius: 14px;
           padding: 12px 14px;
           font-size: 0.94rem;
           outline: none;
+          transition: all .18s ease;
         }
 
         .search-input:focus {
-          border-color: rgba(244,194,79,0.28);
-          box-shadow: 0 0 0 1px rgba(244,194,79,0.14);
+          border-color: rgba(200,149,31,0.28);
+          box-shadow: 0 0 0 3px rgba(200,149,31,0.08);
         }
 
         .rail-count {
@@ -551,22 +596,23 @@ export default function App() {
           width: 100%;
           padding: 14px;
           border-radius: 18px;
-          border: 1px solid var(--line-soft);
-          background: rgba(255,255,255,0.03);
-          color: white;
+          border: 1px solid var(--line-2);
+          background: white;
+          color: var(--text);
           cursor: pointer;
-          transition: transform .18s ease, border-color .18s ease, background .18s ease;
+          transition: all .18s ease;
         }
 
         .rail-item:hover {
           transform: translateY(-1px);
-          border-color: rgba(244,194,79,0.22);
-          background: rgba(255,255,255,0.05);
+          border-color: var(--accent-line);
+          background: #fffdfa;
         }
 
         .rail-item.active {
-          border-color: rgba(244,194,79,0.35);
-          background: rgba(244,194,79,0.10);
+          border-color: rgba(200,149,31,0.28);
+          background: #fff9eb;
+          box-shadow: inset 0 0 0 1px rgba(200,149,31,0.08);
         }
 
         .rail-item-top {
@@ -587,16 +633,18 @@ export default function App() {
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 0.2em;
-          border: 1px solid rgba(252,165,165,0.18);
-          background: var(--red-soft);
-          color: var(--red);
+          border: 1px solid rgba(195,123,123,0.2);
+          background: var(--danger-soft);
+          color: #a86565;
           white-space: nowrap;
+          font-weight: 700;
         }
 
-        .rail-item.active .break-badge {
-          border-color: rgba(244,194,79,0.22);
-          background: rgba(244,194,79,0.14);
-          color: #f6db8f;
+        .rail-item.active .break-badge,
+        .node-card.active .break-badge {
+          border-color: rgba(200,149,31,0.22);
+          background: var(--accent-soft);
+          color: #a27012;
         }
 
         .rail-item p {
@@ -608,11 +656,11 @@ export default function App() {
 
         .graph-stage {
           position: relative;
-          min-height: 720px;
+          min-height: 740px;
           background:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(12,15,21,0.98), rgba(8,10,15,0.96));
+            linear-gradient(#ece9e1 1px, transparent 1px),
+            linear-gradient(90deg, #ece9e1 1px, transparent 1px),
+            linear-gradient(180deg, #fdfcf8, #f7f5ef);
           background-size: 34px 34px, 34px 34px, cover;
         }
 
@@ -630,16 +678,12 @@ export default function App() {
 
         .edge.active {
           opacity: 1;
-          stroke: rgba(244,194,79,0.72);
+          stroke: rgba(200,149,31,0.72);
           stroke-width: 3.5;
         }
 
         .edge.dimmed {
-          opacity: 0.2;
-        }
-
-        .edge.neutral {
-          opacity: 0.55;
+          opacity: 0.18;
         }
 
         .node {
@@ -660,28 +704,27 @@ export default function App() {
 
         .node-card {
           border-radius: 22px;
-          border: 1px solid var(--line-soft);
-          background: rgba(12,14,19,0.85);
+          border: 1px solid var(--line-2);
+          background: rgba(255,255,255,0.95);
           padding: 16px;
-          box-shadow: 0 16px 36px rgba(0,0,0,0.22);
-          backdrop-filter: blur(12px);
-          transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, opacity .18s ease;
+          box-shadow: var(--shadow-soft);
+          transition: all .18s ease;
         }
 
         .node-card:hover {
           transform: translateY(-2px);
-          border-color: rgba(244,194,79,0.24);
-          background: rgba(16,19,25,0.94);
+          border-color: var(--accent-line);
+          background: #fffdfa;
         }
 
         .node-card.active {
-          border-color: rgba(244,194,79,0.38);
-          background: rgba(18,22,28,0.96);
-          box-shadow: 0 18px 40px rgba(244,194,79,0.08);
+          border-color: rgba(200,149,31,0.3);
+          background: #fff9eb;
+          box-shadow: 0 14px 36px rgba(200,149,31,0.10);
         }
 
         .node-card.dimmed {
-          opacity: 0.45;
+          opacity: 0.42;
         }
 
         .node-top {
@@ -709,9 +752,9 @@ export default function App() {
           margin-top: 12px;
           padding: 10px 12px;
           border-radius: 16px;
-          border: 1px solid rgba(244,194,79,0.16);
+          border: 1px solid rgba(200,149,31,0.16);
           background: var(--accent-soft);
-          color: #f7e7b9;
+          color: #8a620f;
           font-size: 0.82rem;
           line-height: 1.55;
         }
@@ -725,7 +768,7 @@ export default function App() {
           transform: translate(-50%, -50%);
           border-radius: 999px;
           background: var(--accent);
-          box-shadow: 0 0 28px rgba(244,194,79,0.9);
+          box-shadow: 0 0 26px rgba(200,149,31,0.38);
         }
 
         .inspector {
@@ -765,9 +808,9 @@ export default function App() {
         .receipt-item {
           padding: 11px 12px;
           border-radius: 14px;
-          border: 1px solid rgba(244,194,79,0.14);
+          border: 1px solid rgba(200,149,31,0.14);
           background: var(--accent-soft);
-          color: #f6e3a4;
+          color: #8a620f;
         }
 
         .trace-list {
@@ -789,9 +832,9 @@ export default function App() {
           width: 34px;
           height: 34px;
           border-radius: 999px;
-          border: 1px solid rgba(244,194,79,0.18);
+          border: 1px solid rgba(200,149,31,0.18);
           background: var(--accent-soft);
-          color: #f6db8f;
+          color: #a27012;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -855,8 +898,8 @@ export default function App() {
           align-items: flex-start;
           padding: 14px 16px;
           border-radius: 18px;
-          border: 1px solid var(--line-soft);
-          background: rgba(255,255,255,0.03);
+          border: 1px solid var(--line-2);
+          background: rgba(255,255,255,0.88);
           color: var(--muted);
           line-height: 1.7;
           font-size: 0.95rem;
@@ -892,7 +935,7 @@ export default function App() {
 
         .std-title {
           margin-top: 8px;
-          color: white;
+          color: var(--text);
           font-size: 1rem;
           font-weight: 700;
         }
@@ -915,7 +958,7 @@ export default function App() {
         }
 
         .ask-card {
-          color: white;
+          color: var(--text);
           line-height: 1.75;
         }
 
@@ -932,7 +975,7 @@ export default function App() {
         }
 
         .closing h2 .accent {
-          color: var(--accent);
+          color: #b88317;
           display: block;
         }
 
@@ -992,6 +1035,14 @@ export default function App() {
         }
 
         @media (max-width: 860px) {
+          .topbar {
+            position: static;
+          }
+
+          .nav {
+            justify-content: flex-start;
+          }
+
           .mini-cards,
           .standard-grid,
           .system-grid,
@@ -1028,6 +1079,19 @@ export default function App() {
       `}</style>
 
       <div className="app">
+        <header className="topbar">
+          <div className="brand">
+            <span className="brand-mark" />
+            <span>SwarmCore</span>
+          </div>
+
+          <div className="nav">
+            <button onClick={() => scrollToRef(graphRef)}>Graph</button>
+            <button onClick={() => scrollToRef(doctrineRef)}>Doctrine</button>
+            <a href="mailto:build@swarmandbee.ai">Contact</a>
+          </div>
+        </header>
+
         <section className="hero">
           <div className="hero-copy">
             <div className="pill">
@@ -1046,7 +1110,7 @@ export default function App() {
             </p>
 
             <div className="cta-row">
-              <button className="btn primary" onClick={() => scrollToRef(workspaceRef)}>
+              <button className="btn primary" onClick={() => scrollToRef(graphRef)}>
                 Enter the Graph
               </button>
               <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
@@ -1071,8 +1135,8 @@ export default function App() {
           <aside className="hero-side">
             <div className="side-card">
               <div className="side-top">
-                <h3>swarm-core / graph</h3>
-                <span className="status">integrity map</span>
+                <h3>Chain Integrity Map</h3>
+                <span className="status">live structure</span>
               </div>
               <p>
                 A real AI system fails in the shell around the model. SwarmCore makes those breaks visible, attributable, and fixable.
@@ -1104,10 +1168,10 @@ export default function App() {
           </aside>
         </section>
 
-        <section className="workspace" ref={workspaceRef}>
+        <section className="workspace" ref={graphRef}>
           <div className="workspace-topbar">
-            <span>swarm-core / graph</span>
-            <span>integrity map · execution surface · receipt inspector</span>
+            <span>swarm-core / chain integrity map</span>
+            <span>graph · execution surface · receipt inspector</span>
           </div>
 
           <div className="workspace-grid">
@@ -1129,7 +1193,7 @@ export default function App() {
               </div>
 
               <div className="rail-list">
-                {filteredNodes.map((node, idx) => {
+                {filteredNodes.map((node) => {
                   const activeNode = node.title === selectedNode;
                   return (
                     <button
@@ -1139,7 +1203,7 @@ export default function App() {
                     >
                       <div className="rail-item-top">
                         <div className="rail-item-title">{node.title}</div>
-                        <div className="break-badge">break {idx + 1}</div>
+                        <div className="break-badge">break</div>
                       </div>
                       <p>{node.short}</p>
                     </button>
@@ -1151,14 +1215,13 @@ export default function App() {
             <div className="graph-stage">
               <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
                 {edges.map((edge) => {
-                  const isActive = edge.nodes.includes(selectedNode);
-                  const cls = isActive ? "edge active" : "edge dimmed";
+                  const activeEdge = edge.nodes.includes(selectedNode);
                   return (
                     <path
                       key={edge.id}
-                      className={cls}
+                      className={`edge ${activeEdge ? "active" : "dimmed"}`}
                       d={edge.d}
-                      stroke="rgba(255,255,255,0.22)"
+                      stroke="#d7d1c7"
                       strokeWidth="2.5"
                       fill="none"
                     />
@@ -1168,10 +1231,8 @@ export default function App() {
 
               {nodes.map((node) => {
                 const activeNode = node.title === selectedNode;
-                const connected = edges.some(
-                  (edge) => edge.nodes.includes(selectedNode) && edge.nodes.includes(node.title)
-                );
-                const dimmed = !activeNode && selectedNode && !connected;
+                const connected = isConnectedToActive(node.title);
+                const dimmed = selectedNode && !connected;
 
                 return (
                   <div
@@ -1352,7 +1413,7 @@ export default function App() {
               SwarmCore is the audit and mechanics layer for serious AI systems — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
             </p>
             <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
-              <button className="btn primary" onClick={() => scrollToRef(workspaceRef)}>
+              <button className="btn primary" onClick={() => scrollToRef(graphRef)}>
                 Enter the Graph
               </button>
               <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
