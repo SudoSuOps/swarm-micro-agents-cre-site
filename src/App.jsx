@@ -2,6 +2,9 @@ import React from "react";
 
 export default function App() {
   const [selectedNode, setSelectedNode] = React.useState("Scaffold");
+  const [search, setSearch] = React.useState("");
+  const workspaceRef = React.useRef(null);
+  const doctrineRef = React.useRef(null);
 
   const nodes = [
     {
@@ -126,7 +129,38 @@ export default function App() {
     },
   ];
 
-  const active = nodes.find((node) => node.title === selectedNode) || nodes[0];
+  const edges = [
+    {
+      id: "e1",
+      d: "M130 140 C 250 155, 282 250, 360 270",
+      nodes: ["Scaffold", "Memory"],
+    },
+    {
+      id: "e2",
+      d: "M360 270 C 430 360, 465 430, 510 505",
+      nodes: ["Memory", "Governance"],
+    },
+    {
+      id: "e3",
+      d: "M130 140 C 320 120, 470 110, 625 165",
+      nodes: ["Scaffold", "Retrieval"],
+    },
+    {
+      id: "e4",
+      d: "M625 165 C 690 210, 752 250, 810 300",
+      nodes: ["Retrieval", "Verifier"],
+    },
+    {
+      id: "e5",
+      d: "M510 505 C 620 510, 700 535, 836 518",
+      nodes: ["Governance", "Audit"],
+    },
+    {
+      id: "e6",
+      d: "M140 140 C 220 260, 320 442, 510 505",
+      nodes: ["Scaffold", "Governance"],
+    },
+  ];
 
   const buildStandard = [
     "Sealed task boundaries",
@@ -161,6 +195,23 @@ export default function App() {
     },
   ];
 
+  const active = nodes.find((node) => node.title === selectedNode) || nodes[0];
+
+  const filteredNodes = nodes.filter((node) => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      node.title.toLowerCase().includes(q) ||
+      node.short.toLowerCase().includes(q) ||
+      node.fix.toLowerCase().includes(q) ||
+      node.why.toLowerCase().includes(q)
+    );
+  });
+
+  const scrollToRef = (ref) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <>
       <style>{`
@@ -188,6 +239,7 @@ export default function App() {
 
         * { box-sizing: border-box; }
         html, body, #root { min-height: 100%; margin: 0; }
+        html { scroll-behavior: smooth; }
         body {
           background:
             radial-gradient(circle at top, rgba(244,194,79,0.12), transparent 25%),
@@ -461,6 +513,32 @@ export default function App() {
           text-transform: uppercase;
         }
 
+        .search-wrap {
+          margin-top: 14px;
+        }
+
+        .search-input {
+          width: 100%;
+          border: 1px solid var(--line-soft);
+          background: rgba(255,255,255,0.03);
+          color: white;
+          border-radius: 16px;
+          padding: 12px 14px;
+          font-size: 0.94rem;
+          outline: none;
+        }
+
+        .search-input:focus {
+          border-color: rgba(244,194,79,0.28);
+          box-shadow: 0 0 0 1px rgba(244,194,79,0.14);
+        }
+
+        .rail-count {
+          margin-top: 10px;
+          color: var(--muted-2);
+          font-size: 12px;
+        }
+
         .rail-list {
           display: grid;
           gap: 10px;
@@ -546,6 +624,24 @@ export default function App() {
           pointer-events: none;
         }
 
+        .edge {
+          transition: opacity .18s ease, stroke .18s ease, stroke-width .18s ease;
+        }
+
+        .edge.active {
+          opacity: 1;
+          stroke: rgba(244,194,79,0.72);
+          stroke-width: 3.5;
+        }
+
+        .edge.dimmed {
+          opacity: 0.2;
+        }
+
+        .edge.neutral {
+          opacity: 0.55;
+        }
+
         .node {
           position: absolute;
           width: 230px;
@@ -569,7 +665,7 @@ export default function App() {
           padding: 16px;
           box-shadow: 0 16px 36px rgba(0,0,0,0.22);
           backdrop-filter: blur(12px);
-          transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+          transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, opacity .18s ease;
         }
 
         .node-card:hover {
@@ -582,6 +678,10 @@ export default function App() {
           border-color: rgba(244,194,79,0.38);
           background: rgba(18,22,28,0.96);
           box-shadow: 0 18px 40px rgba(244,194,79,0.08);
+        }
+
+        .node-card.dimmed {
+          opacity: 0.45;
         }
 
         .node-top {
@@ -895,7 +995,8 @@ export default function App() {
           .mini-cards,
           .standard-grid,
           .system-grid,
-          .stack-grid {
+          .stack-grid,
+          .side-metric {
             grid-template-columns: 1fr;
           }
 
@@ -945,8 +1046,12 @@ export default function App() {
             </p>
 
             <div className="cta-row">
-              <button className="btn primary">Enter the Graph</button>
-              <button className="btn">Read the Doctrine</button>
+              <button className="btn primary" onClick={() => scrollToRef(workspaceRef)}>
+                Enter the Graph
+              </button>
+              <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
+                Read the Doctrine
+              </button>
             </div>
 
             <div className="mini-cards">
@@ -999,7 +1104,7 @@ export default function App() {
           </aside>
         </section>
 
-        <section className="workspace">
+        <section className="workspace" ref={workspaceRef}>
           <div className="workspace-topbar">
             <span>swarm-core / graph</span>
             <span>integrity map · execution surface · receipt inspector</span>
@@ -1008,8 +1113,23 @@ export default function App() {
           <div className="workspace-grid">
             <aside className="rail">
               <div className="rail-title">Breakpoints</div>
+
+              <div className="search-wrap">
+                <input
+                  className="search-input"
+                  type="text"
+                  placeholder="Search scaffold, memory, verifier..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+
+              <div className="rail-count">
+                {filteredNodes.length} visible node{filteredNodes.length === 1 ? "" : "s"}
+              </div>
+
               <div className="rail-list">
-                {nodes.map((node, idx) => {
+                {filteredNodes.map((node, idx) => {
                   const activeNode = node.title === selectedNode;
                   return (
                     <button
@@ -1030,15 +1150,29 @@ export default function App() {
 
             <div className="graph-stage">
               <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M130 140 C 250 155, 282 250, 360 270 S 560 120, 625 165 S 735 245, 792 290" stroke="rgba(244,194,79,0.56)" strokeWidth="3" fill="none" strokeDasharray="8 10" />
-                <path d="M350 270 C 430 360, 465 430, 510 505" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
-                <path d="M510 505 C 620 510, 700 535, 836 518" stroke="rgba(244,194,79,0.34)" strokeWidth="2.5" fill="none" />
-                <path d="M620 168 C 690 210, 752 250, 810 300" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
-                <path d="M140 140 C 220 260, 320 442, 510 505" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
+                {edges.map((edge) => {
+                  const isActive = edge.nodes.includes(selectedNode);
+                  const cls = isActive ? "edge active" : "edge dimmed";
+                  return (
+                    <path
+                      key={edge.id}
+                      className={cls}
+                      d={edge.d}
+                      stroke="rgba(255,255,255,0.22)"
+                      strokeWidth="2.5"
+                      fill="none"
+                    />
+                  );
+                })}
               </svg>
 
-              {nodes.map((node, idx) => {
+              {nodes.map((node) => {
                 const activeNode = node.title === selectedNode;
+                const connected = edges.some(
+                  (edge) => edge.nodes.includes(selectedNode) && edge.nodes.includes(node.title)
+                );
+                const dimmed = !activeNode && selectedNode && !connected;
+
                 return (
                   <div
                     key={node.id}
@@ -1046,10 +1180,10 @@ export default function App() {
                     style={{ left: `${node.x}%`, top: `${node.y}%` }}
                   >
                     <button onClick={() => setSelectedNode(node.title)}>
-                      <div className={`node-card ${activeNode ? "active" : ""}`}>
+                      <div className={`node-card ${activeNode ? "active" : ""} ${dimmed ? "dimmed" : ""}`}>
                         <div className="node-top">
                           <div className="node-title">{node.title}</div>
-                          <div className="break-badge">break {idx + 1}</div>
+                          <div className="break-badge">break</div>
                         </div>
                         <p>{node.short}</p>
                         <div className="node-fix">SwarmCore fix: {node.fix}</div>
@@ -1112,7 +1246,7 @@ export default function App() {
           </div>
         </section>
 
-        <div className="sections">
+        <div className="sections" ref={doctrineRef}>
           <div className="two-col">
             <section className="section">
               <div className="section-eyebrow">Why SwarmCore exists</div>
@@ -1218,8 +1352,12 @@ export default function App() {
               SwarmCore is the audit and mechanics layer for serious AI systems — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
             </p>
             <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
-              <button className="btn primary">Launch SwarmCore</button>
-              <button className="btn">Open the doctrine</button>
+              <button className="btn primary" onClick={() => scrollToRef(workspaceRef)}>
+                Enter the Graph
+              </button>
+              <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
+                Read the Doctrine
+              </button>
             </div>
           </section>
         </div>
