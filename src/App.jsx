@@ -792,6 +792,61 @@ export default function App() {
             <button className="btn">Open the doctrine</button>
           </div>
         </section>
+
+        <footer
+          style={{
+            marginTop: "64px",
+            borderTop: "1px solid rgba(255,255,255,0.10)",
+            paddingTop: "24px",
+            paddingBottom: "8px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "16px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              color: "#a1a1aa",
+              fontSize: "14px",
+              lineHeight: 1.7,
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <div style={{ color: "#fff", fontWeight: 700, fontSize: "16px", letterSpacing: "0.02em" }}>
+                Swarm & Bee
+              </div>
+              <a
+                href="mailto:build@swarmandbee.ai"
+                style={{ color: "#a1a1aa", textDecoration: "none" }}
+              >
+                build@swarmandbee.ai
+              </a>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px", textAlign: "right" }}>
+              <a
+                href="https://x.com/swarmandbee"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: "#a1a1aa", textDecoration: "none" }}
+              >
+                x.com/swarmandbee
+              </a>
+              <div
+                style={{
+                  fontSize: "11px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.22em",
+                  color: "#71717a",
+                }}
+              >
+                SwarmCore by design
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </>
   );
