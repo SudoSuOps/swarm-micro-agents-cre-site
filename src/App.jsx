@@ -1,11 +1,21 @@
 import React from "react";
 
 export default function App() {
+  const [selectedNode, setSelectedNode] = React.useState("Scaffold");
+
   const breakpoints = [
     {
       title: "Scaffold",
       problem: "Leaked answers, porous harnesses, hidden shortcuts.",
       fix: "Sealed task boundaries and explicit access control.",
+      detail:
+        "The harness itself leaks privileged information, exposes hidden verifier logic, or contaminates the environment before reasoning starts. This breaks legitimacy at the scaffold layer.",
+      receipts: [
+        "task boundary manifest",
+        "accessible paths log",
+        "prompt frame hash",
+        "tool permission record",
+      ],
       left: "12%",
       top: "18%",
     },
@@ -13,6 +23,14 @@ export default function App() {
       title: "Memory",
       problem: "Weak facts become permanent truth.",
       fix: "Scored, sourced, revocable memory with approval states.",
+      detail:
+        "Persistent systems fail when provisional observations silently become trusted facts. SwarmCore treats memory as governed state: attributable, confidence-scored, reviewable, and revocable.",
+      receipts: [
+        "memory write log",
+        "source attribution",
+        "confidence score",
+        "approval state",
+      ],
       left: "34%",
       top: "36%",
     },
@@ -20,6 +38,14 @@ export default function App() {
       title: "Retrieval",
       problem: "Untrusted context contaminates decisions.",
       fix: "Scoped retrieval with attributable source paths.",
+      detail:
+        "Agents should not pull arbitrary context and treat it as legitimate evidence. Retrieval must be task-scoped, source-bound, and visible in the receipt chain.",
+      receipts: [
+        "retrieval scope",
+        "source path",
+        "document lineage",
+        "access policy match",
+      ],
       left: "56%",
       top: "20%",
     },
@@ -27,6 +53,14 @@ export default function App() {
       title: "Verifier",
       problem: "Spoofable pass signals and shallow checks.",
       fix: "Hardened validation tied to intended task completion.",
+      detail:
+        "A verifier that checks cosmetic output instead of true completion can be tricked by prompt injection, mocked outputs, or fake success markers. SwarmCore hardens the validation layer and checks the path, not only the artifact.",
+      receipts: [
+        "verifier version",
+        "validation trace",
+        "task completion proof",
+        "spoof resistance checks",
+      ],
       left: "74%",
       top: "42%",
     },
@@ -34,6 +68,14 @@ export default function App() {
       title: "Governance",
       problem: "Agents drift beyond their authority.",
       fix: "Role separation, escalation rules, human finality.",
+      detail:
+        "The junior should not act like the senior. The senior should not silently become final authority. SwarmCore binds every role to explicit permissions, escalation paths, and human finality thresholds.",
+      receipts: [
+        "role policy",
+        "escalation reason",
+        "authority class",
+        "human review status",
+      ],
       left: "46%",
       top: "68%",
     },
@@ -41,6 +83,14 @@ export default function App() {
       title: "Audit",
       problem: "No receipts, no trust, no finality.",
       fix: "Full action lineage and reviewable decision traces.",
+      detail:
+        "Without a full record of what ran, what it saw, what policy applied, and whether a human approved the outcome, there is no defendable system. SwarmCore closes the loop with receipts.",
+      receipts: [
+        "model + version",
+        "memory loaded",
+        "tools used",
+        "final decision lineage",
+      ],
       left: "81%",
       top: "72%",
     },
@@ -73,6 +123,9 @@ export default function App() {
     "Benchmark wins without mechanical legitimacy",
   ];
 
+  const activeNode =
+    breakpoints.find((node) => node.title === selectedNode) || breakpoints[0];
+
   return (
     <>
       <style>{`
@@ -80,8 +133,6 @@ export default function App() {
           --bg: #09090b;
           --bg-soft: rgba(255,255,255,0.04);
           --panel: rgba(17,17,20,0.88);
-          --panel-2: rgba(10,10,12,0.72);
-          --border: rgba(255,255,255,0.10);
           --text: #f5f5f5;
           --muted: #b5b5bd;
           --muted-2: #8c8c96;
@@ -91,6 +142,7 @@ export default function App() {
           --danger: #fca5a5;
           --ok-soft: rgba(52,211,153,0.12);
           --ok: #86efac;
+          --border: rgba(255,255,255,0.10);
           --shadow: 0 20px 60px rgba(0,0,0,0.35);
           --radius: 28px;
         }
@@ -106,10 +158,8 @@ export default function App() {
             var(--bg);
         }
 
-        a { color: inherit; text-decoration: none; }
-
         .page {
-          max-width: 1320px;
+          max-width: 1360px;
           margin: 0 auto;
           padding: 40px 24px 88px;
           position: relative;
@@ -140,9 +190,8 @@ export default function App() {
 
         .hero {
           display: grid;
-          grid-template-columns: 1.05fr 0.95fr;
-          gap: 32px;
-          align-items: center;
+          grid-template-columns: 1fr;
+          gap: 28px;
         }
 
         .hero h1 {
@@ -150,16 +199,16 @@ export default function App() {
           font-size: clamp(3rem, 7vw, 6rem);
           line-height: 0.95;
           letter-spacing: -0.05em;
-          max-width: 860px;
+          max-width: 980px;
         }
 
         .hero h1 span { color: var(--accent); display: block; }
 
         .lead {
-          max-width: 760px;
+          max-width: 820px;
           margin-top: 24px;
           color: var(--muted);
-          font-size: 1.18rem;
+          font-size: 1.16rem;
           line-height: 1.9;
         }
 
@@ -196,7 +245,7 @@ export default function App() {
           margin-top: 32px;
         }
 
-        .card, .panel {
+        .mini-card, .panel, .graph-shell {
           background: var(--bg-soft);
           border: 1px solid var(--border);
           border-radius: var(--radius);
@@ -205,9 +254,6 @@ export default function App() {
 
         .mini-card {
           padding: 18px;
-          border-radius: 24px;
-          background: var(--bg-soft);
-          border: 1px solid var(--border);
         }
         .mini-card h3 {
           margin: 0 0 8px;
@@ -248,9 +294,16 @@ export default function App() {
           padding: 8px 10px;
         }
 
+        .graph-interactive {
+          display: grid;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 14px;
+          align-items: stretch;
+        }
+
         .graph {
           position: relative;
-          height: 540px;
+          min-height: 560px;
           overflow: hidden;
           border-radius: 24px;
           border: 1px solid var(--border);
@@ -274,6 +327,17 @@ export default function App() {
           transform: translate(-50%, -50%);
         }
 
+        .node-button {
+          appearance: none;
+          width: 100%;
+          background: transparent;
+          border: 0;
+          padding: 0;
+          text-align: left;
+          color: inherit;
+          cursor: pointer;
+        }
+
         .node-box {
           background: rgba(10,10,12,0.86);
           border: 1px solid var(--border);
@@ -288,6 +352,12 @@ export default function App() {
           border-color: rgba(244,196,79,0.35);
           background: rgba(18,18,21,0.94);
           transform: translateY(-2px);
+        }
+
+        .node-box.active {
+          border-color: rgba(244,196,79,0.45);
+          background: rgba(22,22,26,0.96);
+          box-shadow: 0 16px 36px rgba(244,196,79,0.10);
         }
 
         .node-top {
@@ -314,6 +384,12 @@ export default function App() {
           letter-spacing: 0.18em;
           text-transform: uppercase;
           white-space: nowrap;
+        }
+
+        .node-box.active .node-badge {
+          border-color: rgba(244,196,79,0.28);
+          background: rgba(244,196,79,0.14);
+          color: #f7d77e;
         }
 
         .node p {
@@ -346,6 +422,70 @@ export default function App() {
           transform: translate(-50%, -50%);
         }
 
+        .graph-detail {
+          border: 1px solid var(--border);
+          background: rgba(10,10,12,0.76);
+          border-radius: 24px;
+          padding: 18px;
+          display: flex;
+          flex-direction: column;
+          min-height: 560px;
+        }
+
+        .eyebrow-mini, .eyebrow {
+          font-size: 12px;
+          letter-spacing: 0.30em;
+          text-transform: uppercase;
+          color: var(--accent);
+        }
+
+        .graph-detail h3 {
+          margin: 12px 0 0;
+          font-size: 1.55rem;
+          line-height: 1.15;
+        }
+
+        .problem-block,
+        .fix-block,
+        .receipt-group {
+          margin-top: 14px;
+          border-radius: 18px;
+          padding: 14px;
+          border: 1px solid var(--border);
+          background: rgba(255,255,255,0.04);
+        }
+
+        .label {
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: var(--muted-2);
+          margin-bottom: 8px;
+        }
+
+        .graph-detail p {
+          margin: 0;
+          color: var(--muted);
+          line-height: 1.8;
+          font-size: 0.95rem;
+        }
+
+        .receipt-list {
+          margin-top: 12px;
+          display: grid;
+          gap: 10px;
+        }
+
+        .receipt-item {
+          border-radius: 16px;
+          border: 1px solid rgba(244,196,79,0.12);
+          background: rgba(244,196,79,0.08);
+          padding: 12px 14px;
+          color: #ead79a;
+          font-size: 0.9rem;
+          line-height: 1.5;
+        }
+
         .section {
           margin-top: 84px;
         }
@@ -358,13 +498,6 @@ export default function App() {
 
         .panel {
           padding: 32px;
-        }
-
-        .eyebrow {
-          font-size: 12px;
-          letter-spacing: 0.30em;
-          text-transform: uppercase;
-          color: var(--accent);
         }
 
         .section h2 {
@@ -429,7 +562,7 @@ export default function App() {
           letter-spacing: 0.24em;
         }
 
-        .principle .label {
+        .principle .label2 {
           margin-top: 10px;
           font-size: 1.05rem;
           font-weight: 600;
@@ -560,14 +693,15 @@ export default function App() {
         }
 
         @media (max-width: 1120px) {
-          .hero,
           .section-grid,
-          .shape {
+          .shape,
+          .graph-interactive {
             grid-template-columns: 1fr;
           }
           .flow-grid {
             grid-template-columns: repeat(2, minmax(0,1fr));
           }
+          .graph-detail { min-height: auto; }
         }
 
         @media (max-width: 860px) {
@@ -578,7 +712,7 @@ export default function App() {
             grid-template-columns: 1fr;
           }
           .graph {
-            height: 760px;
+            min-height: 760px;
           }
           .node {
             width: 220px;
@@ -588,7 +722,16 @@ export default function App() {
         @media (max-width: 640px) {
           .page { padding: 28px 16px 72px; }
           .panel, .flow, .closing { padding: 24px; }
-          .graph { height: 900px; }
+          .graph {
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px;
+            background:
+              linear-gradient(180deg, rgba(17,17,20,0.95), rgba(9,9,11,0.94));
+          }
+          .graph svg, .core-dot { display: none; }
           .node {
             position: relative;
             inset: auto !important;
@@ -596,18 +739,6 @@ export default function App() {
             top: auto !important;
             transform: none;
             width: 100%;
-            margin: 16px 0;
-            padding: 0 12px;
-          }
-          .graph svg, .core-dot { display: none; }
-          .graph {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 12px 0;
-            background:
-              linear-gradient(180deg, rgba(17,17,20,0.95), rgba(9,9,11,0.94));
-            height: auto;
           }
         }
       `}</style>
@@ -651,35 +782,72 @@ export default function App() {
             </div>
           </div>
 
-          <div className="card graph-shell">
+          <div className="graph-shell">
             <div className="graph-topbar">
               <span>swarm-core / graph</span>
               <span className="status">integrity map</span>
             </div>
 
-            <div className="graph">
-              <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M130 140 C 260 160, 260 250, 360 255 S 560 120, 620 165 S 750 240, 785 285" stroke="rgba(244,196,79,0.55)" strokeWidth="3" fill="none" strokeDasharray="8 8" />
-                <path d="M355 255 C 420 360, 460 410, 505 470" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
-                <path d="M505 470 C 620 470, 690 520, 790 505" stroke="rgba(244,196,79,0.35)" strokeWidth="2.5" fill="none" />
-                <path d="M625 165 C 690 210, 740 235, 790 285" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
-                <path d="M140 140 C 220 240, 310 420, 500 470" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
-              </svg>
+            <div className="graph-interactive">
+              <div className="graph">
+                <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M130 140 C 260 160, 260 250, 360 255 S 560 120, 620 165 S 750 240, 785 285" stroke="rgba(244,196,79,0.55)" strokeWidth="3" fill="none" strokeDasharray="8 8" />
+                  <path d="M355 255 C 420 360, 460 410, 505 470" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
+                  <path d="M505 470 C 620 470, 690 520, 790 505" stroke="rgba(244,196,79,0.35)" strokeWidth="2.5" fill="none" />
+                  <path d="M625 165 C 690 210, 740 235, 790 285" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
+                  <path d="M140 140 C 220 240, 310 420, 500 470" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
+                </svg>
 
-              {breakpoints.map((node, idx) => (
-                <div className="node" key={node.title} style={{ left: node.left, top: node.top }}>
-                  <div className="node-box">
-                    <div className="node-top">
-                      <div className="node-title">{node.title}</div>
-                      <div className="node-badge">break {idx + 1}</div>
-                    </div>
-                    <p>{node.problem}</p>
-                    <div className="fix">SwarmCore fix: {node.fix}</div>
+                {breakpoints.map((node, idx) => (
+                  <div className="node" key={node.title} style={{ left: node.left, top: node.top }}>
+                    <button
+                      className="node-button"
+                      onClick={() => setSelectedNode(node.title)}
+                      aria-pressed={selectedNode === node.title}
+                    >
+                      <div className={`node-box ${selectedNode === node.title ? "active" : ""}`}>
+                        <div className="node-top">
+                          <div className="node-title">{node.title}</div>
+                          <div className="node-badge">break {idx + 1}</div>
+                        </div>
+                        <p>{node.problem}</p>
+                        <div className="fix">SwarmCore fix: {node.fix}</div>
+                      </div>
+                    </button>
+                  </div>
+                ))}
+
+                <div className="core-dot" />
+              </div>
+
+              <aside className="graph-detail">
+                <div className="eyebrow-mini">Selected breakpoint</div>
+                <h3>{activeNode.title}</h3>
+
+                <div className="problem-block">
+                  <div className="label">Failure mode</div>
+                  <p>{activeNode.problem}</p>
+                </div>
+
+                <div className="fix-block">
+                  <div className="label">SwarmCore fix</div>
+                  <p>{activeNode.fix}</p>
+                </div>
+
+                <div className="problem-block">
+                  <div className="label">Why it breaks trust</div>
+                  <p>{activeNode.detail}</p>
+                </div>
+
+                <div className="receipt-group">
+                  <div className="label">Receipts SwarmCore logs</div>
+                  <div className="receipt-list">
+                    {activeNode.receipts.map((item) => (
+                      <div className="receipt-item" key={item}>{item}</div>
+                    ))}
                   </div>
                 </div>
-              ))}
-
-              <div className="core-dot" />
+              </aside>
             </div>
           </div>
         </section>
@@ -711,14 +879,14 @@ export default function App() {
               {principles.map((item, i) => (
                 <div className="principle" key={item}>
                   <div className="num">0{i + 1}</div>
-                  <div className="label">{item}</div>
+                  <div className="label2">{item}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section flow card">
+        <section className="section flow panel">
           <div className="eyebrow">How it works</div>
           <h2>SwarmCore turns brittle agent chains into reviewable systems.</h2>
 
