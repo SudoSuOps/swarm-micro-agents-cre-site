@@ -16,8 +16,13 @@ export default function App() {
         "prompt frame hash",
         "tool permission record",
       ],
-      left: "12%",
-      top: "18%",
+      run: [
+        ["01", "Task boundary loaded", "Only declared files and tools exposed to the agent."],
+        ["02", "Prompt frame sealed", "System prompt and role policy hashed before execution."],
+        ["03", "Access attempt checked", "Any out-of-scope file or hidden verifier path is denied."],
+      ],
+      x: "12%",
+      y: "18%",
     },
     {
       title: "Memory",
@@ -31,8 +36,13 @@ export default function App() {
         "confidence score",
         "approval state",
       ],
-      left: "34%",
-      top: "36%",
+      run: [
+        ["01", "Working memory loaded", "Only scoped session memory is brought into context."],
+        ["02", "Fact write proposed", "New memory is tagged as provisional, not truth."],
+        ["03", "Approval boundary enforced", "Promotion to long-term memory requires policy or human approval."],
+      ],
+      x: "34%",
+      y: "36%",
     },
     {
       title: "Retrieval",
@@ -46,8 +56,13 @@ export default function App() {
         "document lineage",
         "access policy match",
       ],
-      left: "56%",
-      top: "20%",
+      run: [
+        ["01", "Query scoped", "Retrieval is constrained to approved stores and task policy."],
+        ["02", "Source selected", "Every retrieved document is attributable and logged."],
+        ["03", "Context assembled", "Only approved context enters the decision path."],
+      ],
+      x: "56%",
+      y: "20%",
     },
     {
       title: "Verifier",
@@ -61,8 +76,13 @@ export default function App() {
         "task completion proof",
         "spoof resistance checks",
       ],
-      left: "74%",
-      top: "42%",
+      run: [
+        ["01", "Verifier selected", "Validation version and policy are pinned before run."],
+        ["02", "Output checked", "Verifier tests intended task completion, not cosmetic signals."],
+        ["03", "Spoof scan passed", "PASS strings, mocks, and shortcut artifacts are rejected."],
+      ],
+      x: "74%",
+      y: "42%",
     },
     {
       title: "Governance",
@@ -76,8 +96,13 @@ export default function App() {
         "authority class",
         "human review status",
       ],
-      left: "46%",
-      top: "68%",
+      run: [
+        ["01", "Role loaded", "Junior, senior, and human boundaries are explicit."],
+        ["02", "Threshold crossed", "High-risk or ambiguous work triggers escalation."],
+        ["03", "Human finality", "Final authority remains visible and reviewable."],
+      ],
+      x: "46%",
+      y: "68%",
     },
     {
       title: "Audit",
@@ -91,8 +116,13 @@ export default function App() {
         "tools used",
         "final decision lineage",
       ],
-      left: "81%",
-      top: "72%",
+      run: [
+        ["01", "Execution receipt started", "Every run gets an identity and lineage root."],
+        ["02", "Trace appended", "Model, memory, retrieval, verifier, and actions are recorded."],
+        ["03", "Outcome sealed", "Final path is reviewable and survives scrutiny."],
+      ],
+      x: "81%",
+      y: "72%",
     },
   ];
 
@@ -107,11 +137,26 @@ export default function App() {
   ];
 
   const rails = [
-    ["Detect", "Find breaks in the chain before they become false confidence."],
-    ["Bound", "Constrain what agents can see, do, store, and claim."],
-    ["Verify", "Validate the path, not just the output."],
-    ["Escalate", "Route meaningful risk to stronger reviewers and humans."],
-    ["Seal", "Leave receipts that survive scrutiny."],
+    {
+      name: "Detect",
+      text: "Find breaks in the chain before they become false confidence.",
+    },
+    {
+      name: "Bound",
+      text: "Constrain what agents can see, do, store, and claim.",
+    },
+    {
+      name: "Verify",
+      text: "Validate the path, not just the output.",
+    },
+    {
+      name: "Escalate",
+      text: "Route meaningful risk to stronger reviewers and humans.",
+    },
+    {
+      name: "Seal",
+      text: "Leave receipts that survive scrutiny.",
+    },
   ];
 
   const evidence = [
@@ -127,810 +172,262 @@ export default function App() {
     breakpoints.find((node) => node.title === selectedNode) || breakpoints[0];
 
   return (
-    <>
-      <style>{`
-        :root {
-          --bg: #09090b;
-          --bg-soft: rgba(255,255,255,0.04);
-          --panel: rgba(17,17,20,0.88);
-          --text: #f5f5f5;
-          --muted: #b5b5bd;
-          --muted-2: #8c8c96;
-          --accent: #f4c44f;
-          --accent-soft: rgba(244,196,79,0.12);
-          --danger-soft: rgba(248,113,113,0.12);
-          --danger: #fca5a5;
-          --ok-soft: rgba(52,211,153,0.12);
-          --ok: #86efac;
-          --border: rgba(255,255,255,0.10);
-          --shadow: 0 20px 60px rgba(0,0,0,0.35);
-          --radius: 28px;
-        }
-
-        * { box-sizing: border-box; }
-        html, body, #root { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
-        body {
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-          background:
-            radial-gradient(circle at top, rgba(244,196,79,0.10), transparent 28%),
-            radial-gradient(circle at 80% 20%, rgba(251,191,36,0.08), transparent 18%),
-            linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 20%),
-            var(--bg);
-        }
-
-        .page {
-          max-width: 1360px;
-          margin: 0 auto;
-          padding: 40px 24px 88px;
-          position: relative;
-        }
-
-        .pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          border: 1px solid rgba(244,196,79,0.24);
-          background: rgba(244,196,79,0.10);
-          color: #f7d77e;
-          border-radius: 999px;
-          padding: 10px 14px;
-          font-size: 12px;
-          letter-spacing: 0.26em;
-          text-transform: uppercase;
-          margin-bottom: 18px;
-        }
-
-        .pill-dot {
-          width: 8px;
-          height: 8px;
-          background: var(--accent);
-          border-radius: 50%;
-          display: inline-block;
-        }
-
-        .hero {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 28px;
-        }
-
-        .hero h1 {
-          margin: 0;
-          font-size: clamp(3rem, 7vw, 6rem);
-          line-height: 0.95;
-          letter-spacing: -0.05em;
-          max-width: 980px;
-        }
-
-        .hero h1 span { color: var(--accent); display: block; }
-
-        .lead {
-          max-width: 820px;
-          margin-top: 24px;
-          color: var(--muted);
-          font-size: 1.16rem;
-          line-height: 1.9;
-        }
-
-        .actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 28px;
-        }
-
-        .btn {
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.04);
-          color: white;
-          border-radius: 18px;
-          padding: 14px 18px;
-          font-weight: 700;
-          font-size: 0.96rem;
-          cursor: pointer;
-          transition: transform .18s ease, background .18s ease, border-color .18s ease;
-        }
-        .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.08); }
-        .btn.primary {
-          background: var(--accent);
-          color: #111;
-          border-color: rgba(244,196,79,0.32);
-          box-shadow: 0 12px 30px rgba(244,196,79,0.18);
-        }
-
-        .mini-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0,1fr));
-          gap: 14px;
-          margin-top: 32px;
-        }
-
-        .mini-card, .panel, .graph-shell {
-          background: var(--bg-soft);
-          border: 1px solid var(--border);
-          border-radius: var(--radius);
-          backdrop-filter: blur(16px);
-        }
-
-        .mini-card {
-          padding: 18px;
-        }
-        .mini-card h3 {
-          margin: 0 0 8px;
-          font-size: 0.98rem;
-        }
-        .mini-card p {
-          margin: 0;
-          color: var(--muted-2);
-          line-height: 1.7;
-          font-size: 0.95rem;
-        }
-
-        .graph-shell {
-          padding: 16px;
-          box-shadow: var(--shadow);
-          overflow: hidden;
-        }
-
-        .graph-topbar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.04);
-          padding: 12px 16px;
-          border-radius: 18px;
-          color: var(--muted-2);
-          font-size: 12px;
-          margin-bottom: 14px;
-        }
-
-        .status {
-          display: inline-flex;
-          border-radius: 999px;
-          border: 1px solid rgba(52,211,153,0.2);
-          background: var(--ok-soft);
-          color: var(--ok);
-          padding: 8px 10px;
-        }
-
-        .graph-interactive {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 14px;
-          align-items: stretch;
-        }
-
-        .graph {
-          position: relative;
-          min-height: 560px;
-          overflow: hidden;
-          border-radius: 24px;
-          border: 1px solid var(--border);
-          background:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(10,10,12,0.92), rgba(15,15,17,0.88));
-          background-size: 32px 32px, 32px 32px, cover;
-        }
-
-        .graph svg {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-        }
-
-        .node {
-          position: absolute;
-          width: 240px;
-          transform: translate(-50%, -50%);
-        }
-
-        .node-button {
-          appearance: none;
-          width: 100%;
-          background: transparent;
-          border: 0;
-          padding: 0;
-          text-align: left;
-          color: inherit;
-          cursor: pointer;
-        }
-
-        .node-box {
-          background: rgba(10,10,12,0.86);
-          border: 1px solid var(--border);
-          border-radius: 22px;
-          padding: 16px;
-          box-shadow: 0 14px 30px rgba(0,0,0,0.22);
-          backdrop-filter: blur(12px);
-          transition: border-color .18s ease, background .18s ease, transform .18s ease;
-        }
-
-        .node-box:hover {
-          border-color: rgba(244,196,79,0.35);
-          background: rgba(18,18,21,0.94);
-          transform: translateY(-2px);
-        }
-
-        .node-box.active {
-          border-color: rgba(244,196,79,0.45);
-          background: rgba(22,22,26,0.96);
-          box-shadow: 0 16px 36px rgba(244,196,79,0.10);
-        }
-
-        .node-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
-
-        .node-title {
-          font-size: 0.94rem;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-        }
-
-        .node-badge {
-          border-radius: 999px;
-          border: 1px solid rgba(248,113,113,0.18);
-          background: var(--danger-soft);
-          color: var(--danger);
-          padding: 4px 8px;
-          font-size: 10px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          white-space: nowrap;
-        }
-
-        .node-box.active .node-badge {
-          border-color: rgba(244,196,79,0.28);
-          background: rgba(244,196,79,0.14);
-          color: #f7d77e;
-        }
-
-        .node p {
-          margin: 0;
-          color: var(--muted);
-          line-height: 1.65;
-          font-size: 0.93rem;
-        }
-
-        .fix {
-          margin-top: 12px;
-          border-radius: 18px;
-          border: 1px solid rgba(244,196,79,0.16);
-          background: var(--accent-soft);
-          padding: 10px 12px;
-          color: #f7e8b8;
-          font-size: 0.82rem;
-          line-height: 1.6;
-        }
-
-        .core-dot {
-          position: absolute;
-          left: 46%;
-          top: 68%;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: var(--accent);
-          box-shadow: 0 0 30px rgba(244,196,79,0.9);
-          transform: translate(-50%, -50%);
-        }
-
-        .graph-detail {
-          border: 1px solid var(--border);
-          background: rgba(10,10,12,0.76);
-          border-radius: 24px;
-          padding: 18px;
-          display: flex;
-          flex-direction: column;
-          min-height: 560px;
-        }
-
-        .eyebrow-mini, .eyebrow {
-          font-size: 12px;
-          letter-spacing: 0.30em;
-          text-transform: uppercase;
-          color: var(--accent);
-        }
-
-        .graph-detail h3 {
-          margin: 12px 0 0;
-          font-size: 1.55rem;
-          line-height: 1.15;
-        }
-
-        .problem-block,
-        .fix-block,
-        .receipt-group {
-          margin-top: 14px;
-          border-radius: 18px;
-          padding: 14px;
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.04);
-        }
-
-        .label {
-          font-size: 11px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--muted-2);
-          margin-bottom: 8px;
-        }
-
-        .graph-detail p {
-          margin: 0;
-          color: var(--muted);
-          line-height: 1.8;
-          font-size: 0.95rem;
-        }
-
-        .receipt-list {
-          margin-top: 12px;
-          display: grid;
-          gap: 10px;
-        }
-
-        .receipt-item {
-          border-radius: 16px;
-          border: 1px solid rgba(244,196,79,0.12);
-          background: rgba(244,196,79,0.08);
-          padding: 12px 14px;
-          color: #ead79a;
-          font-size: 0.9rem;
-          line-height: 1.5;
-        }
-
-        .section {
-          margin-top: 84px;
-        }
-
-        .section-grid {
-          display: grid;
-          grid-template-columns: 0.95fr 1.05fr;
-          gap: 24px;
-        }
-
-        .panel {
-          padding: 32px;
-        }
-
-        .section h2 {
-          margin: 14px 0 0;
-          font-size: clamp(2rem, 4vw, 3rem);
-          line-height: 1.08;
-          letter-spacing: -0.04em;
-        }
-
-        .section p.lead-2 {
-          margin-top: 18px;
-          color: var(--muted);
-          line-height: 1.9;
-          font-size: 1rem;
-        }
-
-        .evidence-list {
-          margin-top: 24px;
-          display: grid;
-          gap: 10px;
-        }
-
-        .evidence-item {
-          display: flex;
-          gap: 12px;
-          align-items: flex-start;
-          border-radius: 18px;
-          border: 1px solid var(--border);
-          background: rgba(10,10,12,0.52);
-          padding: 14px 16px;
-          color: var(--muted);
-          line-height: 1.7;
-          font-size: 0.95rem;
-        }
-
-        .evidence-dot {
-          width: 10px;
-          height: 10px;
-          margin-top: 6px;
-          border-radius: 50%;
-          background: var(--accent);
-          flex: 0 0 auto;
-        }
-
-        .principles {
-          margin-top: 22px;
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0,1fr));
-          gap: 14px;
-        }
-
-        .principle {
-          border-radius: 22px;
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.04);
-          padding: 20px;
-        }
-
-        .principle .num {
-          font-size: 12px;
-          color: var(--muted-2);
-          letter-spacing: 0.24em;
-        }
-
-        .principle .label2 {
-          margin-top: 10px;
-          font-size: 1.05rem;
-          font-weight: 600;
-        }
-
-        .flow {
-          padding: 32px;
-          background: linear-gradient(180deg, rgba(17,17,20,0.95), rgba(9,9,11,0.94));
-        }
-
-        .flow-grid {
-          display: grid;
-          grid-template-columns: repeat(5, minmax(0,1fr));
-          gap: 14px;
-          margin-top: 28px;
-        }
-
-        .flow-card {
-          border-radius: 22px;
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.04);
-          padding: 20px;
-          min-height: 170px;
-        }
-
-        .flow-card .num {
-          font-size: 12px;
-          letter-spacing: 0.28em;
-          color: var(--muted-2);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .flow-card h3 {
-          margin: 12px 0 0;
-          font-size: 1.12rem;
-        }
-
-        .flow-card p {
-          margin: 12px 0 0;
-          color: var(--muted-2);
-          line-height: 1.7;
-          font-size: 0.94rem;
-        }
-
-        .shape {
-          display: grid;
-          grid-template-columns: 1.15fr 0.85fr;
-          gap: 24px;
-        }
-
-        .role-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0,1fr));
-          gap: 14px;
-          margin-top: 24px;
-        }
-
-        .role-card {
-          border-radius: 22px;
-          border: 1px solid var(--border);
-          background: rgba(10,10,12,0.52);
-          padding: 20px;
-        }
-
-        .role-card h3 {
-          margin: 0;
-          font-size: 1.08rem;
-        }
-
-        .role-card p {
-          margin: 12px 0 0;
-          color: var(--muted-2);
-          line-height: 1.7;
-          font-size: 0.94rem;
-        }
-
-        .asks {
-          background: rgba(244,196,79,0.10);
-          border-color: rgba(244,196,79,0.18);
-        }
-
-        .asks-list {
-          margin-top: 18px;
-          display: grid;
-          gap: 12px;
-        }
-
-        .ask {
-          border-radius: 18px;
-          border: 1px solid var(--border);
-          background: rgba(10,10,12,0.36);
-          padding: 16px;
-          line-height: 1.7;
-          font-size: 0.95rem;
-        }
-
-        .closing {
-          text-align: center;
-          padding: 42px 32px;
-        }
-
-        .closing h2 {
-          max-width: 860px;
-          margin: 14px auto 0;
-          font-size: clamp(2rem, 4.8vw, 4rem);
-          line-height: 1.05;
-          letter-spacing: -0.05em;
-        }
-
-        .closing h2 span { display: block; color: var(--accent); }
-
-        .closing p {
-          max-width: 780px;
-          margin: 20px auto 0;
-          color: var(--muted);
-          line-height: 1.9;
-          font-size: 1rem;
-        }
-
-        .footer-actions {
-          margin-top: 28px;
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        @media (max-width: 1120px) {
-          .section-grid,
-          .shape,
-          .graph-interactive {
-            grid-template-columns: 1fr;
-          }
-          .flow-grid {
-            grid-template-columns: repeat(2, minmax(0,1fr));
-          }
-          .graph-detail { min-height: auto; }
-        }
-
-        @media (max-width: 860px) {
-          .mini-grid,
-          .principles,
-          .role-grid,
-          .flow-grid {
-            grid-template-columns: 1fr;
-          }
-          .graph {
-            min-height: 760px;
-          }
-          .node {
-            width: 220px;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .page { padding: 28px 16px 72px; }
-          .panel, .flow, .closing { padding: 24px; }
-          .graph {
-            min-height: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 12px;
-            background:
-              linear-gradient(180deg, rgba(17,17,20,0.95), rgba(9,9,11,0.94));
-          }
-          .graph svg, .core-dot { display: none; }
-          .node {
-            position: relative;
-            inset: auto !important;
-            left: auto !important;
-            top: auto !important;
-            transform: none;
-            width: 100%;
-          }
-        }
-      `}</style>
-
-      <div className="page">
-        <section className="hero">
+    <div className="min-h-screen bg-neutral-950 text-neutral-100">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.10),transparent_28%),radial-gradient(circle_at_80%_20%,rgba(251,191,36,0.10),transparent_18%),linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent_20%)]" />
+
+      <main className="relative mx-auto max-w-[1400px] px-6 py-10 md:px-10 lg:px-12">
+        <section className="grid gap-10">
           <div>
-            <div className="pill">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-400/25 bg-amber-400/10 px-3 py-1 text-xs tracking-[0.25em] text-amber-200 uppercase">
               SwarmCore
-              <span className="pill-dot" />
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
               Audit Layer for Serious AI
             </div>
 
-            <h1>
+            <h1 className="max-w-5xl text-5xl font-semibold leading-[0.95] tracking-tight text-white md:text-7xl">
               AI is breaking in the
-              <span>layers around the model.</span>
+              <span className="block text-amber-300">layers around the model.</span>
             </h1>
 
-            <p className="lead">
-              SwarmCore is the mechanics and audit layer for building agent systems that can
-              survive scrutiny. It exposes breaks in the chain, constrains authority, hardens
-              verification, and leaves receipts.
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-300 md:text-xl">
+              SwarmCore is the mechanics and audit layer for building agent systems that can survive scrutiny. It exposes breaks in the chain, constrains authority, hardens verification, and leaves receipts.
             </p>
 
-            <div className="actions">
-              <button className="btn primary">Enter the Graph</button>
-              <button className="btn">Read the Doctrine</button>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button className="rounded-2xl bg-amber-300 px-5 py-3 text-sm font-semibold text-neutral-950 shadow-lg shadow-amber-500/20 transition hover:-translate-y-0.5">
+                Enter the Graph
+              </button>
+              <button className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                Read the Doctrine
+              </button>
             </div>
 
-            <div className="mini-grid">
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
                 ["System failure", "Scaffold, memory, retrieval, verifier, governance."],
                 ["Defendable build", "Bounded agents with real mechanics and finality."],
                 ["Traceable outcomes", "Receipts for what ran, what it saw, and why."],
               ].map(([title, text]) => (
-                <div className="mini-card" key={title}>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+                <div key={title} className="rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+                  <div className="text-sm font-semibold text-white">{title}</div>
+                  <div className="mt-2 text-sm leading-6 text-neutral-400">{text}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="graph-shell">
-            <div className="graph-topbar">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-neutral-900/80 p-4 shadow-2xl shadow-black/30">
+            <div className="mb-3 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-neutral-400">
               <span>swarm-core / graph</span>
-              <span className="status">integrity map</span>
+              <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-1 text-emerald-300">integrity map</span>
             </div>
 
-            <div className="graph-interactive">
-              <div className="graph">
-                <svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M130 140 C 260 160, 260 250, 360 255 S 560 120, 620 165 S 750 240, 785 285" stroke="rgba(244,196,79,0.55)" strokeWidth="3" fill="none" strokeDasharray="8 8" />
+            <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative h-[560px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]">
+                <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 700" preserveAspectRatio="none">
+                  <path d="M130 140 C 260 160, 260 250, 360 255 S 560 120, 620 165 S 750 240, 785 285" stroke="rgba(251,191,36,0.55)" strokeWidth="3" fill="none" strokeDasharray="8 8" />
                   <path d="M355 255 C 420 360, 460 410, 505 470" stroke="rgba(255,255,255,0.22)" strokeWidth="2.5" fill="none" />
-                  <path d="M505 470 C 620 470, 690 520, 790 505" stroke="rgba(244,196,79,0.35)" strokeWidth="2.5" fill="none" />
+                  <path d="M505 470 C 620 470, 690 520, 790 505" stroke="rgba(251,191,36,0.35)" strokeWidth="2.5" fill="none" />
                   <path d="M625 165 C 690 210, 740 235, 790 285" stroke="rgba(255,255,255,0.18)" strokeWidth="2" fill="none" />
                   <path d="M140 140 C 220 240, 310 420, 500 470" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none" />
                 </svg>
 
-                {breakpoints.map((node, idx) => (
-                  <div className="node" key={node.title} style={{ left: node.left, top: node.top }}>
+                {breakpoints.map((node, idx) => {
+                  const active = selectedNode === node.title;
+                  return (
                     <button
-                      className="node-button"
+                      key={node.title}
                       onClick={() => setSelectedNode(node.title)}
-                      aria-pressed={selectedNode === node.title}
+                      className="absolute w-[240px] -translate-x-1/2 -translate-y-1/2 text-left"
+                      style={{ left: node.x, top: node.y }}
                     >
-                      <div className={`node-box ${selectedNode === node.title ? "active" : ""}`}>
-                        <div className="node-top">
-                          <div className="node-title">{node.title}</div>
-                          <div className="node-badge">break {idx + 1}</div>
+                      <div
+                        className={`rounded-[1.4rem] border p-4 shadow-xl shadow-black/20 backdrop-blur-md transition ${
+                          active
+                            ? "border-amber-300/40 bg-neutral-900/95 ring-1 ring-amber-300/20"
+                            : "border-white/10 bg-neutral-950/80 hover:border-amber-300/30 hover:bg-neutral-900/90"
+                        }`}
+                      >
+                        <div className="mb-3 flex items-center justify-between">
+                          <div className="text-sm font-semibold tracking-wide text-white">{node.title}</div>
+                          <div
+                            className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] ${
+                              active
+                                ? "border border-amber-300/25 bg-amber-300/10 text-amber-200"
+                                : "border border-red-400/20 bg-red-400/10 text-red-300"
+                            }`}
+                          >
+                            break {idx + 1}
+                          </div>
                         </div>
-                        <p>{node.problem}</p>
-                        <div className="fix">SwarmCore fix: {node.fix}</div>
+                        <p className="text-sm leading-6 text-neutral-300">{node.problem}</p>
+                        <div className="mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-xs leading-5 text-amber-100">
+                          SwarmCore fix: {node.fix}
+                        </div>
                       </div>
                     </button>
-                  </div>
-                ))}
+                  );
+                })}
 
-                <div className="core-dot" />
+                <div className="absolute left-[46%] top-[68%] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300 shadow-[0_0_30px_rgba(251,191,36,0.9)]" />
               </div>
 
-              <aside className="graph-detail">
-                <div className="eyebrow-mini">Selected breakpoint</div>
-                <h3>{activeNode.title}</h3>
+              <div className="grid gap-4">
+                <div className="rounded-[1.5rem] border border-white/10 bg-neutral-950/70 p-5">
+                  <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Selected breakpoint</div>
+                  <h3 className="mt-3 text-2xl font-semibold text-white">{activeNode.title}</h3>
 
-                <div className="problem-block">
-                  <div className="label">Failure mode</div>
-                  <p>{activeNode.problem}</p>
-                </div>
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Failure mode</div>
+                    <p className="text-sm leading-7 text-neutral-300">{activeNode.problem}</p>
+                  </div>
 
-                <div className="fix-block">
-                  <div className="label">SwarmCore fix</div>
-                  <p>{activeNode.fix}</p>
-                </div>
+                  <div className="mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/10 p-4">
+                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-amber-200/80">SwarmCore fix</div>
+                    <p className="text-sm leading-7 text-amber-100">{activeNode.fix}</p>
+                  </div>
 
-                <div className="problem-block">
-                  <div className="label">Why it breaks trust</div>
-                  <p>{activeNode.detail}</p>
-                </div>
+                  <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="mb-2 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Why it breaks trust</div>
+                    <p className="text-sm leading-7 text-neutral-300">{activeNode.detail}</p>
+                  </div>
 
-                <div className="receipt-group">
-                  <div className="label">Receipts SwarmCore logs</div>
-                  <div className="receipt-list">
-                    {activeNode.receipts.map((item) => (
-                      <div className="receipt-item" key={item}>{item}</div>
-                    ))}
+                  <div className="mt-4">
+                    <div className="mb-3 text-[11px] uppercase tracking-[0.24em] text-neutral-500">Receipts SwarmCore logs</div>
+                    <div className="grid gap-2">
+                      {activeNode.receipts.map((item) => (
+                        <div
+                          key={item}
+                          className="rounded-xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-sm text-amber-100"
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </aside>
+
+                <div className="rounded-[1.5rem] border border-white/10 bg-neutral-950/70 p-5">
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Run trace</div>
+                    <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-300">
+                      execution
+                    </div>
+                  </div>
+
+                  <div className="mt-4 space-y-3">
+                    {activeNode.run.map(([step, title, text], idx) => (
+                      <div key={step + title} className="relative rounded-2xl border border-white/10 bg-white/5 p-4">
+                        {idx < activeNode.run.length - 1 && (
+                          <div className="absolute left-[23px] top-[54px] h-10 w-px bg-gradient-to-b from-amber-300/50 to-transparent" />
+                        )}
+                        <div className="flex gap-3">
+                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-300/20 bg-amber-300/10 text-[11px] font-semibold text-amber-200">
+                            {step}
+                          </div>
+                          <div>
+                            <div className="text-sm font-semibold text-white">{title}</div>
+                            <div className="mt-1 text-sm leading-6 text-neutral-400">{text}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-neutral-900/80 p-4">
+                    <div className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">Execution summary</div>
+                    <div className="mt-2 text-sm leading-7 text-neutral-300">
+                      SwarmCore does not only ask whether an answer was produced. It asks whether the path was sealed, attributable, policy-bound, and mechanically valid.
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section section-grid">
-          <div className="panel">
-            <div className="eyebrow">Why SwarmCore exists</div>
-            <h2>Benchmarks can be passed through contaminated paths.</h2>
-            <p className="lead-2">
-              A system can look powerful while being structurally unsound. SwarmCore treats
-              intelligence as an operating environment problem: what the agent can access, how
-              memory mutates, what retrieval was allowed, whether the verifier was spoofable,
-              and whether a human remained the real authority boundary.
+        <section className="mt-24 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">Why SwarmCore exists</div>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+              Benchmarks can be passed through contaminated paths.
+            </h2>
+            <p className="mt-5 text-base leading-8 text-neutral-300">
+              A system can look powerful while being structurally unsound. SwarmCore treats intelligence as an operating environment problem: what the agent can access, how memory mutates, what retrieval was allowed, whether the verifier was spoofable, and whether a human remained the real authority boundary.
             </p>
 
-            <div className="evidence-list">
+            <div className="mt-8 space-y-3">
               {evidence.map((item) => (
-                <div className="evidence-item" key={item}>
-                  <span className="evidence-dot" />
-                  <span>{item}</span>
+                <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-neutral-950/60 px-4 py-3">
+                  <div className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-amber-300" />
+                  <div className="text-sm leading-6 text-neutral-300">{item}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="panel">
-            <div className="eyebrow">The build standard</div>
-            <div className="principles">
+          <div className="rounded-[2rem] border border-white/10 bg-neutral-900/80 p-8 shadow-xl shadow-black/20">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">The build standard</div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {principles.map((item, i) => (
-                <div className="principle" key={item}>
-                  <div className="num">0{i + 1}</div>
-                  <div className="label2">{item}</div>
+                <div key={item} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                  <div className="text-xs tracking-[0.25em] text-neutral-500">0{i + 1}</div>
+                  <div className="mt-2 text-lg font-medium text-white">{item}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section flow panel">
-          <div className="eyebrow">How it works</div>
-          <h2>SwarmCore turns brittle agent chains into reviewable systems.</h2>
+        <section className="mt-24 rounded-[2rem] border border-white/10 bg-gradient-to-br from-neutral-900 to-neutral-950 p-8 md:p-10">
+          <div className="max-w-3xl">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">How it works</div>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+              SwarmCore turns brittle agent chains into reviewable systems.
+            </h2>
+          </div>
 
-          <div className="flow-grid">
-            {rails.map(([name, text], idx) => (
-              <div className="flow-card" key={name}>
-                <div className="num">
-                  <span>0{idx + 1}</span>
-                  {idx < rails.length - 1 ? <span>→</span> : <span />}
+          <div className="mt-10 grid gap-4 md:grid-cols-5">
+            {rails.map((rail, idx) => (
+              <div key={rail.name} className="relative rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs tracking-[0.3em] text-neutral-500">0{idx + 1}</span>
+                  {idx < rails.length - 1 && <span className="hidden text-neutral-600 md:block">→</span>}
                 </div>
-                <h3>{name}</h3>
-                <p>{text}</p>
+                <div className="text-lg font-semibold text-white">{rail.name}</div>
+                <div className="mt-3 text-sm leading-6 text-neutral-400">{rail.text}</div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="section shape">
-          <div className="panel">
-            <div className="eyebrow">System shape</div>
-            <h2>Junior. Senior. Human. Receipts.</h2>
-            <p className="lead-2">
-              SwarmCore is built for role-defined systems. Junior agents intake, classify, and
-              package. Senior agents review, interpret, and escalate. Humans retain final
-              authority when risk, ambiguity, or policy thresholds are crossed.
+        <section className="mt-24 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">System shape</div>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+              Junior. Senior. Human. Receipts.
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-neutral-300">
+              SwarmCore is built for role-defined systems. Junior agents intake, classify, and package. Senior agents review, interpret, and escalate. Humans retain final authority when risk, ambiguity, or policy thresholds are crossed.
             </p>
 
-            <div className="role-grid">
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
               {[
                 ["Junior", "Bounded worker for intake, triage, extraction, and routing."],
                 ["Senior", "Reviewer for judgment, correction, exception handling, and policy-sensitive decisions."],
                 ["Human CEO", "Final authority with visibility into evidence, memory, policy, and action history."],
               ].map(([title, text]) => (
-                <div className="role-card" key={title}>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+                <div key={title} className="rounded-3xl border border-white/10 bg-neutral-950/60 p-5">
+                  <div className="text-lg font-semibold text-white">{title}</div>
+                  <div className="mt-3 text-sm leading-6 text-neutral-400">{text}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="panel asks">
-            <div className="eyebrow" style={{ color: "#fde7a7" }}>SwarmCore asks</div>
-            <div className="asks-list">
+          <div className="rounded-[2rem] border border-amber-300/20 bg-amber-300/10 p-8">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-100">SwarmCore asks</div>
+            <div className="mt-4 space-y-4 text-white">
               {[
                 "Was the task boundary sealed?",
                 "Was memory legitimate, sourced, and revocable?",
@@ -939,83 +436,63 @@ export default function App() {
                 "Did the agent act within its authority?",
                 "Can the entire path survive scrutiny?",
               ].map((q) => (
-                <div className="ask" key={q}>{q}</div>
+                <div key={q} className="rounded-2xl border border-white/10 bg-neutral-950/40 px-4 py-4 text-sm leading-6">
+                  {q}
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section panel closing">
-          <div className="eyebrow">Closing statement</div>
-          <h2>
-            AI does not just need better outputs.
-            <span>It needs better construction.</span>
-          </h2>
-          <p>
-            SwarmCore is the audit and mechanics layer for serious AI systems — built to expose
-            breaks, constrain behavior, verify the path, and make outcomes defendable by design.
-          </p>
-          <div className="footer-actions">
-            <button className="btn primary">Launch SwarmCore</button>
-            <button className="btn">Open the doctrine</button>
+        <section className="mt-24 rounded-[2.2rem] border border-white/10 bg-white/5 px-8 py-10 text-center backdrop-blur-sm md:px-12">
+          <div className="mx-auto max-w-3xl">
+            <div className="text-xs uppercase tracking-[0.3em] text-amber-300">Closing statement</div>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+              AI does not just need better outputs.
+              <span className="block text-amber-300">It needs better construction.</span>
+            </h2>
+            <p className="mt-6 text-base leading-8 text-neutral-300 md:text-lg">
+              SwarmCore is the audit and mechanics layer for serious AI systems — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <button className="rounded-2xl bg-amber-300 px-5 py-3 text-sm font-semibold text-neutral-950 shadow-lg shadow-amber-500/20">
+                Launch SwarmCore
+              </button>
+              <button className="rounded-2xl border border-white/15 bg-neutral-950/60 px-5 py-3 text-sm font-semibold text-white">
+                Open the doctrine
+              </button>
+            </div>
           </div>
         </section>
 
-        <footer
-          style={{
-            marginTop: "64px",
-            borderTop: "1px solid rgba(255,255,255,0.10)",
-            paddingTop: "24px",
-            paddingBottom: "8px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "16px",
-              justifyContent: "space-between",
-              alignItems: "center",
-              color: "#a1a1aa",
-              fontSize: "14px",
-              lineHeight: 1.7,
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-              <div style={{ color: "#fff", fontWeight: 700, fontSize: "16px", letterSpacing: "0.02em" }}>
-                Swarm & Bee
-              </div>
+        <footer className="relative mt-16 border-t border-white/10 pt-8 pb-4">
+          <div className="flex flex-col gap-4 text-sm text-neutral-400 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-1">
+              <div className="text-base font-semibold tracking-wide text-white">Swarm & Bee</div>
               <a
                 href="mailto:build@swarmandbee.ai"
-                style={{ color: "#a1a1aa", textDecoration: "none" }}
+                className="transition hover:text-amber-300"
               >
                 build@swarmandbee.ai
               </a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "4px", textAlign: "right" }}>
+            <div className="flex flex-col gap-1 md:items-end">
               <a
                 href="https://x.com/swarmandbee"
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: "#a1a1aa", textDecoration: "none" }}
+                className="transition hover:text-amber-300"
               >
                 x.com/swarmandbee
               </a>
-              <div
-                style={{
-                  fontSize: "11px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.22em",
-                  color: "#71717a",
-                }}
-              >
+              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
                 SwarmCore by design
               </div>
             </div>
           </div>
         </footer>
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
