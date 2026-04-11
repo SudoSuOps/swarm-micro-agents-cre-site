@@ -261,11 +261,17 @@ export default function App() {
         }
 
         .brand-mark {
-          width: 12px;
-          height: 12px;
+          width: 32px;
+          height: 32px;
           border-radius: 999px;
-          background: linear-gradient(135deg, #d3a53e, #f1d37e);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(180deg, #f6dfa4, #ebc45c);
+          border: 1px solid rgba(200,149,31,0.22);
           box-shadow: 0 0 0 6px rgba(200,149,31,0.08);
+          font-size: 16px;
+          line-height: 1;
         }
 
         .nav {
@@ -412,6 +418,54 @@ export default function App() {
           grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 12px;
           margin-top: 28px;
+        }
+
+        .hero-copy {
+          position: relative;
+        }
+
+        .hero-corner-badge {
+          position: absolute;
+          top: 22px;
+          right: 22px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 999px;
+          border: 1px solid rgba(200,149,31,0.18);
+          background: linear-gradient(180deg, rgba(255,250,235,0.98), rgba(247,237,209,0.96));
+          box-shadow: 0 8px 24px rgba(200,149,31,0.10);
+          color: #9a6d12;
+          font-size: 20px;
+        }
+
+        .posture-strip {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 18px;
+        }
+
+        .posture-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 12px;
+          border-radius: 999px;
+          border: 1px solid var(--line);
+          background: rgba(255,255,255,0.92);
+          color: var(--text);
+          font-size: 0.88rem;
+          font-weight: 600;
+          box-shadow: 0 4px 14px rgba(32,28,20,0.04);
+          white-space: nowrap;
+        }
+
+        .posture-badge span {
+          font-size: 0.95rem;
+          line-height: 1;
         }
 
         .mini-card,
@@ -1081,7 +1135,7 @@ export default function App() {
       <div className="app">
         <header className="topbar">
           <div className="brand">
-            <span className="brand-mark" />
+            <span className="brand-mark" aria-hidden="true">🐝</span>
             <span>SwarmCore</span>
           </div>
 
@@ -1094,6 +1148,8 @@ export default function App() {
 
         <section className="hero">
           <div className="hero-copy">
+            <div className="hero-corner-badge" aria-hidden="true">🐝</div>
+
             <div className="pill">
               SwarmCore
               <span className="dot" />
@@ -1116,6 +1172,21 @@ export default function App() {
               <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
                 Read the Doctrine
               </button>
+            </div>
+
+            <div className="posture-strip">
+              {[
+                ["🐝", "Sovereign compute"],
+                ["🐝", "Edge-first deployment"],
+                ["🐝", "Verified intelligence"],
+                ["🐝", "Human finality"],
+                ["🐝", "Data is high-value"],
+              ].map(([icon, text]) => (
+                <div key={text} className="posture-badge">
+                  <span>{icon}</span>
+                  {text}
+                </div>
+              ))}
             </div>
 
             <div className="mini-cards">
