@@ -19,6 +19,7 @@ function formatMoney(cents) {
 export default function App() {
   const graphRef = React.useRef(null);
   const doctrineRef = React.useRef(null);
+  const platformRef = React.useRef(null);
   const contactRef = React.useRef(null);
 
   const [selectedNode, setSelectedNode] = React.useState("Scaffold");
@@ -183,14 +184,26 @@ export default function App() {
     "Verifier hardening",
     "Human finality",
     "Full receipts",
+    "Run ledger",
   ];
 
   const stack = [
-    { name: "Detect", text: "Find breaks in the chain before they become false confidence." },
-    { name: "Bound", text: "Constrain what agents can see, do, store, and claim." },
-    { name: "Verify", text: "Validate the path, not just the output." },
-    { name: "Escalate", text: "Route meaningful risk to stronger reviewers and humans." },
-    { name: "Seal", text: "Leave receipts that survive scrutiny." },
+    { name: "Expose", text: "Name where it breaks. Scaffold, retrieval, memory, verifier, authority — each one a real failure mode." },
+    { name: "Seal", text: "Lock what the agent can see, do, remember, and claim. No undeclared paths. No hidden context." },
+    { name: "Verify", text: "Validate the path, not just the output string. A verifier that checks surface signals is theater." },
+    { name: "Escalate", text: "Route risk to stronger reviewers. Humans stay in the loop at the thresholds that matter." },
+    { name: "Ledger", text: "Leave receipts. Every run, every decision, every path. Signed and survives scrutiny." },
+  ];
+
+  const platform = [
+    { name: "Datasets", desc: "Domain-specific training pairs. Weighed on dual scales, provenance-stamped, deed-recorded. Class A through Class C." },
+    { name: "Fine-tunes", desc: "Specialist models cooked on sovereign hardware. Before/after benchmarks included. Not weights — working systems." },
+    { name: "Evaluations", desc: "Structured eval packs with ground-truth scoring. Deterministic, reproducible, receipt-backed." },
+    { name: "Run Ledger", desc: "Every agent run recorded. Model version, memory state, retrieval scope, verifier result, outcome. Auditable." },
+    { name: "Cookbook", desc: "Verified recipes for building on sovereign compute. Step-by-step, proven in production, oven settings included." },
+    { name: "CLI", desc: "swarmcore install. Local control of the full pipeline — boundaries, memory, retrieval, verification — from your terminal." },
+    { name: "Docs", desc: "Complete reference for sealed boundaries, memory discipline, retrieval integrity, verifier hardening, and governance." },
+    { name: "Providers", desc: "Connect SwarmCore to your existing agent infrastructure. Bring your own stack. The receipts travel with the run." },
   ];
 
   const active = nodes.find((node) => node.title === selectedNode) || nodes[0];
@@ -387,6 +400,10 @@ export default function App() {
           text-decoration: none; cursor: pointer; transition: all .18s ease;
         }
         .nav button:hover, .nav a:hover { border-color: var(--accent-line); background: #fffdf8; transform: translateY(-1px); }
+        .nav .nav-cta {
+          background: linear-gradient(180deg, #f2d381, #e8bb49); border-color: rgba(200,149,31,0.26);
+          box-shadow: 0 6px 18px rgba(200,149,31,0.14);
+        }
 
         .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 18px; margin-bottom: 18px; }
         .hero-copy, .hero-side, .workspace, .section, .footer {
@@ -427,6 +444,14 @@ export default function App() {
           box-shadow: 0 12px 30px rgba(200,149,31,0.16);
         }
 
+        .failure-strip { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; }
+        .failure-tag {
+          display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px;
+          border: 1px solid rgba(195,123,123,0.2); background: rgba(246,229,229,0.7); font-size: 0.86rem;
+        }
+        .failure-layer { font-weight: 700; color: #171717; }
+        .failure-mode { color: #a86565; font-size: 0.8rem; }
+
         .posture-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
         .posture-badge {
           display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 999px;
@@ -437,7 +462,7 @@ export default function App() {
           display: grid; gap: 12px;
         }
         .mini-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-        .asset-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 20px; }
+        .asset-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 20px; }
         .stack-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         .standard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .system-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -599,6 +624,7 @@ export default function App() {
         @media (max-width: 1260px) {
           .hero, .two-col, .workspace-grid { grid-template-columns: 1fr; }
           .asset-grid, .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .mini-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .graph-stage { min-height: 720px; }
         }
 
@@ -623,9 +649,10 @@ export default function App() {
           </div>
 
           <nav className="nav" aria-label="Site navigation">
-            <button onClick={() => scrollToRef(graphRef)}>Graph</button>
-            <button onClick={() => scrollToRef(doctrineRef)}>Doctrine</button>
-            <button onClick={() => scrollToRef(contactRef)}>Contact</button>
+            <button onClick={() => scrollToRef(graphRef)}>Breakpoints</button>
+            <button onClick={() => scrollToRef(doctrineRef)}>How it works</button>
+            <button onClick={() => scrollToRef(platformRef)}>Platform</button>
+            <button className="nav-cta" onClick={() => scrollToRef(contactRef)}>Talk to us →</button>
           </nav>
         </header>
 
@@ -635,39 +662,54 @@ export default function App() {
             <div className="hero-corner-badge" aria-hidden="true">🐝</div>
 
             <div className="pill">
-              SwarmCore
+              Swarm &amp; Bee
               <span className="dot" />
-              Sovereign Build Surface
+              SwarmCore
             </div>
 
             <h1>
-              AI is breaking in the
-              <span className="accent">layers around the model.</span>
+              AI fails in the layers
+              <span className="accent">around the model.</span>
             </h1>
 
+            <div className="failure-strip">
+              {[
+                ["Scaffold", "answers leak"],
+                ["Retrieval", "context contaminates"],
+                ["Memory", "weak facts persist"],
+                ["Verifier", "surface signals pass"],
+                ["Authority", "agents drift"],
+              ].map(([layer, mode]) => (
+                <div key={layer} className="failure-tag">
+                  <span className="failure-layer">{layer}</span>
+                  <span className="failure-mode">{mode}</span>
+                </div>
+              ))}
+            </div>
+
             <p className="lead">
-              SwarmCore is the mechanics and audit layer for building agent systems that can survive scrutiny. It is built on sovereign compute, treats data as a high-value asset, runs where the data lives, and verifies every path before trust is earned.
+              SwarmCore hardens all five. Sealed boundaries. Controlled execution. Verified paths. Human finality. Full receipts. Built on sovereign compute — you own the hardware, you own the trust boundary.
             </p>
 
             <div className="cta-row">
               <button className="btn primary" onClick={() => scrollToRef(graphRef)}>
-                Enter the Graph
+                See where it breaks →
               </button>
-              <button className="btn" onClick={() => scrollToRef(doctrineRef)}>
-                Read the Doctrine
+              <button className="btn" onClick={() => scrollToRef(platformRef)}>
+                View the platform
               </button>
             </div>
 
             <div className="posture-strip">
               {[
-                ["🐝", "Sovereign compute"],
-                ["🐝", "Edge-first deployment"],
-                ["🐝", "Verified intelligence"],
-                ["🐝", "Human finality"],
-                ["🐝", "Data is high-value"],
-              ].map(([icon, text]) => (
+                "Own the compute",
+                "Own the trust boundary",
+                "Run where data lives",
+                "Human has final say",
+                "Data is the product",
+              ].map((text) => (
                 <div key={text} className="posture-badge">
-                  <span>{icon}</span>
+                  <span className="dot" />
                   {text}
                 </div>
               ))}
@@ -675,9 +717,9 @@ export default function App() {
 
             <div className="mini-cards">
               {[
-                ["System failure", "Scaffold, memory, retrieval, verifier, governance."],
-                ["Defendable build", "Bounded agents with real mechanics and finality."],
-                [`API target`, getApiBase()],
+                ["The problem", "Five failure layers. Scaffold, retrieval, memory, verifier, authority. One break is enough."],
+                ["The fix", "Sealed boundaries. Verified paths. Full receipts. Defendable by design, not by hope."],
+                ["The platform", "Datasets. Fine-tunes. Evals. Receipts. A real operating surface, not a manifesto."],
               ].map(([title, text]) => (
                 <div key={title} className="mini-card">
                   <h3>{title}</h3>
@@ -690,20 +732,20 @@ export default function App() {
           <aside className="hero-side">
             <div className="side-card">
               <div className="side-top">
-                <h3>Chain Integrity Map</h3>
-                <span className="status">live backend</span>
+                <h3>Why sovereign compute</h3>
+                <span className="status">non-negotiable</span>
               </div>
               <p>
-                The graph now writes live runs and reads live receipts from your sovereign backend.
+                You can't outsource the trust boundary. If the compute isn't yours, the boundary isn't yours. SwarmCore runs where your data lives — on hardware you control, under policy you set.
               </p>
             </div>
 
             <div className="side-metric">
               {[
-                ["Compute posture", "sovereign"],
-                ["Deployment shape", "edge-first"],
-                ["Truth mode", "receipts"],
-                ["Data stance", "high-value"],
+                ["Compute", "yours"],
+                ["Deployment", "edge-first"],
+                ["Trust boundary", "yours"],
+                ["Data", "high-value asset"],
               ].map(([label, value]) => (
                 <div className="metric" key={label}>
                   <div className="metric-label">{label}</div>
@@ -714,16 +756,16 @@ export default function App() {
 
             <div className="side-card">
               <div className="side-top">
-                <h3>Live state</h3>
+                <h3>Live run</h3>
               </div>
               <p>
                 {runState.loading
                   ? "Creating a live run and loading receipts…"
                   : runState.run
-                  ? `Latest run: ${runState.run.id}`
+                  ? `Receipt issued: ${runState.run.id}`
                   : runState.error
-                  ? `Run error: ${runState.error}`
-                  : "Select a node to create a live run."}
+                  ? "Backend offline — receipts unavailable."
+                  : "Select a breakpoint below to create a live run."}
               </p>
             </div>
           </aside>
@@ -926,46 +968,25 @@ export default function App() {
             </section>
           </div>
 
-          <section className="section">
-            <div className="section-eyebrow">Marketplace / assets</div>
-            <h2>Live assets from the sovereign backend.</h2>
+          <section className="section" ref={platformRef} aria-label="SwarmCore platform surface">
+            <div className="section-eyebrow">Platform surface</div>
+            <h2>SwarmCore is a real operating surface. Not a manifesto.</h2>
             <p className="section-copy">
-              Datasets, fine-tunes, evaluation packs, and service offerings should all flow through the same ledgered asset model.
+              Datasets, fine-tunes, evaluations, receipts, CLI, docs, cookbook, providers. Everything flows through the same ledgered, receipt-backed, sovereign stack.
             </p>
-
-            {assetsState.loading ? (
-              <div className="section-copy">Loading assets…</div>
-            ) : assetsState.error ? (
-              <div className="section-copy" style={{ marginTop: 20, opacity: 0.5 }}>
-                Assets unavailable — backend not configured.
-              </div>
-            ) : (
-              <div className="asset-grid">
-                {assets.length === 0 ? (
-                  <div className="asset-card">
-                    <h3>No assets yet</h3>
-                    <p>Seed the backend or publish the first dataset, fine-tune, or evaluation listing.</p>
-                  </div>
-                ) : (
-                  assets.map((asset) => (
-                    <div key={asset.id} className="asset-card">
-                      <div className="asset-type">{asset.type}</div>
-                      <h3 style={{ marginTop: 12 }}>{asset.title}</h3>
-                      <p>{asset.summary || "No summary yet."}</p>
-                      <div className="asset-meta">
-                        <span>{formatMoney(asset.price_cents)}</span>
-                        <span>{asset.status}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            )}
+            <div className="asset-grid" style={{ marginTop: 24 }}>
+              {platform.map((item) => (
+                <div key={item.name} className="asset-card">
+                  <div className="asset-type">{item.name}</div>
+                  <p style={{ marginTop: 10 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </section>
 
-          <section className="section">
-            <div className="section-eyebrow">How it works</div>
-            <h2>SwarmCore turns brittle agent chains into reviewable systems.</h2>
+          <section className="section" aria-label="How SwarmCore works">
+            <div className="section-eyebrow">The five-step fix</div>
+            <h2>SwarmCore turns brittle agent chains into reviewable, defensible systems.</h2>
             <div className="stack-grid">
               {stack.map((item, idx) => (
                 <div key={item.name} className="stack-card">
@@ -978,18 +999,18 @@ export default function App() {
           </section>
 
           <div className="two-col">
-            <section className="section">
-              <div className="section-eyebrow">System shape</div>
-              <h2>Junior. Senior. Human. Receipts.</h2>
+            <section className="section" aria-label="Governance and human finality">
+              <div className="section-eyebrow">Verification and human finality</div>
+              <h2>Junior. Senior. Human. The loop stays closed.</h2>
               <p className="section-copy">
-                SwarmCore is built for role-defined systems. Junior agents intake, classify, and package. Senior agents review, interpret, and escalate. Humans retain final authority when risk, ambiguity, or policy thresholds are crossed.
+                Every serious system needs role clarity. Junior agents are bounded workers — intake, triage, extraction, routing. Senior agents review, interpret, correct, and escalate. Humans retain final authority where risk, ambiguity, or policy thresholds are crossed. Trust is earned through controls, not confidence scores.
               </p>
 
               <div className="system-grid">
                 {[
-                  ["Junior", "Bounded worker for intake, triage, extraction, and routing."],
-                  ["Senior", "Reviewer for judgment, correction, exception handling, and policy-sensitive decisions."],
-                  ["Human CEO", "Final authority with visibility into evidence, memory, policy, and action history."],
+                  ["Junior", "Bounded worker. Intake, triage, extraction, routing. No authority beyond its declared scope."],
+                  ["Senior", "Reviewer and escalator. Judgment, correction, exception handling, policy-sensitive decisions."],
+                  ["Human", "Final authority. Visibility into evidence, memory state, policy applied, and full action history."],
                 ].map(([title, text]) => (
                   <div key={title} className="system-card">
                     <h3>{title}</h3>
@@ -999,17 +1020,17 @@ export default function App() {
               </div>
             </section>
 
-            <section className="section">
-              <div className="section-eyebrow">SwarmCore asks</div>
-              <h2>Did the system earn the answer?</h2>
+            <section className="section" aria-label="SwarmCore audit questions">
+              <div className="section-eyebrow">The six questions</div>
+              <h2>Did the system earn the answer, or did it cheat to get there?</h2>
               <div className="ask-grid">
                 {[
-                  "Was the task boundary sealed?",
+                  "Was the task boundary sealed before execution?",
                   "Was memory legitimate, sourced, and revocable?",
-                  "Was retrieval allowed for this task?",
-                  "Was the verifier mechanically valid?",
-                  "Did the agent act within its authority?",
-                  "Can the entire path survive scrutiny?",
+                  "Was retrieval scoped to approved sources only?",
+                  "Was the verifier mechanically valid — not spoofable?",
+                  "Did the agent act within its declared authority?",
+                  "Can the entire path survive external scrutiny?",
                 ].map((item) => (
                   <div key={item} className="ask-card">
                     {item}
@@ -1112,21 +1133,21 @@ export default function App() {
             </div>
           </section>
 
-          <section className="section">
-            <div className="section-eyebrow">Closing statement</div>
+          <section className="section" aria-label="Closing statement">
+            <div className="section-eyebrow">The bottom line</div>
             <h2>
-              AI does not just need better outputs.
-              <span className="accent">It needs better construction.</span>
+              Five failure layers. Five fixes.
+              <span className="accent">One sovereign platform.</span>
             </h2>
             <p className="section-copy">
-              SwarmCore is the audit and mechanics layer for serious AI systems — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
+              The scaffold leaks or it doesn't. The retrieval is scoped or it isn't. The memory is disciplined or it poisons. The verifier is real or it's theater. The authority is bound or it drifts. SwarmCore makes this mechanical, not aspirational — running on compute you own, with receipts that survive scrutiny, and humans who stay in the loop where it matters.
             </p>
             <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
               <button className="btn primary" onClick={() => scrollToRef(graphRef)}>
-                Enter the Graph
+                See where it breaks →
               </button>
               <button className="btn" onClick={() => scrollToRef(contactRef)}>
-                Contact Swarm & Bee
+                Talk to Swarm &amp; Bee
               </button>
             </div>
           </section>
