@@ -1,0 +1,38 @@
+# SwarmCore — Swarm & Bee
+
+## What SwarmCore is
+
+SwarmCore is the mechanics and audit layer for building AI agent systems that survive scrutiny. It is built by Swarm & Bee — an AI training data refinery focused on provenance, quality, and defendable intelligence.
+
+SwarmCore addresses six failure modes that break trust in agent systems:
+
+- **Scaffold integrity**: Leaked answers, porous harnesses, and hidden shortcuts contaminate reasoning before it begins. SwarmCore seals task boundaries and enforces explicit access control.
+- **Memory discipline**: Weak facts becoming permanent truth. SwarmCore scores, sources, and gates all memory writes. Long-term truth requires policy or human sign-off.
+- **Retrieval integrity**: Untrusted context contaminating decisions. SwarmCore scopes retrieval to approved sources with full attribution.
+- **Verifier hardening**: Spoofable pass signals and shallow checks. SwarmCore validates intended task completion, not cosmetic outputs.
+- **Governance**: Agents drifting beyond their authority. SwarmCore binds roles, escalation paths, and human finality in code and policy.
+- **Audit receipts**: No receipts, no trust. SwarmCore records full lineage and reviewable decision traces for every run.
+
+## Company
+
+- **Name**: Swarm & Bee
+- **Product**: SwarmCore
+- **Contact**: build@swarmandbee.ai
+- **Website**: https://swarmandbee.ai
+- **X / Twitter**: @swarmandbee
+
+## Core thesis
+
+AI does not just need better outputs. It needs better construction. The audit and mechanics layer for serious AI — built to expose breaks, constrain behavior, verify the path, and make outcomes defendable by design.
+
+## Key concepts
+
+- Sovereign compute: agents run where the data lives, not on shared cloud infrastructure
+- Edge-first deployment: computation at the boundary, not in centralized servers
+- Verified intelligence: every output is traceable to a bounded, auditable path
+- Human finality: humans retain authority where risk, ambiguity, or policy thresholds are crossed
+- Data as high-value asset: training data carries provenance, quality weight, and blockchain-anchored finality
+
+## Pricing
+
+Contact build@swarmandbee.ai for enterprise pricing. SwarmCore is built for organizations deploying agent systems in CRE, legal, medical, and financial domains.

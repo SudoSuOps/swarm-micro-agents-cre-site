@@ -622,14 +622,15 @@ export default function App() {
             <span>SwarmCore</span>
           </div>
 
-          <div className="nav">
+          <nav className="nav" aria-label="Site navigation">
             <button onClick={() => scrollToRef(graphRef)}>Graph</button>
             <button onClick={() => scrollToRef(doctrineRef)}>Doctrine</button>
             <button onClick={() => scrollToRef(contactRef)}>Contact</button>
-          </div>
+          </nav>
         </header>
 
-        <section className="hero">
+        <main>
+        <section className="hero" aria-label="Hero — SwarmCore overview">
           <div className="hero-copy">
             <div className="hero-corner-badge" aria-hidden="true">🐝</div>
 
@@ -728,7 +729,7 @@ export default function App() {
           </aside>
         </section>
 
-        <section className="workspace" ref={graphRef}>
+        <section className="workspace" ref={graphRef} aria-label="Chain Integrity Map — interactive graph">
           <div className="workspace-topbar">
             <span>swarm-core / chain integrity map</span>
             <span>graph · execution surface · receipt inspector</span>
@@ -887,7 +888,7 @@ export default function App() {
 
         <div ref={doctrineRef}>
           <div className="two-col">
-            <section className="section">
+            <section className="section" aria-label="Why SwarmCore exists">
               <div className="section-eyebrow">Why SwarmCore exists</div>
               <h2>Benchmarks can be passed through contaminated paths.</h2>
               <p className="section-copy">
@@ -1130,8 +1131,9 @@ export default function App() {
             </div>
           </section>
         </div>
+        </main>
 
-        <footer className="footer">
+        <footer className="footer" aria-label="Site footer">
           <div className="footer-brand">
             <strong>Swarm & Bee</strong>
             <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>
