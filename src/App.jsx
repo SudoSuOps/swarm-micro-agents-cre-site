@@ -441,6 +441,7 @@ export default function App() {
         .stack-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         .standard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .system-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .ask-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
         .mini-card, .side-card, .inspector-block, .trace-step, .standard-card, .stack-card, .system-card, .ask-card, .asset-card, .contact-card {
           border: 1px solid var(--line-2); background: rgba(255,255,255,0.88); border-radius: var(--radius-lg);
@@ -914,7 +915,9 @@ export default function App() {
             {assetsState.loading ? (
               <div className="section-copy">Loading assets…</div>
             ) : assetsState.error ? (
-              <div className="form-error" style={{ marginTop: 20 }}>{assetsState.error}</div>
+              <div className="section-copy" style={{ marginTop: 20, opacity: 0.5 }}>
+                Assets unavailable — backend not configured.
+              </div>
             ) : (
               <div className="asset-grid">
                 {assets.length === 0 ? (
@@ -1063,7 +1066,7 @@ export default function App() {
             </div>
           </section>
 
-          <section className="section closing">
+          <section className="section">
             <div className="section-eyebrow">Closing statement</div>
             <h2>
               AI does not just need better outputs.
