@@ -652,6 +652,7 @@ export default function App() {
             <button onClick={() => scrollToRef(graphRef)}>Breakpoints</button>
             <button onClick={() => scrollToRef(doctrineRef)}>How it works</button>
             <button onClick={() => scrollToRef(platformRef)}>Platform</button>
+            <a href="/cre/" style={{ textDecoration: "none" }}>CRE →</a>
             <button className="nav-cta" onClick={() => scrollToRef(contactRef)}>Talk to us →</button>
           </nav>
         </header>
@@ -982,6 +983,31 @@ export default function App() {
                 </div>
               ))}
             </div>
+
+            <a href="/cre/" style={{ textDecoration: "none", display: "block", marginTop: 32 }}>
+              <div style={{
+                background: "#fffdf8",
+                border: "1px solid #c8951a",
+                borderRadius: 12,
+                padding: "28px 32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 24,
+                cursor: "pointer",
+                transition: "border-color 0.15s, transform 0.15s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = "#a37010"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.borderColor = "#c8951a"; }}
+              >
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c8951a", marginBottom: 8 }}>Micro-domain · CRE</div>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", marginBottom: 8 }}>Built for CRE firms — 4B junior, 9B senior, principal control.</h3>
+                  <p style={{ color: "#555", fontSize: 15, lineHeight: 1.6 }}>Capital markets intake. Lease abstraction. Email triage. Pipeline hygiene. Real tasks, real tiers, real authority boundaries. See exactly what SwarmCore does inside a CRE firm.</p>
+                </div>
+                <div style={{ fontSize: 28, color: "#c8951a", flexShrink: 0, fontWeight: 300 }}>→</div>
+              </div>
+            </a>
           </section>
 
           <section className="section" aria-label="How SwarmCore works">
