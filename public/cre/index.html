@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SwarmCore for CRE — Junior Agent, Senior Agent, Principal Authority | Swarm &amp; Bee</title>
+  <meta name="description" content="Your CRE firm already runs on a junior-senior-principal structure. SwarmCore mirrors it exactly — a 4B junior that handles intake, pipeline, and prep; a 9B senior that handles deal judgment, risk, and positioning; and a principal who keeps final authority."/>
+  <link rel="canonical" href="https://swarmandbee.ai/cre/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://swarmandbee.ai/cre/"/>
+  <meta property="og:title" content="SwarmCore for CRE — Junior Agent, Senior Agent, Principal Authority"/>
+  <meta property="og:description" content="A 4B junior that handles intake, pipeline, and prep. A 9B senior that handles deal judgment, lender fit, and escalation. The principal keeps final authority on risk and capital."/>
+  <meta property="og:site_name" content="Swarm &amp; Bee"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@swarmandbee"/>
+  <meta name="robots" content="index, follow"/>
+  <meta name="keywords" content="CRE AI agents, commercial real estate AI, junior agent CRE, senior agent CRE, deal intake automation, lease abstraction AI, lender outreach AI, CRE pipeline automation, SwarmCore"/>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://swarmandbee.ai/#organization",
+        "name": "Swarm & Bee",
+        "url": "https://swarmandbee.ai",
+        "email": "build@swarmandbee.ai",
+        "sameAs": ["https://x.com/swarmandbee"]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://swarmandbee.ai/cre/",
+        "name": "SwarmCore for CRE — Junior Agent, Senior Agent, Principal Authority",
+        "description": "SwarmCore for commercial real estate firms — a 4B junior agent for intake, pipeline, and prep; a 9B senior agent for deal judgment, risk, and positioning; and a principal layer that retains final authority.",
+        "url": "https://swarmandbee.ai/cre/",
+        "isPartOf": { "@id": "https://swarmandbee.ai/#website" },
+        "publisher": { "@id": "https://swarmandbee.ai/#organization" }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --bg-2: #f3f1eb;
+      --panel: rgba(255,255,255,0.82);
+      --panel-strong: rgba(255,255,255,0.96);
+      --line: #e8e2d7;
+      --line-2: #ece7de;
+      --text: #171717;
+      --muted: #5f6670;
+      --muted-2: #8b93a0;
+      --accent: #c8951f;
+      --accent-soft: #f7edd1;
+      --accent-line: rgba(200,149,31,0.22);
+      --danger: #c37b7b;
+      --danger-soft: #f6e5e5;
+      --success: #6f9b7d;
+      --success-soft: #e9f3ec;
+      --shadow: 0 20px 60px rgba(32,28,20,0.08);
+      --shadow-soft: 0 10px 28px rgba(32,28,20,0.05);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0; min-width: 320px; min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(200,149,31,0.10), transparent 24%),
+        radial-gradient(circle at 80% 14%, rgba(200,149,31,0.08), transparent 14%),
+        linear-gradient(180deg, rgba(255,255,255,0.65), transparent 20%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+
+    /* Layout */
+    .wrap { max-width: 1340px; margin: 0 auto; padding: 18px 18px 80px; }
+
+    /* Topbar */
+    .topbar {
+      position: sticky; top: 12px; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 14px 18px; border: 1px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.78); backdrop-filter: blur(18px);
+      border-radius: 20px; box-shadow: var(--shadow-soft); margin-bottom: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, #f6dfa4, #ebc45c);
+      border: 1px solid rgba(200,149,31,0.22);
+      box-shadow: 0 0 0 6px rgba(200,149,31,0.08); font-size: 16px;
+    }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .nav a, .nav-btn {
+      appearance: none; border: 1px solid var(--line); background: white; color: var(--text);
+      padding: 9px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; transition: all .18s ease; display: inline-block;
+    }
+    .nav a:hover, .nav-btn:hover { border-color: var(--accent-line); background: #fffdf8; }
+    .nav .cta-btn {
+      background: linear-gradient(180deg, #f2d381, #e8bb49);
+      border-color: rgba(200,149,31,0.26); box-shadow: 0 6px 18px rgba(200,149,31,0.14);
+    }
+
+    /* Panel base */
+    .panel {
+      border: 1px solid rgba(255,255,255,0.52); background: var(--panel);
+      backdrop-filter: blur(16px); border-radius: var(--radius-xl); box-shadow: var(--shadow);
+    }
+
+    /* Hero */
+    .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; margin-bottom: 18px; }
+    .hero-copy { padding: 32px; position: relative; }
+    .hero-side { padding: 20px; display: grid; gap: 14px; align-content: start; }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 10px; width: fit-content;
+      border-radius: 999px; border: 1px solid var(--accent-line); background: var(--accent-soft);
+      color: #9a6d12; padding: 10px 14px; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.24em; font-weight: 700;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); display: inline-block; }
+
+    h1 { margin: 20px 0 0; font-size: clamp(2.4rem, 4.5vw, 4.2rem); line-height: 1.0; letter-spacing: -0.05em; }
+    h1 .accent { display: block; color: #b88317; }
+    .lead { margin: 22px 0 0; color: var(--muted); font-size: 1.06rem; line-height: 1.9; max-width: 720px; }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn {
+      appearance: none; border: 1px solid var(--line); background: white; color: var(--text);
+      border-radius: 16px; padding: 14px 20px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all .18s ease; display: inline-block; text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: var(--accent-line); background: #fffdf8; }
+    .btn.primary {
+      background: linear-gradient(180deg, #f2d381, #e8bb49);
+      border-color: rgba(200,149,31,0.26); box-shadow: 0 12px 30px rgba(200,149,31,0.16);
+    }
+
+    /* Three-tier cards */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-bottom: 18px; }
+    .tier-card { padding: 22px; border: 1px solid var(--line-2); background: rgba(255,255,255,0.88); border-radius: var(--radius-lg); }
+    .tier-card.highlight { border-color: rgba(200,149,31,0.28); background: #fff9eb; }
+    .tier-label { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+    .tier-model { font-size: 0.82rem; color: var(--muted-2); font-weight: 600; margin-bottom: 14px; }
+    .tier-title { font-size: 1.18rem; font-weight: 700; margin-bottom: 12px; }
+    .tier-desc { color: var(--muted); font-size: 0.93rem; line-height: 1.75; }
+    .tier-oneliner {
+      margin-top: 14px; padding: 10px 12px; border-radius: 14px;
+      border: 1px solid rgba(200,149,31,0.16); background: var(--accent-soft);
+      color: #8a620f; font-size: 0.84rem; line-height: 1.55; font-style: italic;
+    }
+
+    /* Section shell */
+    .section { padding: 28px; margin-bottom: 18px; }
+    .eyebrow { color: #b88317; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; }
+    h2 { margin: 12px 0 0; font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.1; letter-spacing: -0.04em; }
+    .section-copy { margin-top: 16px; color: var(--muted); line-height: 1.9; font-size: 1rem; }
+
+    /* Domain blocks */
+    .domain-grid { display: grid; gap: 16px; margin-top: 24px; }
+    .domain-block { border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; }
+    .domain-header {
+      padding: 16px 20px; background: rgba(255,255,255,0.94);
+      border-bottom: 1px solid var(--line-2); display: flex; align-items: center; gap: 12px;
+    }
+    .domain-name { font-weight: 700; font-size: 1rem; }
+    .domain-badge {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+      padding: 5px 9px; border-radius: 999px; border: 1px solid var(--accent-line);
+      background: var(--accent-soft); color: #9a6d12;
+    }
+    .domain-body { display: grid; grid-template-columns: 1.1fr 0.9fr; }
+    .domain-tasks { padding: 20px; border-right: 1px solid var(--line-2); }
+    .domain-value { padding: 20px; background: rgba(247,246,242,0.7); }
+    .domain-col-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; color: var(--muted-2); margin-bottom: 14px; }
+    .task-list { display: grid; gap: 8px; }
+    .task-item { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; color: var(--muted); line-height: 1.55; }
+    .task-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); margin-top: 6px; flex: 0 0 auto; }
+    .value-statement { font-size: 1.02rem; font-weight: 700; color: var(--text); line-height: 1.5; margin-bottom: 14px; }
+    .value-detail { font-size: 0.9rem; color: var(--muted); line-height: 1.75; }
+    .value-list { display: grid; gap: 6px; margin-top: 12px; }
+    .value-item { font-size: 0.88rem; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
+    .check { color: var(--success); font-weight: 700; flex: 0 0 auto; }
+
+    /* CEO section */
+    .ceo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+    .ceo-before, .ceo-after { padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--line-2); }
+    .ceo-before { background: rgba(246,229,229,0.5); border-color: rgba(195,123,123,0.2); }
+    .ceo-after { background: rgba(233,243,236,0.5); border-color: rgba(111,155,125,0.2); }
+    .ceo-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+    .ceo-before .ceo-label { color: #a86565; }
+    .ceo-after .ceo-label { color: #52755d; }
+    .ceo-list { display: grid; gap: 8px; }
+    .ceo-item { font-size: 0.92rem; line-height: 1.55; display: flex; gap: 8px; align-items: flex-start; }
+    .ceo-before .ceo-item { color: #a86565; }
+    .ceo-after .ceo-item { color: #3d6349; }
+
+    /* ROI grid */
+    .roi-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 22px; }
+    .roi-card { padding: 18px; border: 1px solid var(--line-2); background: rgba(255,255,255,0.88); border-radius: var(--radius-lg); }
+    .roi-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .roi-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+    /* Division summary */
+    .division-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 22px; }
+    .division-card {
+      padding: 22px; border-radius: var(--radius-lg);
+      border: 1px solid var(--line-2); background: rgba(255,255,255,0.9);
+    }
+    .division-role { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .division-model { font-size: 0.78rem; color: var(--muted-2); font-weight: 600; margin-bottom: 12px; }
+    .division-line { font-size: 1.06rem; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+    .division-examples { display: grid; gap: 6px; }
+    .division-ex { font-size: 0.86rem; color: var(--muted); display: flex; gap: 8px; }
+
+    /* Contact CTA */
+    .contact-cta { padding: 40px; text-align: center; }
+    .contact-cta h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+    .contact-cta .lead { margin: 16px auto 0; max-width: 600px; }
+
+    /* Footer */
+    .footer {
+      margin-top: 20px; padding: 22px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      border: 1px solid rgba(255,255,255,0.52); background: var(--panel);
+      backdrop-filter: blur(16px); border-radius: var(--radius-xl); box-shadow: var(--shadow);
+    }
+    .footer-brand { display: grid; gap: 4px; }
+    .footer a, .footer span { color: var(--muted); text-decoration: none; font-size: 0.94rem; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .hero, .tier-grid, .roi-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .topbar { position: static; }
+      .domain-body { grid-template-columns: 1fr; }
+      .domain-tasks { border-right: none; border-bottom: 1px solid var(--line-2); }
+      .ceo-grid, .division-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .roi-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a href="/" class="brand">
+      <span class="brand-mark" aria-hidden="true">🐝</span>
+      <span>Swarm &amp; Bee</span>
+    </a>
+    <nav class="nav" aria-label="CRE page navigation">
+      <a href="/#graph">Breakpoints</a>
+      <a href="/#platform">Platform</a>
+      <a href="mailto:build@swarmandbee.ai" class="cta-btn">Talk to us →</a>
+    </nav>
+  </header>
+
+  <main>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="CRE agent model overview">
+    <div class="hero-copy panel">
+
+      <div class="pill">
+        SwarmCore
+        <span class="dot"></span>
+        CRE Micro-Domain
+      </div>
+
+      <h1>
+        Your CRE firm doesn't need
+        <span class="accent">one magic agent.</span>
+      </h1>
+
+      <p class="lead">
+        It needs a <strong>4B junior</strong> that handles intake, pipeline, and prep — and a <strong>9B senior</strong> that handles deal judgment, lender fit, and escalation. The principal keeps final authority on risk, relationships, and capital. That is exactly how your shop already works. SwarmCore mirrors it.
+      </p>
+
+      <div class="cta-row">
+        <a href="mailto:build@swarmandbee.ai" class="btn primary">Build this for my firm →</a>
+        <a href="#junior" class="btn">See what the junior does</a>
+      </div>
+    </div>
+
+    <aside class="hero-side panel" aria-label="The three-tier model at a glance">
+      <div class="tier-card highlight">
+        <div class="tier-label">Junior</div>
+        <div class="tier-model">4B model · volume layer</div>
+        <div class="tier-title">Runs the paperwork, pipeline, and prep.</div>
+        <div class="tier-oneliner">Intake, extraction, classification, summaries, drafts, updates, first-pass packaging. The work that clogs the day.</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Senior</div>
+        <div class="tier-model">9B model · judgment layer</div>
+        <div class="tier-title">Runs the judgment, strategy, and escalation.</div>
+        <div class="tier-oneliner">Deal positioning, lender fit, lease risk, go/no-go guidance. The work that requires a real opinion.</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Principal</div>
+        <div class="tier-model">You · final authority</div>
+        <div class="tier-title">Retains final authority on risk, relationships, and capital.</div>
+        <div class="tier-oneliner">You receive the brief, the recommendation, the risk flag, and the choices. You make the call.</div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Junior agent -->
+  <section class="section panel" id="junior" aria-label="What the junior agent does">
+    <div class="eyebrow">4B Junior Agent</div>
+    <h2>The work that clogs the day — handled.</h2>
+    <p class="section-copy">
+      Think of the junior agent like a strong analyst, coordinator, and associate support layer running 24 hours a day. It handles the repetitive, time-consuming, high-volume work so your team doesn't have to.
+    </p>
+
+    <div class="domain-grid">
+
+      <!-- Capital Markets -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Capital Markets</div>
+          <div class="domain-badge">deal intake · packaging</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the junior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Ingests a new opportunity from email, broker OM, Dropbox link, or call notes</div>
+              <div class="task-item"><span class="task-dot"></span>Extracts borrower, sponsor, asset type, location, loan request, NOI, occupancy, DSCR, leverage, and timeline</div>
+              <div class="task-item"><span class="task-dot"></span>Normalizes messy broker packages into a structured deal card</div>
+              <div class="task-item"><span class="task-dot"></span>Updates the pipeline and CRM with clean, structured fields</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts the first lender summary</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts first-pass lender outreach lists based on asset type and deal shape</div>
+              <div class="task-item"><span class="task-dot"></span>Flags missing items — rent roll, T12, org chart, trailing occupancy, borrower financials</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">45 minutes of cleanup becomes 3 minutes of review.</div>
+            <div class="value-detail">Instead of a human retyping and cleaning a broker package, the junior agent gets it into the system and gives the team a clean starting point.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>More deal flow processed</div>
+              <div class="value-item"><span class="check">+</span>Less analyst drag on intake</div>
+              <div class="value-item"><span class="check">+</span>Fewer missed data points</div>
+              <div class="value-item"><span class="check">+</span>Cleaner pipeline from day one</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leasing -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Leasing</div>
+          <div class="domain-badge">abstraction · date tracking</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the junior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Reads inbound leasing emails and classifies by prospect, existing tenant, landlord, broker, legal, or vendor</div>
+              <div class="task-item"><span class="task-dot"></span>Pulls key terms from LOIs, lease abstracts, amendments, notices, and estoppels</div>
+              <div class="task-item"><span class="task-dot"></span>Compares draft lease language against your standard clause library</div>
+              <div class="task-item"><span class="task-dot"></span>Surfaces every critical date — rent commencement, expiration, options, notice windows, TI obligations</div>
+              <div class="task-item"><span class="task-dot"></span>Updates the lease database with extracted terms</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts the first abstract or first response</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">The firm stops losing money on missed details.</div>
+            <div class="value-detail">The junior agent is a systematic reader — it does not get tired, skim, or miss a notice date buried on page 38.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>No missed renewals or option windows</div>
+              <div class="value-item"><span class="check">+</span>No sloppy abstracting from stale PDFs</div>
+              <div class="value-item"><span class="check">+</span>Less time digging through email chains</div>
+              <div class="value-item"><span class="check">+</span>Lease database stays current</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Email</div>
+          <div class="domain-badge">triage · routing · drafts</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the junior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Monitors inbound email and tags by urgency, deal, tenant, lender, legal, asset, and region</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts replies for routine correspondence</div>
+              <div class="task-item"><span class="task-dot"></span>Summarizes long threads into a single clean read</div>
+              <div class="task-item"><span class="task-dot"></span>Pulls action items and open asks from every thread</div>
+              <div class="task-item"><span class="task-dot"></span>Logs the thread to the right deal, contact, or property record</div>
+              <div class="task-item"><span class="task-dot"></span>Escalates only what actually matters to the senior layer</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">Instead of reading 80 emails to find 6 that matter — you get 6.</div>
+            <div class="value-detail">The CEO and senior team receive a clean queue, draft replies, flagged risk items, thread summaries, and tracked action items. That is real operational leverage.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>No inbox triage for the senior team</div>
+              <div class="value-item"><span class="check">+</span>Drafts ready to review, not write</div>
+              <div class="value-item"><span class="check">+</span>Action items don't fall through threads</div>
+              <div class="value-item"><span class="check">+</span>Every thread logged to the right record</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database / CRM -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Database &amp; CRM</div>
+          <div class="domain-badge">records · enrichment · hygiene</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the junior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Keeps deal, contact, and property records clean and current</div>
+              <div class="task-item"><span class="task-dot"></span>Updates pipeline stages as deals progress</div>
+              <div class="task-item"><span class="task-dot"></span>Enriches contact and property records from emails, docs, and call notes</div>
+              <div class="task-item"><span class="task-dot"></span>Links documents, emails, and files to the right deal</div>
+              <div class="task-item"><span class="task-dot"></span>Extracts structured data from PDFs and emails into searchable fields</div>
+              <div class="task-item"><span class="task-dot"></span>Identifies incomplete records and stale opportunities for review</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">The database becomes a living system instead of a graveyard.</div>
+            <div class="value-detail">Most firms lose time because their internal system is half-dead. The junior agent turns it into the firm's operational memory.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>Reporting you can trust</div>
+              <div class="value-item"><span class="check">+</span>Lender targeting from real data</div>
+              <div class="value-item"><span class="check">+</span>Historical search that actually works</div>
+              <div class="value-item"><span class="check">+</span>Institutional memory that survives turnover</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Senior agent -->
+  <section class="section panel" id="senior" aria-label="What the senior agent does">
+    <div class="eyebrow">9B Senior Agent</div>
+    <h2>The judgment work. Done before you sit down.</h2>
+    <p class="section-copy">
+      The senior agent is not there to do volume. It is there to do judgment. Think of it like a strong VP, director, or capital markets lead — reviewing the junior's output and forming the actual recommendation.
+    </p>
+
+    <div class="domain-grid">
+
+      <!-- Capital Markets -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Capital Markets</div>
+          <div class="domain-badge">deal review · lender strategy</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the senior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Reviews the structured deal card from the junior agent</div>
+              <div class="task-item"><span class="task-dot"></span>Decides whether the deal is actually financeable at the stated terms</div>
+              <div class="task-item"><span class="task-dot"></span>Identifies the right lender buckets — bank, debt fund, CMBS, life co, agency</div>
+              <div class="task-item"><span class="task-dot"></span>Spots structural issues: weak sponsor story, DSCR pressure, rollover risk, occupancy concentration, bad use of proceeds framing, bridge vs perm mismatch</div>
+              <div class="task-item"><span class="task-dot"></span>Rewrites the lender narrative so the deal is positioned correctly</div>
+              <div class="task-item"><span class="task-dot"></span>Recommends path: send · hold · repackage · request more docs · decline</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">Better judgment before a human wastes time or reputation.</div>
+            <div class="value-detail">The senior agent protects the firm from blasting the wrong lenders, presenting weak packages badly, or chasing dead deals too long.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>Lender outreach is targeted, not scattered</div>
+              <div class="value-item"><span class="check">+</span>Structure issues caught before the call</div>
+              <div class="value-item"><span class="check">+</span>Lender story positioned for the right audience</div>
+              <div class="value-item"><span class="check">+</span>Dead deals killed early, not late</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leasing -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Leasing</div>
+          <div class="domain-badge">lease risk · strategy notes</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the senior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Reviews non-standard lease language flagged by the junior</div>
+              <div class="task-item"><span class="task-dot"></span>Compares landlord vs tenant risk in economic and operational terms</div>
+              <div class="task-item"><span class="task-dot"></span>Spots hidden issues that look like boilerplate but carry commercial consequences</div>
+              <div class="task-item"><span class="task-dot"></span>Flags what should go to outside counsel, internal legal, asset management, or the principal directly</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts strategy notes — not just clause summaries — on what to fight for and what to give</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">Protects economics and risk posture on every lease.</div>
+            <div class="value-detail">The senior agent helps the firm answer what is normal, what is dangerous, what is worth fighting over, and what is not worth slowing the deal for.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>Lease economics reviewed before signing</div>
+              <div class="value-item"><span class="check">+</span>Escalation decisions made early</div>
+              <div class="value-item"><span class="check">+</span>Outside counsel used only where it matters</div>
+              <div class="value-item"><span class="check">+</span>Strategy, not just clause summaries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email and Communications -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Email &amp; Communications</div>
+          <div class="domain-badge">high-stakes outbound · positioning</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the senior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Reviews high-stakes outbound before it goes — lender positioning, sponsor updates, tenant notices</div>
+              <div class="task-item"><span class="task-dot"></span>Handles sensitive situations: bad news delivery, deal re-trades, lender pushback, tenant disputes</div>
+              <div class="task-item"><span class="task-dot"></span>Turns a messy issue into a clean executive recommendation the principal can act on</div>
+              <div class="task-item"><span class="task-dot"></span>Identifies political and relationship risk in proposed communications</div>
+              <div class="task-item"><span class="task-dot"></span>Drafts the harder messages — the ones where tone, timing, and framing matter</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">This is where relationships are protected or damaged.</div>
+            <div class="value-detail">The senior agent helps the firm communicate with clarity, strategy, and tone discipline — not with emotion, urgency, or reactive instinct.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>High-stakes messages reviewed before sending</div>
+              <div class="value-item"><span class="check">+</span>Relationship risk identified in advance</div>
+              <div class="value-item"><span class="check">+</span>Issues turned into structured recommendations</div>
+              <div class="value-item"><span class="check">+</span>Less reactive, more strategic outbound</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operating Intelligence -->
+      <div class="domain-block">
+        <div class="domain-header">
+          <div class="domain-name">Pipeline &amp; Operating Intelligence</div>
+          <div class="domain-badge">pattern · strategy · prioritization</div>
+        </div>
+        <div class="domain-body">
+          <div class="domain-tasks">
+            <div class="domain-col-label">What the senior agent does</div>
+            <div class="task-list">
+              <div class="task-item"><span class="task-dot"></span>Reads the full body of firm memory — deals, tenants, lenders, issues, outcomes</div>
+              <div class="task-item"><span class="task-dot"></span>Identifies patterns across deals: which lenders close, which deal types stall, which tenants escalate</div>
+              <div class="task-item"><span class="task-dot"></span>Recommends pipeline prioritization based on deal quality, timing, and lender fit</div>
+              <div class="task-item"><span class="task-dot"></span>Surfaces weak spots in the firm's process before they become problems</div>
+              <div class="task-item"><span class="task-dot"></span>Turns raw records into decision support — not data storage, decision intelligence</div>
+            </div>
+          </div>
+          <div class="domain-value">
+            <div class="domain-col-label">Real value</div>
+            <div class="value-statement">The junior gives you data hygiene. The senior gives you operating intelligence.</div>
+            <div class="value-detail">The system stops being a storage layer and becomes a decision layer — surfacing what matters, when it matters, with a recommendation.</div>
+            <div class="value-list">
+              <div class="value-item"><span class="check">+</span>Pipeline prioritized by real signal, not feel</div>
+              <div class="value-item"><span class="check">+</span>Lender patterns visible across the firm</div>
+              <div class="value-item"><span class="check">+</span>Process gaps caught before they repeat</div>
+              <div class="value-item"><span class="check">+</span>Institutional knowledge becomes queryable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CEO section -->
+  <section class="section panel" id="principal" aria-label="What the principal gets">
+    <div class="eyebrow">Principal · MD · CEO</div>
+    <h2>You receive the brief, the risk, and the choices. You make the call.</h2>
+    <p class="section-copy">
+      The principal is not there to answer random AI questions all day. The principal is there to make final decisions on risk, relationships, and capital. The system should bring them a prepared package — not raw noise.
+    </p>
+
+    <div class="ceo-grid">
+      <div class="ceo-before">
+        <div class="ceo-label">Without SwarmCore — what the CEO does</div>
+        <div class="ceo-list">
+          <div class="ceo-item">✗ &nbsp;Inbox triage — reading 80 emails to find 6</div>
+          <div class="ceo-item">✗ &nbsp;Deal cleanup — normalizing messy broker packages</div>
+          <div class="ceo-item">✗ &nbsp;Lease scanning — reading PDFs to find notice dates</div>
+          <div class="ceo-item">✗ &nbsp;CRM hygiene — chasing stale records and missing fields</div>
+          <div class="ceo-item">✗ &nbsp;First-pass lender thinking — asking who should we call</div>
+          <div class="ceo-item">✗ &nbsp;Chasing missing docs from brokers and borrowers</div>
+          <div class="ceo-item">✗ &nbsp;Re-reading long threads to understand where things stand</div>
+        </div>
+      </div>
+      <div class="ceo-after">
+        <div class="ceo-label">With SwarmCore — what the CEO receives</div>
+        <div class="ceo-list">
+          <div class="ceo-item">✓ &nbsp;Prepared deal brief — structured, clean, actionable</div>
+          <div class="ceo-item">✓ &nbsp;Clean escalation memo — the issue, the options, the recommendation</div>
+          <div class="ceo-item">✓ &nbsp;Risk summary — what matters and why</div>
+          <div class="ceo-item">✓ &nbsp;Draft communications — ready to approve or edit, not write</div>
+          <div class="ceo-item">✓ &nbsp;Prioritized pipeline — which deals to move and which to cut</div>
+          <div class="ceo-item">✓ &nbsp;Flagged exceptions — only what actually requires a decision</div>
+          <div class="ceo-item">✓ &nbsp;The call to make — not the research to do</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Division summary -->
+  <section class="section panel" aria-label="Clear division of labor">
+    <div class="eyebrow">The division of labor</div>
+    <h2>Simple. Clear. Already how your shop works.</h2>
+
+    <div class="division-grid">
+      <div class="division-card">
+        <div class="division-role">Junior</div>
+        <div class="division-model">4B model · volume</div>
+        <div class="division-line">"Do the work that is high-volume, repetitive, and structureable."</div>
+        <div class="division-examples">
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Intake and extraction</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Classification and routing</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Summaries and first drafts</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Database and CRM hygiene</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>First-pass packaging</div>
+        </div>
+      </div>
+      <div class="division-card" style="border-color:rgba(200,149,31,0.28);background:#fff9eb;">
+        <div class="division-role">Senior</div>
+        <div class="division-model">9B model · judgment</div>
+        <div class="division-line">"Do the work that requires judgment, framing, prioritization, and escalation."</div>
+        <div class="division-examples">
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Deal strategy and lender fit</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Lease risk and positioning</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Go / no-go guidance</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>High-stakes communications</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Operating intelligence</div>
+        </div>
+      </div>
+      <div class="division-card">
+        <div class="division-role">Principal</div>
+        <div class="division-model">You · final authority</div>
+        <div class="division-line">"Retain final authority over money, reputation, legal exposure, and firm direction."</div>
+        <div class="division-examples">
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Approve deal strategy</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Approve lender approach</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Approve major communications</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Approve tenant and legal stance</div>
+          <div class="division-ex"><span class="task-dot" style="margin-top:7px;"></span>Make capital decisions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI / why this matters -->
+  <section class="section panel" aria-label="Why this matters to the firm">
+    <div class="eyebrow">Why it matters</div>
+    <h2>What the firm actually gets.</h2>
+
+    <div class="roi-grid">
+      <div class="roi-card">
+        <div class="roi-title">More speed</div>
+        <div class="roi-desc">More deals processed without adding coordination headcount. The junior runs volume while your team focuses on decisions.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-title">Better quality</div>
+        <div class="roi-desc">Cleaner data, cleaner packages, cleaner communication. The senior reviews before the package goes out. Every time.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-title">Less executive drag</div>
+        <div class="roi-desc">The CEO stops doing inbox triage, deal cleanup, and CRM hygiene. They receive a brief, make the call, and move on.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-title">Institutional memory</div>
+        <div class="roi-desc">The firm stops forgetting what happened on prior deals, lenders, tenants, and issues. The system remembers so the team doesn't have to.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="section panel contact-cta" ref="contactRef" aria-label="Contact Swarm and Bee">
+    <div class="eyebrow">Build this for your firm</div>
+    <h2>We build and manage the full stack.<br/>You keep the authority.</h2>
+    <p class="lead">
+      Swarm &amp; Bee deploys the junior and senior layer on sovereign compute — your hardware, your data, your boundaries. We run the evaluation process. You keep final authority on every decision that matters.
+    </p>
+    <div class="cta-row" style="justify-content:center;margin-top:32px;">
+      <a href="mailto:build@swarmandbee.ai" class="btn primary">Talk to us about your firm →</a>
+      <a href="/" class="btn">Back to SwarmCore</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="footer-brand">
+      <strong>Swarm &amp; Bee</strong>
+      <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>
+    </div>
+    <div class="footer-brand" style="text-align:right;">
+      <a href="https://x.com/swarmandbee" target="_blank" rel="noreferrer">x.com/swarmandbee</a>
+      <span>SwarmCore · CRE Micro-Domain</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
