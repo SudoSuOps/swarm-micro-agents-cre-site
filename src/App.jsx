@@ -645,7 +645,7 @@ export default function App() {
         <header className="topbar">
           <div className="brand">
             <span className="brand-mark" aria-hidden="true">🐝</span>
-            <span>SwarmCore</span>
+            <span>Swarm &amp; Bee</span>
           </div>
 
           <nav className="nav" aria-label="Site navigation">
@@ -662,9 +662,9 @@ export default function App() {
             <div className="hero-corner-badge" aria-hidden="true">🐝</div>
 
             <div className="pill">
-              Swarm &amp; Bee
-              <span className="dot" />
               SwarmCore
+              <span className="dot" />
+              Mechanical Evaluation Process
             </div>
 
             <h1>
@@ -688,7 +688,7 @@ export default function App() {
             </div>
 
             <p className="lead">
-              SwarmCore hardens all five. Sealed boundaries. Controlled execution. Verified paths. Human finality. Full receipts. Built on sovereign compute — you own the hardware, you own the trust boundary.
+              SwarmCore is a mechanical evaluation process — not a philosophy, not a framework, not vibes. It hardens all five failure layers: sealed boundaries, controlled execution, verified paths, human finality, full receipts. Built by Swarm &amp; Bee on sovereign compute you own.
             </p>
 
             <div className="cta-row">
