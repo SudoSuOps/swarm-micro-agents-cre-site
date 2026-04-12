@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRE Intelligence Graph — SwarmCore by Swarm & Bee</title>
+  <meta name="description" content="Live CRE agent intelligence graph — 4B junior, 9B senior, domain specialists, and principal authority. Real task routing, real escalation paths, real authority boundaries." />
+  <link rel="canonical" href="https://swarmandbee.ai/cre/graph/" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://swarmandbee.ai/cre/graph/" />
+  <meta property="og:title" content="CRE Intelligence Graph — SwarmCore by Swarm & Bee" />
+  <meta property="og:description" content="4B junior agents. 9B senior agents. Domain specialists. Principal authority. Click any node to inspect what it handles, what it produces, and where authority flows." />
+  <meta property="og:site_name" content="Swarm & Bee" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CRE Intelligence Graph — SwarmCore" />
+  <meta name="twitter:description" content="Real task routing. Real escalation paths. Real authority boundaries. The CRE agent stack, live." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://swarmandbee.ai/#organization",
+        "name": "Swarm & Bee",
+        "url": "https://swarmandbee.ai",
+        "email": "build@swarmandbee.ai"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://swarmandbee.ai/cre/graph/",
+        "name": "CRE Intelligence Graph",
+        "description": "Interactive intelligence routing graph for CRE agent systems built by Swarm & Bee. Shows 4B junior agents, 9B senior agents, domain specialists, and principal authority boundaries.",
+        "url": "https://swarmandbee.ai/cre/graph/",
+        "isPartOf": { "@id": "https://swarmandbee.ai/#website" },
+        "author": { "@id": "https://swarmandbee.ai/#organization" },
+        "keywords": ["CRE AI agents", "commercial real estate AI", "agent routing graph", "SwarmCore", "Swarm and Bee", "CRE intelligence layer"]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #f7f6f2;
+      --card:          #ffffff;
+      --border:        #e8e3d8;
+      --border-soft:   #f0ebe0;
+      --accent:        #c8951a;
+      --accent-dark:   #a37010;
+      --accent-light:  #fef3c7;
+      --text:          #1a1a1a;
+      --muted:         #666;
+      --muted-light:   #999;
+      --input-bg:      #f3f4f6;
+      --input-border:  #9ca3af;
+      --junior-bg:     #dbeafe;
+      --junior-border: #2563eb;
+      --junior-text:   #1e40af;
+      --spec-bg:       #dcfce7;
+      --spec-border:   #16a34a;
+      --spec-text:     #166534;
+      --senior-bg:     #fef3c7;
+      --senior-border: #c8951a;
+      --senior-text:   #92400e;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ── Topbar ──────────────────────────────── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 200;
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .topbar-nav a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .topbar-nav a:hover { color: var(--text); background: #f7f6f2; }
+    .topbar-nav a.back { color: var(--accent); }
+    .topbar-nav a.cta {
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 14px;
+    }
+    .topbar-nav a.cta:hover { background: var(--accent-dark); color: #fff; }
+
+    /* ── Stats bar ───────────────────────────── */
+    .stats-bar {
+      position: fixed;
+      top: 52px; left: 0; right: 0;
+      height: 36px;
+      background: #fffdf8;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 20px;
+      z-index: 150;
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0 16px 0 0;
+      margin-right: 16px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-pill:last-child { border-right: none; margin-left: auto; padding-right: 0; margin-right: 0; }
+    .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .stat-val { font-weight: 700; color: var(--text); }
+    .stat-label { color: var(--accent); font-weight: 600; }
+
+    /* ── Graph canvas ────────────────────────── */
+    #graph-wrap {
+      position: fixed;
+      top: 88px; left: 0; right: 0; bottom: 0;
+    }
+    #graph-canvas { width: 100%; height: 100%; background: var(--bg); }
+
+    /* ── Inspector panel ─────────────────────── */
+    .inspector {
+      position: fixed;
+      top: 88px; right: 0; bottom: 0;
+      width: 360px;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      transform: translateX(105%);
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.06);
+    }
+    .inspector.open { transform: translateX(0); }
+
+    .inspector-header {
+      padding: 18px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .inspector-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      flex: 1;
+    }
+    .inspector-close {
+      flex-shrink: 0;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 28px; height: 28px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .inspector-close:hover { border-color: var(--accent); color: var(--accent); }
+
+    .inspector-body {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .tier-badge.input     { background: var(--input-bg);  color: var(--input-border); }
+    .tier-badge.junior    { background: var(--junior-bg);  color: var(--junior-border); }
+    .tier-badge.specialty { background: var(--spec-bg);    color: var(--spec-border); }
+    .tier-badge.senior    { background: var(--senior-bg);  color: var(--senior-border); }
+    .tier-badge.principal { background: var(--text);       color: #fff; }
+
+    .inspector-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .isec { margin-bottom: 20px; }
+    .isec-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .task-list { list-style: none; }
+    .task-list li {
+      font-size: 12.5px;
+      color: var(--text);
+      padding: 5px 0 5px 14px;
+      border-bottom: 1px solid var(--border-soft);
+      position: relative;
+      line-height: 1.5;
+    }
+    .task-list li:last-child { border-bottom: none; }
+    .task-list li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.1;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .tag.route { border-color: var(--accent); color: var(--accent); }
+
+    .wt-bar-wrap { margin-top: 10px; }
+    .wt-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .wt-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .wt-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .wt-source { font-size: 11px; color: var(--muted-light); margin-top: 7px; font-style: italic; }
+
+    /* ── Legend ──────────────────────────────── */
+    .legend {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      z-index: 100;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .legend-hd {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 11px;
+    }
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 12px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .legend-row:last-child { margin-bottom: 0; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .legend-sub { font-size: 10px; color: var(--muted); }
+
+    /* ── Hint ────────────────────────────────── */
+    .hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 11px;
+      color: var(--muted);
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* ── Welcome overlay ─────────────────────── */
+    .welcome {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.5s;
+      white-space: nowrap;
+    }
+    .welcome.gone { opacity: 0; }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <a href="/" class="topbar-brand">
+    <span style="color:#c8951a">🐝</span>
+    <span>Swarm &amp; Bee</span>
+  </a>
+  <nav class="topbar-nav">
+    <a href="/cre/" class="back">← CRE</a>
+    <a href="/">SwarmCore</a>
+    <a href="mailto:build@swarmandbee.ai" class="cta">Build with us →</a>
+  </nav>
+</header>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stat-pill">
+    <div class="stat-dot" style="background:#9ca3af"></div>
+    <span><span class="stat-val">6</span> inputs</span>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-dot" style="background:#2563eb"></div>
+    <span><span class="stat-val">4</span> junior agents · 4B</span>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-dot" style="background:#16a34a"></div>
+    <span><span class="stat-val">2</span> specialists</span>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-dot" style="background:#c8951a"></div>
+    <span><span class="stat-val">4</span> senior agents · 9B</span>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-dot" style="background:#1a1a1a"></div>
+    <span><span class="stat-val">1</span> principal authority</span>
+  </div>
+  <div class="stat-pill">
+    <span class="stat-label">CREHash · 52 RJ/hr · Class A 0.85+</span>
+  </div>
+</div>
+
+<!-- Graph -->
+<div id="graph-wrap">
+  <div id="graph-canvas"></div>
+</div>
+
+<!-- Inspector -->
+<aside class="inspector" id="inspector" role="complementary" aria-label="Node inspector">
+  <div class="inspector-header">
+    <div class="inspector-title" id="ins-title">—</div>
+    <button class="inspector-close" id="ins-close" aria-label="Close inspector">✕</button>
+  </div>
+  <div class="inspector-body" id="ins-body"></div>
+</aside>
+
+<!-- Legend -->
+<div class="legend" role="note" aria-label="Graph legend">
+  <div class="legend-hd">Agent tiers</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#9ca3af"></div><span>Input signal</span></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#2563eb"></div><span>4B Junior agent</span></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#16a34a"></div><span>Domain specialist</span></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#c8951a"></div><span>9B Senior agent</span></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#1a1a1a"></div><span>Principal authority</span></div>
+  <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e8e3d8">
+    <div class="legend-hd" style="margin-bottom:8px">Edge types</div>
+    <div class="legend-row" style="margin-bottom:5px"><span style="font-size:13px;color:#9ca3af">──→</span><span class="legend-sub" style="margin-left:4px">routes</span></div>
+    <div class="legend-row" style="margin-bottom:5px"><span style="font-size:13px;color:#2563eb">──→</span><span class="legend-sub" style="margin-left:4px">escalates</span></div>
+    <div class="legend-row"><span style="font-size:13px;color:#16a34a">──→</span><span class="legend-sub" style="margin-left:4px">specialist input</span></div>
+  </div>
+</div>
+
+<!-- Hint -->
+<div class="hint">Scroll to zoom · Drag to pan · Click any node to inspect</div>
+
+<!-- Welcome -->
+<div class="welcome" id="welcome">Intelligence routing graph — live</div>
+
+<script>
+// ── NODE REGISTRY ──────────────────────────────────────────────────────────
+const NODES = {
+
+  // ── INPUTS ──
+  in_om: {
+    label: "OM /\nFinancials",
+    group: "input",
+    tier: "Input signal",
+    title: "OM / Financials",
+    desc: "Offering memorandums, financial statements, T-12s, rent rolls, sales comps. The raw deal package that enters the system. Multi-format: PDF, XLSX, scanned docs.",
+    tasks: [
+      "Structured document ingestion from email, Dropbox, or upload",
+      "OCR + table extraction from scanned OMs",
+      "Financial schedule normalization (T-3, T-12, proforma)",
+      "Rent roll parsing: tenant, SF, rent, expiry, options",
+      "Multi-format support: PDF, XLSX, Word, email body"
+    ],
+    produces: ["Parsed OM", "Extracted rent roll", "Financial schedule", "Document index"],
+    routesTo: ["Capital Markets 4B"],
+    weight: null,
+    training: null
+  },
+
+  in_email: {
+    label: "Inbound\nEmail",
+    group: "input",
+    tier: "Input signal",
+    title: "Inbound Email",
+    desc: "Lender inquiries, broker submissions, tenant requests, client updates, term sheet responses. High-volume, mixed-priority communication stream — the daily flood.",
+    tasks: [
+      "Real-time inbox monitoring across connected accounts",
+      "Thread context extraction and sender classification",
+      "Attachment detection, download, and routing",
+      "Priority scoring: lender > client > broker > vendor",
+      "Duplicate and chain detection across long threads"
+    ],
+    produces: ["Classified email", "Attached documents", "Thread summary", "Priority score"],
+    routesTo: ["Email Triage 4B", "Capital Markets 4B"],
+    weight: null,
+    training: null
+  },
+
+  in_loi: {
+    label: "LOI /\nLease PDF",
+    group: "input",
+    tier: "Input signal",
+    title: "LOI / Lease PDF",
+    desc: "Letters of intent, executed leases, amendments, estoppels, subordination agreements. The legal paper trail of every CRE deal — dense, structured, consequential.",
+    tasks: [
+      "Clause extraction by type: rent, term, options, TI, free rent",
+      "Critical date identification and calendar seeding",
+      "Amendment layering over base lease",
+      "Cross-document reconciliation (LOI → lease → amendment)",
+      "Estoppel and SNDA processing"
+    ],
+    produces: ["Parsed lease terms", "Critical date list", "Abstract draft", "Amendment delta"],
+    routesTo: ["Leasing 4B"],
+    weight: null,
+    training: null
+  },
+
+  in_crm: {
+    label: "CRM /\nPipeline",
+    group: "input",
+    tier: "Input signal",
+    title: "CRM / Pipeline",
+    desc: "Existing deal records, contact database, stage history, stale opportunities, relationship logs. The institutional memory of the firm — often dirty, always valuable.",
+    tasks: [
+      "Stale record detection and flagging",
+      "Duplicate contact and company merging",
+      "Pipeline stage progression trigger detection",
+      "Missing field and data gap identification",
+      "Activity log parsing and event extraction"
+    ],
+    produces: ["Hygiene report", "Stage update queue", "Enrichment requests", "Stale deal list"],
+    routesTo: ["DB / CRM 4B"],
+    weight: null,
+    training: null
+  },
+
+  in_netlease: {
+    label: "Net Lease\nDocs",
+    group: "input",
+    tier: "Input signal",
+    title: "Net Lease Documents",
+    desc: "Single-tenant NNN deals, STNL comparables, corporate credit filings, cap rate sheets, absolute net leases. The specialist input stream that bypasses junior generalists.",
+    tasks: [
+      "NNN / NN / absolute net structure detection",
+      "Remaining lease term and rent bump extraction",
+      "Tenant credit rating and guarantor identification",
+      "Comparable NNN deal ingestion for benchmarking",
+      "Sale-leaseback document processing"
+    ],
+    produces: ["NNN summary", "Tenant credit profile", "Lease schedule", "Comp set"],
+    routesTo: ["Net Lease Specialist"],
+    weight: null,
+    training: null
+  },
+
+  in_mktg: {
+    label: "Marketing\nBrief",
+    group: "input",
+    tier: "Input signal",
+    title: "Marketing Brief",
+    desc: "Property photos, floor plans, comp sets, positioning notes, broker instructions. Everything needed to turn a deal into a market-ready OM and outreach campaign.",
+    tasks: [
+      "Asset profile extraction from brief or call notes",
+      "Comp set normalization for OM investment summary",
+      "Positioning note parsing and tone detection",
+      "Media asset cataloging and gap identification",
+      "Broker instruction parsing and constraint logging"
+    ],
+    produces: ["Asset profile", "Comp table", "Content inventory", "Positioning brief"],
+    routesTo: ["Marketing Agent"],
+    weight: null,
+    training: null
+  },
+
+  // ── JUNIOR AGENTS (4B) ──
+  jr_capital: {
+    label: "Capital Markets\n4B Junior",
+    group: "junior",
+    tier: "4B Junior agent",
+    title: "Capital Markets — 4B Junior",
+    desc: "Handles deal intake, financial data extraction, and initial package assembly. Fine-tuned on CREHash Capital Markets pairs — DSCR calculations, lender matrix matching, deal card generation. Bounded worker. Every number sourced.",
+    tasks: [
+      "Intake from email, OM, Dropbox, or upload",
+      "Extract: borrower, property type, NOI, DSCR, LTV, leverage",
+      "Build deal card with key metrics and source citations",
+      "Match deal to lender matrix by loan size, type, and LTV",
+      "Write lender outreach summary paragraphs",
+      "Flag missing docs: rent roll, T-12, schedule of leases",
+      "Log every extracted number with page/source reference"
+    ],
+    produces: ["Deal Card", "Lender Shortlist", "Outreach Summaries", "Missing Doc Flag"],
+    routesTo: ["Deal Review 9B Senior"],
+    weight: 0.81,
+    training: "CREHash · Capital Markets pairs · 52 RJ/hr"
+  },
+
+  jr_leasing: {
+    label: "Leasing\n4B Junior",
+    group: "junior",
+    tier: "4B Junior agent",
+    title: "Leasing — 4B Junior",
+    desc: "Processes lease documents end-to-end: extract, abstract, compare against standard clause library, surface critical dates. Turns 2-hour manual abstracts into structured outputs in minutes.",
+    tasks: [
+      "Classify incoming: LOI, executed lease, amendment, estoppel",
+      "Extract all material terms with clause citation",
+      "Compare against standard clause library — flag deviations",
+      "Surface critical dates: expiry, option windows, rent bumps, TI deadlines",
+      "Push extracted fields to lease database",
+      "Generate abstract draft for senior QC review",
+      "Flag non-standard language with clause location"
+    ],
+    produces: ["Lease Abstract Draft", "Critical Date List", "Non-Standard Clause Flags", "Database Update"],
+    routesTo: ["Lease QC 9B Senior"],
+    weight: 0.78,
+    training: "CREHash · Leasing pairs · clause extraction"
+  },
+
+  jr_email: {
+    label: "Email Triage\n4B Junior",
+    group: "junior",
+    tier: "4B Junior agent",
+    title: "Email Triage — 4B Junior",
+    desc: "Monitors inbound communications 24/7. Classifies, prioritizes, drafts, routes, and logs. The first line of response — bounded, logged, and never sends without approval on flagged threads.",
+    tasks: [
+      "Monitor inbound email, classify by sender type and urgency",
+      "Tag: lender inquiry / tenant request / broker submission / vendor / client update",
+      "Draft routine replies: quote requests, scheduling, follow-ups, status updates",
+      "Extract action items and log to CRM deal record",
+      "Summarize long threads to 3-bullet brief",
+      "Route high-stakes or sensitive emails to senior Comms QC",
+      "Never draft responses to lenders or clients on active deals without escalation"
+    ],
+    produces: ["Draft Replies", "Action Item Log", "Thread Summary", "Escalation Flag"],
+    routesTo: ["Comms QC 9B Senior"],
+    weight: 0.83,
+    training: "CREHash · Email pairs · classification + drafting"
+  },
+
+  jr_db: {
+    label: "DB / CRM\n4B Junior",
+    group: "junior",
+    tier: "4B Junior agent",
+    title: "DB / CRM — 4B Junior",
+    desc: "Keeps the firm's institutional memory clean and current. Runs automated hygiene passes, enriches records from live signals, links documents to the right deal records. The data janitor that never calls in sick.",
+    tasks: [
+      "Detect stale records: no activity in 30/60/90 days",
+      "Trigger pipeline stage updates from email and calendar signals",
+      "Enrich contacts from email signatures and web profiles",
+      "Link incoming documents to matching deal records",
+      "Extract structured fields from PDFs into database rows",
+      "Generate weekly hygiene report with gap summary",
+      "Flag duplicate companies, contacts, and deals for merge"
+    ],
+    produces: ["Clean Pipeline", "Enriched Contacts", "Hygiene Report", "Linked Documents"],
+    routesTo: ["Pipeline Intel 9B Senior"],
+    weight: 0.76,
+    training: "CREHash · CRM pairs · record hygiene + enrichment"
+  },
+
+  // ── SPECIALTY AGENTS ──
+  sp_netlease: {
+    label: "Net Lease\nSpecialist",
+    group: "specialty",
+    tier: "Domain specialist",
+    title: "Net Lease Domain Specialist",
+    desc: "Deep expertise in NNN, NN, and absolute net lease structures. Trained specifically on STNL underwriting, cap rate benchmarking, and corporate credit assessment. Feeds its analysis directly into senior Deal Review — not into the junior queue.",
+    tasks: [
+      "NNN structure verification: pure / modified / absolute net classification",
+      "Cap rate benchmarking against STNL comp database",
+      "Remaining lease term and rent escalation schedule analysis",
+      "Corporate tenant credit and guarantor assessment",
+      "Sale-leaseback structure evaluation and risk flag",
+      "Underwriting sheet generation with assumptions logged",
+      "Identify below-market rent situations and repositioning upside"
+    ],
+    produces: ["Underwriting Sheet", "Cap Rate Analysis", "Tenant Credit Summary", "Structure Risk Flag"],
+    routesTo: ["Deal Review 9B Senior"],
+    weight: 0.88,
+    training: "CREHash · Net Lease specialty · NNN underwriting pairs"
+  },
+
+  sp_mktg: {
+    label: "Marketing\nAgent",
+    group: "specialty",
+    tier: "Domain specialist",
+    title: "Marketing Agent",
+    desc: "Produces market-ready OMs, property briefs, and positioning narratives. Trained on top-performing CRE marketing materials. All deliverables route through Comms QC before release — no direct-to-market outputs.",
+    tasks: [
+      "Draft property descriptions from asset profile and comp data",
+      "Build investment summary: market overview, submarket thesis, asset highlights",
+      "Format OM section structure and narrative flow",
+      "Write lender or buyer introduction and executive summary",
+      "Generate targeted email blast copy by buyer type",
+      "Maintain consistent voice: institutional, not promotional",
+      "Flag any claims requiring factual verification before QC"
+    ],
+    produces: ["OM Draft", "Investment Summary", "Marketing Copy", "Email Blast Template"],
+    routesTo: ["Comms QC 9B Senior"],
+    weight: 0.84,
+    training: "CREHash · Marketing pairs · OM drafting"
+  },
+
+  // ── SENIOR AGENTS (9B) ──
+  sr_deal: {
+    label: "Deal Review\n9B Senior",
+    group: "senior",
+    tier: "9B Senior agent",
+    title: "Deal Review — 9B Senior",
+    desc: "Receives deal packages from Junior Capital Markets and Net Lease Specialist. Applies judgment: financeability, lender fit, structural issues. Issues Go / Hold / Repackage. Escalates to Principal on threshold deals. Not extraction — opinion.",
+    tasks: [
+      "Full deal package review: metrics, narrative, sourcing",
+      "Financeability assessment against current market windows",
+      "Lender bucket selection with written structural reasoning",
+      "Identify: DSCR pressure, rollover risk, bridge-to-perm mismatch, lease-up risk",
+      "Rewrite executive summary if narrative is weak or misleading",
+      "Issue Go / Hold / Repackage recommendation with deal memo",
+      "Escalate to Principal if deal size, risk, or complexity exceeds threshold"
+    ],
+    produces: ["Go/Hold/Repackage Rec", "Deal Memo", "Revised Narrative", "Lender Strategy"],
+    routesTo: ["Principal"],
+    weight: 0.91,
+    training: "CREHash Class A · 0.91 avg · capital markets + underwriting"
+  },
+
+  sr_lease: {
+    label: "Lease QC\n9B Senior",
+    group: "senior",
+    tier: "9B Senior agent",
+    title: "Lease QC — 9B Senior",
+    desc: "Reviews lease abstracts from Junior Leasing. Catches non-standard language, assesses commercial consequences, compares landlord/tenant risk positions. Signs off before database entry and client delivery.",
+    tasks: [
+      "Review junior abstract for completeness and accuracy",
+      "Identify non-standard or unusual clause language",
+      "Compare landlord vs tenant risk positions in detail",
+      "Assess commercial consequence of unusual provisions",
+      "Flag: co-tenancy clauses, kick-out rights, exclusive use, subletting restrictions",
+      "Write strategy notes for broker and client brief",
+      "Approve or return to junior with specific correction instructions"
+    ],
+    produces: ["Approved Lease Abstract", "Risk Assessment", "Strategy Notes", "Client Brief"],
+    routesTo: ["Principal"],
+    weight: 0.89,
+    training: "CREHash Class A · 0.89 avg · lease language + risk"
+  },
+
+  sr_comms: {
+    label: "Comms QC\n9B Senior",
+    group: "senior",
+    tier: "9B Senior agent",
+    title: "Comms QC — 9B Senior",
+    desc: "Reviews high-stakes outbound communications from Email Triage and Marketing Agent. Catches tone, accuracy, positioning, and relationship risk before anything goes to market. Drafts executive-level messages when needed.",
+    tasks: [
+      "Review all flagged draft replies before broker approval",
+      "Identify sensitive positioning, tone issues, and relationship risk",
+      "Draft executive recommendations, board-level briefs, and sensitive updates",
+      "Approve marketing copy and OM narratives from Marketing Agent",
+      "Flag messages requiring direct broker or principal sign-off",
+      "Rewrite for authority, accuracy, and appropriate register",
+      "Maintain voice consistency across all firm communications"
+    ],
+    produces: ["Approved Comms", "Executive Draft", "Marketing Sign-off", "Send-ready Replies"],
+    routesTo: ["Principal"],
+    weight: 0.87,
+    training: "CREHash Class A · 0.87 avg · communications + positioning"
+  },
+
+  sr_intel: {
+    label: "Pipeline Intel\n9B Senior",
+    group: "senior",
+    tier: "9B Senior agent",
+    title: "Pipeline Intel — 9B Senior",
+    desc: "Operates on firm-wide data from DB/CRM Junior. Recognizes patterns across deals, surfaces decisions, identifies process gaps. Makes the pipeline legible to leadership — the intelligence layer, not the data layer.",
+    tasks: [
+      "Analyze firm-wide deal velocity, conversion rates, and cycle time",
+      "Prioritize active pipeline by probability-weighted value",
+      "Surface at-risk deals with suggested interventions",
+      "Generate weekly deal dashboard for principal review",
+      "Identify lender and tenant relationship health signals",
+      "Spot process gaps: slow stages, repeated doc requests, stalled LOIs",
+      "Track market signal changes that affect active deals"
+    ],
+    produces: ["Pipeline Dashboard", "Priority Stack", "At-Risk Alert", "Gap Report"],
+    routesTo: ["Principal"],
+    weight: 0.85,
+    training: "CREHash Class A · 0.85 avg · pipeline + intelligence"
+  },
+
+  // ── PRINCIPAL ──
+  principal: {
+    label: "Principal\n· Human Authority ·",
+    group: "principal",
+    tier: "Principal authority",
+    title: "Principal — Human Authority",
+    desc: "Final authority. Reviews escalated recommendations, signs off on threshold deals, approves high-stakes communications, sets policy. The loop closes here — humans retain authority where risk, ambiguity, or policy thresholds are crossed. Every agent action is auditable from this seat.",
+    tasks: [
+      "Review escalated Go/Hold/Repackage recommendations",
+      "Approve high-stakes outbound communications",
+      "Set risk thresholds and escalation policy for all agents",
+      "Override any agent recommendation with logged reasoning",
+      "Access full audit trail: every source, every decision, every output",
+      "Set scope and authority limits for junior and senior agents",
+      "Define which deal types, dollar thresholds, and client relationships require human review"
+    ],
+    produces: ["Final Approval", "Policy Direction", "Signed-off Output", "Override Log"],
+    routesTo: [],
+    weight: null,
+    training: null
+  }
+};
+
+// ── VIS-NETWORK DATA ───────────────────────────────────────────────────────
+
+const nodeStyle = {
+  input:     { background: "#f3f4f6", border: "#9ca3af", hBg: "#e5e7eb", hBd: "#6b7280", fontColor: "#374151", bw: 1 },
+  junior:    { background: "#dbeafe", border: "#2563eb", hBg: "#bfdbfe", hBd: "#1d4ed8", fontColor: "#1e40af", bw: 2 },
+  specialty: { background: "#dcfce7", border: "#16a34a", hBg: "#bbf7d0", hBd: "#15803d", fontColor: "#166534", bw: 2 },
+  senior:    { background: "#fef3c7", border: "#c8951a", hBg: "#fde68a", hBd: "#a37010", fontColor: "#92400e", bw: 2 },
+  principal: { background: "#1a1a1a", border: "#000",    hBg: "#333333", hBd: "#000000", fontColor: "#ffffff",  bw: 3 },
+};
+
+const visNodes = new vis.DataSet(
+  Object.entries(NODES).map(([id, d]) => {
+    const s = nodeStyle[d.group];
+    return {
+      id,
+      label: d.label,
+      color: {
+        background: s.background,
+        border: s.border,
+        highlight: { background: s.hBg, border: s.hBd },
+        hover:     { background: s.hBg, border: s.hBd },
+      },
+      font: {
+        color: s.fontColor,
+        face: "Inter",
+        size: d.group === "principal" ? 13 : 12,
+        bold: d.group !== "input",
+        multi: true,
+      },
+      borderWidth: s.bw,
+      borderWidthSelected: s.bw + 1,
+      shape: "box",
+      margin: { top: 11, bottom: 11, left: 15, right: 15 },
+      shadow: { enabled: true, size: 5, x: 0, y: 2, color: "rgba(0,0,0,0.07)" },
+      title: `<b>${d.title}</b><br/><span style="color:#666;font-size:11px">${d.tier}</span>`,
+    };
+  })
+);
+
+const EDGE_COLOR = {
+  routes:     { color: "#9ca3af", highlight: "#666", opacity: 0.9 },
+  escalates:  { color: "#2563eb", highlight: "#1d4ed8", opacity: 0.65 },
+  specialist: { color: "#16a34a", highlight: "#15803d", opacity: 0.7 },
+  reports:    { color: "#c8951a", highlight: "#a37010", opacity: 0.8 },
+};
+
+const visEdges = new vis.DataSet([
+  // Inputs → Junior / Specialty
+  { from:"in_om",      to:"jr_capital",  label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  { from:"in_email",   to:"jr_email",    label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  { from:"in_email",   to:"jr_capital",  label:"",           ...EDGE_COLOR.routes,    dashes:true  },
+  { from:"in_loi",     to:"jr_leasing",  label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  { from:"in_crm",     to:"jr_db",       label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  { from:"in_netlease",to:"sp_netlease", label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  { from:"in_mktg",    to:"sp_mktg",     label:"routes",     ...EDGE_COLOR.routes,    dashes:false },
+  // Junior → Senior (escalation)
+  { from:"jr_capital", to:"sr_deal",     label:"escalates",  color:"#2563eb", highlight:"#1d4ed8", opacity:0.65, dashes:false, width:2 },
+  { from:"jr_leasing", to:"sr_lease",    label:"escalates",  color:"#2563eb", highlight:"#1d4ed8", opacity:0.65, dashes:false, width:2 },
+  { from:"jr_email",   to:"sr_comms",    label:"escalates",  color:"#2563eb", highlight:"#1d4ed8", opacity:0.65, dashes:false, width:2 },
+  { from:"jr_db",      to:"sr_intel",    label:"escalates",  color:"#2563eb", highlight:"#1d4ed8", opacity:0.65, dashes:false, width:2 },
+  // Specialty → Senior
+  { from:"sp_netlease",to:"sr_deal",     label:"specialist", color:"#16a34a", highlight:"#15803d", opacity:0.7,  dashes:false, width:2 },
+  { from:"sp_mktg",    to:"sr_comms",    label:"specialist", color:"#16a34a", highlight:"#15803d", opacity:0.7,  dashes:false, width:2 },
+  // Senior → Principal
+  { from:"sr_deal",    to:"principal",   label:"escalates",  color:"#c8951a", highlight:"#a37010", opacity:0.85, dashes:false, width:3 },
+  { from:"sr_lease",   to:"principal",   label:"escalates",  color:"#c8951a", highlight:"#a37010", opacity:0.85, dashes:false, width:3 },
+  { from:"sr_comms",   to:"principal",   label:"escalates",  color:"#c8951a", highlight:"#a37010", opacity:0.85, dashes:false, width:3 },
+  { from:"sr_intel",   to:"principal",   label:"reports",    color:"#c8951a", highlight:"#a37010", opacity:0.85, dashes:false, width:3 },
+]);
+
+const container = document.getElementById("graph-canvas");
+const network = new vis.Network(
+  container,
+  { nodes: visNodes, edges: visEdges },
+  {
+    layout: {
+      hierarchical: {
+        enabled: true,
+        direction: "LR",
+        sortMethod: "directed",
+        levelSeparation: 220,
+        nodeSpacing: 105,
+        treeSpacing: 220,
+        parentCentralization: true,
+        edgeMinimization: true,
+        blockShifting: true,
+      }
+    },
+    nodes: {
+      borderRadius: 8,
+    },
+    edges: {
+      arrows: {
+        to: { enabled: true, scaleFactor: 0.65, type: "arrow" }
+      },
+      smooth: {
+        type: "cubicBezier",
+        forceDirection: "horizontal",
+        roundness: 0.45,
+      },
+      font: {
+        face: "Inter",
+        size: 10,
+        color: "#999",
+        strokeWidth: 2,
+        strokeColor: "rgba(247,246,242,0.9)",
+        align: "middle",
+      },
+      selectionWidth: 2,
+    },
+    physics: { enabled: false },
+    interaction: {
+      hover: true,
+      tooltipDelay: 300,
+      zoomView: true,
+      dragView: true,
+      dragNodes: false,
+      selectConnectedEdges: true,
+      navigationButtons: false,
+      keyboard: false,
+    },
+    autoResize: true,
+  }
+);
+
+// ── INSPECTOR ──────────────────────────────────────────────────────────────
+
+const inspector = document.getElementById("inspector");
+const insTitle  = document.getElementById("ins-title");
+const insBody   = document.getElementById("ins-body");
+const insClose  = document.getElementById("ins-close");
+
+function openInspector(nodeId) {
+  const d = NODES[nodeId];
+  if (!d) return;
+
+  insTitle.textContent = d.title;
+
+  const modelLabel = {
+    input:     "Signal source",
+    junior:    "4B parameter model",
+    specialty: "Domain specialist",
+    senior:    "9B parameter model",
+    principal: "Human authority",
+  }[d.group] || "";
+
+  let weightHtml = "";
+  if (d.weight !== null && d.weight !== undefined) {
+    const pct   = Math.round(d.weight * 100);
+    const cls   = d.weight >= 0.85 ? "#16a34a" : d.weight >= 0.70 ? "#c8951a" : "#ef4444";
+    const label = d.weight >= 0.85 ? "Class A · Royal Jelly" : d.weight >= 0.70 ? "Class B · Honey" : "Class C · Propolis";
+    weightHtml = `
+      <div class="isec">
+        <div class="isec-title">Training weight</div>
+        <div class="wt-bar-wrap">
+          <div class="wt-label"><span>${label}</span><span style="color:${cls};font-weight:700">${d.weight.toFixed(2)}</span></div>
+          <div class="wt-bar"><div class="wt-fill" style="width:${pct}%;background:${cls}"></div></div>
+        </div>
+        ${d.training ? `<div class="wt-source">${d.training}</div>` : ""}
+      </div>`;
+  }
+
+  const routesHtml = d.routesTo && d.routesTo.length
+    ? `<div class="isec">
+        <div class="isec-title">Routes to</div>
+        <div class="tag-row">${d.routesTo.map(r => `<span class="tag route">${r}</span>`).join("")}</div>
+       </div>`
+    : "";
+
+  insBody.innerHTML = `
+    <div class="tier-badge ${d.group}">${modelLabel}</div>
+    <p class="inspector-desc">${d.desc}</p>
+
+    <div class="isec">
+      <div class="isec-title">Tasks handled</div>
+      <ul class="task-list">${d.tasks.map(t => `<li>${t}</li>`).join("")}</ul>
+    </div>
+
+    <div class="isec">
+      <div class="isec-title">Produces</div>
+      <div class="tag-row">${d.produces.map(p => `<span class="tag">${p}</span>`).join("")}</div>
+    </div>
+
+    ${routesHtml}
+    ${weightHtml}
+  `;
+
+  inspector.classList.add("open");
+}
+
+network.on("click", (params) => {
+  if (params.nodes.length > 0) {
+    openInspector(params.nodes[0]);
+  } else {
+    inspector.classList.remove("open");
+  }
+});
+
+insClose.addEventListener("click", () => {
+  inspector.classList.remove("open");
+});
+
+// Fit on load, fade welcome
+network.once("afterDrawing", () => {
+  network.fit({ animation: { duration: 700, easingFunction: "easeInOutQuad" } });
+  setTimeout(() => {
+    document.getElementById("welcome").classList.add("gone");
+  }, 2200);
+});
+</script>
+</body>
+</html>
