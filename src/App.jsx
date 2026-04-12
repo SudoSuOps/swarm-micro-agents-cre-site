@@ -559,16 +559,36 @@ export default function App() {
           color: #9a6d12; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
         }
 
-        .contact-form { display: grid; gap: 12px; margin-top: 20px; }
+        .contact-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 18px; margin-top: 24px; align-items: start; }
+        .contact-meta { display: grid; gap: 12px; }
+        .contact-meta-card {
+          border: 1px solid var(--line-2); background: rgba(255,255,255,0.88); border-radius: var(--radius-lg); padding: 18px;
+        }
+        .contact-meta-label { color: var(--muted-2); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 8px; }
+        .contact-meta-value { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+        .contact-meta-value a { color: #b88317; }
+        .contact-form { display: grid; gap: 12px; }
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .input, .textarea {
           width: 100%; border: 1px solid var(--line); border-radius: 14px; background: white;
-          padding: 12px 14px; font-size: 0.95rem; color: var(--text);
+          padding: 12px 14px; font-size: 0.95rem; color: var(--text); outline: none;
+          transition: border-color .15s ease;
         }
+        .input:focus, .textarea:focus { border-color: rgba(200,149,31,0.4); }
         .textarea { min-height: 140px; resize: vertical; }
-        .form-note { font-size: 0.9rem; color: var(--muted); }
-        .form-error { color: #a86565; background: var(--danger-soft); border: 1px solid rgba(195,123,123,0.16); padding: 10px 12px; border-radius: 12px; }
-        .form-success { color: #52755d; background: var(--success-soft); border: 1px solid rgba(111,155,125,0.16); padding: 10px 12px; border-radius: 12px; }
+        .form-note { font-size: 0.88rem; color: var(--muted-2); }
+        .form-error { color: #a86565; background: var(--danger-soft); border: 1px solid rgba(195,123,123,0.16); padding: 10px 14px; border-radius: 12px; font-size: 0.92rem; }
+        .form-success-card {
+          border: 1px solid rgba(111,155,125,0.2); background: var(--success-soft); border-radius: var(--radius-lg);
+          padding: 28px; text-align: center;
+        }
+        .form-success-icon { font-size: 2rem; margin-bottom: 12px; }
+        .form-success-title { font-size: 1.1rem; font-weight: 700; color: #3d6349; margin: 0 0 8px; }
+        .form-success-body { color: #52755d; font-size: 0.94rem; line-height: 1.7; margin: 0; }
+
+        @media (max-width: 860px) {
+          .contact-layout { grid-template-columns: 1fr; }
+        }
 
         .footer {
           margin-top: 20px; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
@@ -999,70 +1019,95 @@ export default function App() {
           </div>
 
           <section className="section" ref={contactRef}>
-            <div className="section-eyebrow">Contact / intake</div>
-            <h2>Send real inbound to the sovereign backend.</h2>
+            <div className="section-eyebrow">Contact</div>
+            <h2>Tell us what you want to build.</h2>
             <p className="section-copy">
-              This writes to your backend first, then uses server-side email delivery. The key stays off the frontend.
+              We respond to every serious inquiry. If it's a real system with real constraints, we'll have something useful to say.
             </p>
 
-            <div className="contact-card" style={{ marginTop: 20 }}>
-              <form className="contact-form" onSubmit={handleContactSubmit}>
-                <div className="contact-grid">
+            <div className="contact-layout">
+              {/* Left — meta cards */}
+              <div className="contact-meta">
+                {[
+                  ["Email", <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>],
+                  ["Response time", "Same business day"],
+                  ["What we take on", "Agent systems that need to survive scrutiny — CRE, legal, medical, finance."],
+                  ["What to include", "What you're building, where it breaks, what you need it to do."],
+                ].map(([label, value]) => (
+                  <div key={label} className="contact-meta-card">
+                    <div className="contact-meta-label">{label}</div>
+                    <div className="contact-meta-value">{value}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right — form or success state */}
+              {contactState.success ? (
+                <div className="form-success-card">
+                  <div className="form-success-icon">🐝</div>
+                  <h3 className="form-success-title">Message received.</h3>
+                  <p className="form-success-body">
+                    Check your inbox — we sent a confirmation. We'll be in touch shortly.
+                  </p>
+                </div>
+              ) : (
+                <form className="contact-form" onSubmit={handleContactSubmit}>
+                  <div className="contact-grid">
+                    <input
+                      className="input"
+                      placeholder="Name *"
+                      value={contactState.name}
+                      onChange={(e) => setContactState((prev) => ({ ...prev, name: e.target.value }))}
+                      required
+                    />
+                    <input
+                      className="input"
+                      placeholder="Email *"
+                      type="email"
+                      value={contactState.email}
+                      onChange={(e) => setContactState((prev) => ({ ...prev, email: e.target.value }))}
+                      required
+                    />
+                  </div>
+
                   <input
                     className="input"
-                    placeholder="Name"
-                    value={contactState.name}
-                    onChange={(e) => setContactState((prev) => ({ ...prev, name: e.target.value }))}
+                    placeholder="Company"
+                    value={contactState.company}
+                    onChange={(e) => setContactState((prev) => ({ ...prev, company: e.target.value }))}
+                  />
+
+                  <textarea
+                    className="textarea"
+                    placeholder="What are you building? Where does it need to hold up?"
+                    value={contactState.message}
+                    onChange={(e) => setContactState((prev) => ({ ...prev, message: e.target.value }))}
                     required
                   />
+
+                  {/* Honeypot — hidden from real users, bots fill it */}
                   <input
                     className="input"
-                    placeholder="Email"
-                    type="email"
-                    value={contactState.email}
-                    onChange={(e) => setContactState((prev) => ({ ...prev, email: e.target.value }))}
-                    required
+                    placeholder="Website"
+                    value={contactState.website}
+                    onChange={(e) => setContactState((prev) => ({ ...prev, website: e.target.value }))}
+                    style={{ display: "none" }}
+                    tabIndex={-1}
+                    autoComplete="off"
                   />
-                </div>
 
-                <input
-                  className="input"
-                  placeholder="Company"
-                  value={contactState.company}
-                  onChange={(e) => setContactState((prev) => ({ ...prev, company: e.target.value }))}
-                />
+                  {contactState.error ? (
+                    <div className="form-error">{contactState.error}</div>
+                  ) : null}
 
-                <textarea
-                  className="textarea"
-                  placeholder="Tell us what you want to build."
-                  value={contactState.message}
-                  onChange={(e) => setContactState((prev) => ({ ...prev, message: e.target.value }))}
-                  required
-                />
-
-                <input
-                  className="input"
-                  placeholder="Website"
-                  value={contactState.website}
-                  onChange={(e) => setContactState((prev) => ({ ...prev, website: e.target.value }))}
-                  style={{ display: "none" }}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-
-                {contactState.error ? <div className="form-error">{contactState.error}</div> : null}
-                {contactState.success ? <div className="form-success">{contactState.success}</div> : null}
-
-                <div className="cta-row" style={{ marginTop: 0 }}>
-                  <button className="btn primary" type="submit" disabled={contactState.loading}>
-                    {contactState.loading ? "Submitting..." : "Submit to backend"}
-                  </button>
-                </div>
-
-                <div className="form-note">
-                  This route hits <strong>/api/contact</strong> on your sovereign backend.
-                </div>
-              </form>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
+                    <button className="btn primary" type="submit" disabled={contactState.loading}>
+                      {contactState.loading ? "Sending..." : "Send message →"}
+                    </button>
+                    <span className="form-note">You'll get a confirmation in your inbox.</span>
+                  </div>
+                </form>
+              )}
             </div>
           </section>
 
