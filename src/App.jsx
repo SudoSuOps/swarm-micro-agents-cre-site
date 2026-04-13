@@ -42,6 +42,7 @@ export default function App() {
     loading: false,
     error: "",
     success: "",
+    replied: false,
   });
 
   const nodes = [
@@ -324,7 +325,8 @@ export default function App() {
         website: "",
         loading: false,
         error: "",
-        success: `Stored as ${result.id}${result.emailed ? " and emailed." : "."}`,
+        success: result.id,
+        replied: Boolean(result.replied),
       });
     } catch (error) {
       setContactState((prev) => ({
@@ -1099,7 +1101,9 @@ export default function App() {
                   <div className="form-success-icon">🐝</div>
                   <h3 className="form-success-title">Message received.</h3>
                   <p className="form-success-body">
-                    Check your inbox — we sent a confirmation. We'll be in touch shortly.
+                    {contactState.replied
+                      ? "Check your inbox — we sent a confirmation. We'll be in touch shortly."
+                      : "We got it. We'll be in touch shortly."}
                   </p>
                 </div>
               ) : (

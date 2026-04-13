@@ -19,19 +19,41 @@ function generateId() {
   return `CNT-${ts}-${rand}`;
 }
 
+function esc(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 async function sendEmail(apiKey, payload) {
-  const res = await fetch(RESEND_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  return res.ok;
+  try {
+    const res = await fetch(RESEND_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.error(`Resend ${res.status}:`, body.slice(0, 400));
+    }
+    return res.ok;
+  } catch (err) {
+    console.error("Resend network error:", err.message);
+    return false;
+  }
 }
 
 function notifyHtml({ id, name, email, company, message }) {
+  const safeName = esc(name);
+  const safeEmail = esc(email);
+  const safeCompany = esc(company);
+  const safeMessage = esc(message);
   return `
 <!DOCTYPE html>
 <html>
@@ -40,7 +62,7 @@ function notifyHtml({ id, name, email, company, message }) {
   <div style="max-width:600px;margin:40px auto;background:white;border-radius:16px;border:1px solid #e8e2d7;overflow:hidden;">
     <div style="background:linear-gradient(180deg,#f2d381,#e8bb49);padding:24px 28px;">
       <div style="font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:#8a620f;font-weight:700;">SwarmCore · New Inbound</div>
-      <div style="font-size:22px;font-weight:700;color:#171717;margin-top:8px;">New contact from ${name}</div>
+      <div style="font-size:22px;font-weight:700;color:#171717;margin-top:8px;">New contact from ${safeName}</div>
     </div>
     <div style="padding:28px;">
       <table style="width:100%;border-collapse:collapse;">
@@ -50,19 +72,19 @@ function notifyHtml({ id, name, email, company, message }) {
         </tr>
         <tr>
           <td style="padding:10px 0;color:#5f6670;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;vertical-align:top;">Name</td>
-          <td style="padding:10px 0;color:#171717;font-size:0.95rem;">${name}</td>
+          <td style="padding:10px 0;color:#171717;font-size:0.95rem;">${safeName}</td>
         </tr>
         <tr>
           <td style="padding:10px 0;color:#5f6670;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;vertical-align:top;">Email</td>
-          <td style="padding:10px 0;color:#171717;font-size:0.95rem;"><a href="mailto:${email}" style="color:#b88317;">${email}</a></td>
+          <td style="padding:10px 0;color:#171717;font-size:0.95rem;"><a href="mailto:${safeEmail}" style="color:#b88317;">${safeEmail}</a></td>
         </tr>
-        ${company ? `<tr>
+        ${safeCompany ? `<tr>
           <td style="padding:10px 0;color:#5f6670;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;vertical-align:top;">Company</td>
-          <td style="padding:10px 0;color:#171717;font-size:0.95rem;">${company}</td>
+          <td style="padding:10px 0;color:#171717;font-size:0.95rem;">${safeCompany}</td>
         </tr>` : ""}
         <tr>
           <td style="padding:10px 0;color:#5f6670;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;vertical-align:top;">Message</td>
-          <td style="padding:10px 0;color:#171717;font-size:0.95rem;line-height:1.7;white-space:pre-wrap;">${message}</td>
+          <td style="padding:10px 0;color:#171717;font-size:0.95rem;line-height:1.7;white-space:pre-wrap;">${safeMessage}</td>
         </tr>
       </table>
     </div>
@@ -75,6 +97,7 @@ function notifyHtml({ id, name, email, company, message }) {
 }
 
 function replyHtml({ name }) {
+  const safeName = esc(name);
   return `
 <!DOCTYPE html>
 <html>
@@ -83,7 +106,7 @@ function replyHtml({ name }) {
   <div style="max-width:600px;margin:40px auto;background:white;border-radius:16px;border:1px solid #e8e2d7;overflow:hidden;">
     <div style="background:linear-gradient(180deg,#f2d381,#e8bb49);padding:24px 28px;">
       <div style="font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:#8a620f;font-weight:700;">Swarm & Bee</div>
-      <div style="font-size:22px;font-weight:700;color:#171717;margin-top:8px;">Got it, ${name}.</div>
+      <div style="font-size:22px;font-weight:700;color:#171717;margin-top:8px;">Got it, ${safeName}.</div>
     </div>
     <div style="padding:32px 28px;">
       <p style="margin:0 0 20px;color:#171717;font-size:1rem;line-height:1.8;">
@@ -155,6 +178,15 @@ export async function onRequestPost(context) {
       html: replyHtml({ name }),
     }),
   ]);
+
+  // Notification email is the only record of this contact — fail loudly if it didn't send
+  if (!notified) {
+    console.error("Notification email failed — contact may be lost", { id, name, email });
+    return Response.json(
+      { error: "Failed to deliver your message. Please try again or email us directly at build@swarmandbee.ai." },
+      { status: 502 },
+    );
+  }
 
   return Response.json({ id, emailed: notified, replied }, { status: 200 });
 }
