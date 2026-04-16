@@ -26,6 +26,20 @@
     <meta name="robots" content="index, follow" />
     <meta name="keywords" content="AI agents, agent integrity, agent audit, SwarmCore, sovereign compute, training data, Swarm and Bee, defendable AI, CRE AI agents" />
 
+    <!-- Theme bootstrap — runs before React to prevent flash -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("swarm-theme");
+          var system = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored === "dark" || stored === "light" ? stored : (system ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {

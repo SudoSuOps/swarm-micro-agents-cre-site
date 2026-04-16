@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service — Swarm &amp; Bee</title>
+    <meta name="description" content="Terms of service for swarmandbee.ai and the SwarmCore platform by Caballerz Network LLC DBA Swarm & Bee." />
+    <link rel="canonical" href="https://swarmandbee.ai/terms/" />
+    <meta name="robots" content="noindex, follow" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("swarm-theme");
+          var system = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored === "dark" || stored === "light" ? stored : (system ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+      })();
+    </script>
+    <style>
+      :root {
+        --bg: #f7f6f2; --panel: rgba(255,255,255,0.88); --line: #e8e2d7;
+        --text: #171717; --muted: #5f6670; --muted-2: #8b93a0; --accent: #b88317;
+      }
+      html[data-theme="dark"] {
+        --bg: #0c0d10; --panel: rgba(22,24,30,0.88); --line: #2a2e36;
+        --text: #eaeaea; --muted: #9aa3b0; --muted-2: #6a7382; --accent: #e6b445;
+        color-scheme: dark;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased; line-height: 1.7;
+      }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 40px 22px 80px; }
+      .back { display: inline-block; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 32px; }
+      .back:hover { text-decoration: underline; }
+      .eyebrow { color: var(--accent); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; }
+      h1 { margin: 12px 0 6px; font-size: 2.4rem; letter-spacing: -0.03em; }
+      .meta { color: var(--muted-2); font-size: 0.88rem; margin-bottom: 32px; }
+      h2 { margin: 40px 0 12px; font-size: 1.15rem; letter-spacing: -0.01em; }
+      p, li { color: var(--muted); font-size: 0.98rem; }
+      ul { padding-left: 20px; }
+      li { margin-bottom: 6px; }
+      a { color: var(--accent); }
+      .card {
+        margin-top: 32px; padding: 20px 22px; border-radius: 16px;
+        border: 1px solid var(--line); background: var(--panel);
+      }
+      .card strong { color: var(--text); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="/">← Back to SwarmCore</a>
+      <div class="eyebrow">Legal</div>
+      <h1>Terms of Service</h1>
+      <div class="meta">Last updated: April 16, 2026</div>
+
+      <p>
+        These terms govern your use of swarmandbee.ai and any related services operated by <strong>Caballerz Network LLC DBA Swarm &amp; Bee</strong> ("Swarm &amp; Bee", "we"). By using the site you agree to these terms.
+      </p>
+
+      <h2>1. The service</h2>
+      <p>
+        Swarm &amp; Bee provides SwarmCore — an audit and mechanics layer for AI agent systems — along with related datasets, fine-tunes, evaluations, and tooling. Some parts of the service are informational; others are paid products or custom engagements governed by separate agreements.
+      </p>
+
+      <h2>2. Acceptable use</h2>
+      <ul>
+        <li>You will not use the site to harass, defraud, or harm others.</li>
+        <li>You will not attempt to breach security, reverse-engineer protected systems, or overwhelm the service.</li>
+        <li>You will not scrape at volumes that degrade service for others.</li>
+        <li>Custom AI crawlers are welcome — see <a href="/robots.txt">robots.txt</a> for our explicit allow list.</li>
+      </ul>
+
+      <h2>3. Intellectual property</h2>
+      <p>
+        All site content, brand marks, and the SwarmCore name are the property of Caballerz Network LLC. Datasets, models, and software released by Swarm &amp; Bee are governed by their individual licenses where indicated; nothing on this marketing site grants you a license to our protected IP.
+      </p>
+
+      <h2>4. No warranty</h2>
+      <p>
+        The site and any informational content are provided "as is" without warranty of any kind, express or implied. Nothing here constitutes professional, legal, medical, or financial advice. We make reasonable efforts to keep the site accurate, but do not guarantee uptime or completeness.
+      </p>
+
+      <h2>5. Limitation of liability</h2>
+      <p>
+        To the maximum extent permitted by law, Caballerz Network LLC, its officers, and agents are not liable for any indirect, incidental, consequential, or punitive damages arising from your use of the site. For paid engagements, liability is capped as set out in the applicable engagement agreement.
+      </p>
+
+      <h2>6. Governing law</h2>
+      <p>
+        These terms are governed by the laws of the State of Florida, USA. Any dispute will be resolved in the state or federal courts located in Florida unless a separate agreement provides otherwise.
+      </p>
+
+      <h2>7. Changes</h2>
+      <p>
+        We may update these terms. Material changes will be reflected by updating the "Last updated" date above. Continued use after changes indicates acceptance.
+      </p>
+
+      <div class="card">
+        <strong>Contact</strong><br />
+        Caballerz Network LLC DBA Swarm &amp; Bee<br />
+        D-U-N-S 138652395 · Florida, USA<br />
+        <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>
+      </div>
+    </div>
+  </body>
+</html>

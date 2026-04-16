@@ -1,12 +1,13 @@
 /**
  * Cloudflare Pages Function — POST /api/contact
  *
- * Receives the contact form, sends two emails via Resend:
- *   1. Notification to build@swarmandbee.ai
- *   2. Auto-reply to the submitter
+ * Delivery channels (fired in parallel, any success = delivered):
+ *   1. Resend — notification email to build@swarmandbee.ai + auto-reply to sender
+ *   2. Discord webhook — live ping to ops channel
  *
- * Required env var (set in Cloudflare Pages → Settings → Environment Variables):
- *   RESEND_API_KEY  — your Resend API key (never in code/git)
+ * Env vars (Cloudflare Pages → Settings → Environment variables):
+ *   RESEND_API_KEY        — Resend API key (required for email)
+ *   DISCORD_WEBHOOK_URL   — Discord webhook URL (optional, enables live ping)
  */
 
 const NOTIFY_TO = "build@swarmandbee.ai";
@@ -45,6 +46,42 @@ async function sendEmail(apiKey, payload) {
     return res.ok;
   } catch (err) {
     console.error("Resend network error:", err.message);
+    return false;
+  }
+}
+
+async function sendDiscord(webhookUrl, { id, name, email, company, message }) {
+  if (!webhookUrl) return false;
+  try {
+    const fields = [
+      { name: "Ref", value: id, inline: true },
+      { name: "Name", value: name, inline: true },
+      { name: "Email", value: email, inline: true },
+    ];
+    if (company) fields.push({ name: "Company", value: company, inline: false });
+    fields.push({ name: "Message", value: message.slice(0, 1024), inline: false });
+
+    const res = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        embeds: [{
+          title: "New contact — swarmandbee.ai",
+          color: 0xB89B3C,
+          fields,
+          timestamp: new Date().toISOString(),
+          footer: { text: "swarmandbee.ai contact form" },
+        }],
+      }),
+    });
+    if (!res.ok && res.status !== 204) {
+      const body = await res.text().catch(() => "");
+      console.error(`Discord ${res.status}:`, body.slice(0, 400));
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Discord webhook error:", err.message);
     return false;
   }
 }
@@ -155,40 +192,41 @@ export async function onRequestPost(context) {
   }
 
   const apiKey = env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error("RESEND_API_KEY not set");
-    return Response.json({ error: "Email service not configured." }, { status: 500 });
+  const discordUrl = env.DISCORD_WEBHOOK_URL;
+  if (!apiKey && !discordUrl) {
+    console.error("No delivery method configured (RESEND_API_KEY and DISCORD_WEBHOOK_URL both missing)");
+    return Response.json({ error: "Contact service not configured." }, { status: 500 });
   }
 
   const id = generateId();
 
-  // Fire both emails — notification + auto-reply
-  const [notified, replied] = await Promise.all([
-    sendEmail(apiKey, {
+  const [notified, replied, pinged] = await Promise.all([
+    apiKey ? sendEmail(apiKey, {
       from: FROM,
       to: [NOTIFY_TO],
       reply_to: email,
       subject: `New contact: ${name}${company ? ` @ ${company}` : ""} [${id}]`,
       html: notifyHtml({ id, name, email, company, message }),
-    }),
-    sendEmail(apiKey, {
+    }) : Promise.resolve(false),
+    apiKey ? sendEmail(apiKey, {
       from: FROM,
       to: [email],
       subject: "We got your message — Swarm & Bee",
       html: replyHtml({ name }),
-    }),
+    }) : Promise.resolve(false),
+    sendDiscord(discordUrl, { id, name, email, company, message }),
   ]);
 
-  // Notification email is the only record of this contact — fail loudly if it didn't send
-  if (!notified) {
-    console.error("Notification email failed — contact may be lost", { id, name, email });
+  // Succeed if at least one channel delivered — notification email OR Discord ping
+  if (!notified && !pinged) {
+    console.error("All delivery methods failed — contact may be lost", { id, name, email });
     return Response.json(
       { error: "Failed to deliver your message. Please try again or email us directly at build@swarmandbee.ai." },
       { status: 502 },
     );
   }
 
-  return Response.json({ id, emailed: notified, replied }, { status: 200 });
+  return Response.json({ id, emailed: notified, replied, pinged }, { status: 200 });
 }
 
 // Return 405 for non-POST

@@ -1,19 +1,15 @@
 import React from "react";
-import {
-  createRun,
-  getApiBase,
-  getRunReceipts,
-  listAssets,
-  submitContact,
-} from "./lib/api";
+import { submitContact } from "./lib/api";
 
-function formatMoney(cents) {
-  if (!Number.isFinite(cents)) return "Custom";
-  if (cents === 0) return "Free";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(cents / 100);
+function getInitialTheme() {
+  if (typeof document !== "undefined") {
+    const attr = document.documentElement.getAttribute("data-theme");
+    if (attr === "dark" || attr === "light") return attr;
+  }
+  if (typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
+    return "dark";
+  }
+  return "light";
 }
 
 export default function App() {
@@ -22,17 +18,19 @@ export default function App() {
   const platformRef = React.useRef(null);
   const contactRef = React.useRef(null);
 
+  const [theme, setTheme] = React.useState(getInitialTheme);
+
+  React.useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { localStorage.setItem("swarm-theme", theme); } catch (e) { /* storage disabled */ }
+  }, [theme]);
+
+  const toggleTheme = React.useCallback(() => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
+
   const [selectedNode, setSelectedNode] = React.useState("Scaffold");
   const [search, setSearch] = React.useState("");
-  const [assets, setAssets] = React.useState([]);
-  const [assetsState, setAssetsState] = React.useState({ loading: true, error: "" });
-  const [runState, setRunState] = React.useState({
-    loading: false,
-    error: "",
-    run: null,
-    steps: [],
-    receipts: [],
-  });
   const [contactState, setContactState] = React.useState({
     name: "",
     email: "",
@@ -231,73 +229,9 @@ export default function App() {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const handleNodeSelect = React.useCallback(async (title) => {
+  const handleNodeSelect = React.useCallback((title) => {
     setSelectedNode(title);
-    setRunState((prev) => ({ ...prev, loading: true, error: "" }));
-
-    try {
-      const createdRun = await createRun({
-        run_type: "graph_node_select",
-        status: "started",
-        title: `Inspect ${title}`,
-        initial_payload: {
-          graph_node: title,
-          ui_surface: "chain-integrity-map",
-          policy: "defendable-mechanics",
-        },
-      });
-
-      const receiptData = await getRunReceipts(createdRun.id);
-
-      setRunState({
-        loading: false,
-        error: "",
-        run: receiptData.run || createdRun,
-        steps: receiptData.steps || [],
-        receipts: receiptData.receipts || [],
-      });
-    } catch (error) {
-      setRunState({
-        loading: false,
-        error: error.message || "Failed to create live run",
-        run: null,
-        steps: [],
-        receipts: [],
-      });
-    }
   }, []);
-
-  React.useEffect(() => {
-    let cancelled = false;
-
-    async function loadAssets() {
-      setAssetsState({ loading: true, error: "" });
-      try {
-        const data = await listAssets();
-        if (!cancelled) {
-          setAssets(Array.isArray(data) ? data : []);
-          setAssetsState({ loading: false, error: "" });
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setAssets([]);
-          setAssetsState({
-            loading: false,
-            error: error.message || "Failed to load assets",
-          });
-        }
-      }
-    }
-
-    loadAssets();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  React.useEffect(() => {
-    handleNodeSelect("Scaffold");
-  }, [handleNodeSelect]);
 
   async function handleContactSubmit(event) {
     event.preventDefault();
@@ -621,7 +555,14 @@ export default function App() {
           margin-top: 20px; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
         }
         .footer-brand { display: grid; gap: 4px; }
+        .footer-brand-right { text-align: right; justify-items: end; }
         .footer a, .footer span { color: var(--muted); text-decoration: none; font-size: 0.94rem; }
+        .footer a:hover { color: var(--accent); }
+        .footer-legal { font-size: 0.82rem !important; color: var(--muted-2) !important; margin-top: 4px; }
+        .footer-links a { margin-left: 0; }
+        @media (max-width: 860px) {
+          .footer-brand-right { text-align: left; justify-items: start; }
+        }
 
         @media (max-width: 1260px) {
           .hero, .two-col, .workspace-grid { grid-template-columns: 1fr; }
@@ -641,6 +582,310 @@ export default function App() {
           }
           .footer { flex-direction: column; align-items: flex-start; }
         }
+
+        .theme-toggle {
+          width: 40px; height: 40px; padding: 0 !important;
+          display: inline-flex; align-items: center; justify-content: center;
+          font-size: 1.05rem; line-height: 1;
+        }
+
+        .cre-promo-box {
+          background: #fffdf8;
+          border: 1px solid #c8951a;
+          border-radius: 12px;
+          padding: 28px 32px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          cursor: pointer;
+          transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+        }
+        .cre-promo:hover .cre-promo-box { transform: translateY(-2px); border-color: #a37010; }
+        .cre-promo-eyebrow {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+          text-transform: uppercase; color: #c8951a; margin-bottom: 8px;
+        }
+        .cre-promo-title { font-size: 22px; font-weight: 700; color: var(--text); margin: 0 0 8px; }
+        .cre-promo-body { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+        .cre-promo-chip {
+          font-size: 12px; font-weight: 600; color: var(--muted);
+          border: 1px solid var(--line-2); background: white;
+          padding: 5px 12px; border-radius: 6px; text-decoration: none;
+        }
+        .cre-promo-chip.primary {
+          color: #c8951a; border-color: #e8c96a; background: #fffdf8;
+        }
+        .cre-promo-arrow { font-size: 28px; color: #c8951a; flex-shrink: 0; font-weight: 300; }
+
+        .founder-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; margin-top: 24px; align-items: start; }
+        .founder-copy p + p { margin-top: 14px; }
+        .founder-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .proof-card {
+          border: 1px solid var(--line-2); background: rgba(255,255,255,0.92);
+          border-radius: var(--radius-lg); padding: 16px 18px;
+        }
+        .proof-label {
+          color: var(--muted-2); font-size: 11px; letter-spacing: 0.22em;
+          text-transform: uppercase; font-weight: 700; margin-bottom: 10px;
+        }
+        .proof-value { font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+        .proof-sub { margin-top: 6px; color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
+        [data-theme="dark"] .proof-card { background: rgba(22,24,30,0.88); }
+
+        @media (max-width: 860px) {
+          .founder-layout { grid-template-columns: 1fr; }
+          .founder-proof { grid-template-columns: 1fr; }
+        }
+
+        /* ============ DARK MODE ============ */
+        html[data-theme="dark"] {
+          color-scheme: dark;
+        }
+        [data-theme="dark"] :root,
+        :root[data-theme="dark"],
+        html[data-theme="dark"] body {
+          --bg: #0c0d10;
+          --bg-2: #12141a;
+        }
+        html[data-theme="dark"] {
+          --bg: #0c0d10;
+          --bg-2: #12141a;
+          --panel: rgba(22,24,30,0.82);
+          --panel-strong: rgba(26,28,35,0.96);
+          --panel-soft: rgba(20,22,28,0.74);
+          --line: #2a2e36;
+          --line-2: #232730;
+          --text: #eaeaea;
+          --muted: #9aa3b0;
+          --muted-2: #6a7382;
+          --accent: #e6b445;
+          --accent-soft: rgba(230,180,69,0.09);
+          --accent-line: rgba(230,180,69,0.28);
+          --danger: #d9888a;
+          --danger-soft: rgba(195,123,123,0.12);
+          --success: #88ba96;
+          --success-soft: rgba(111,155,125,0.12);
+          --shadow: 0 20px 60px rgba(0,0,0,0.5);
+          --shadow-soft: 0 10px 28px rgba(0,0,0,0.35);
+        }
+
+        html[data-theme="dark"] body {
+          background:
+            radial-gradient(circle at top, rgba(230,180,69,0.07), transparent 24%),
+            radial-gradient(circle at 80% 14%, rgba(230,180,69,0.05), transparent 14%),
+            linear-gradient(180deg, rgba(0,0,0,0.25), transparent 20%),
+            linear-gradient(180deg, #0c0d10, #12141a);
+        }
+
+        /* Topbar + nav */
+        [data-theme="dark"] .topbar {
+          background: rgba(22,24,30,0.78);
+          border-color: rgba(255,255,255,0.04);
+        }
+        [data-theme="dark"] .nav button,
+        [data-theme="dark"] .nav a {
+          background: rgba(26,28,35,0.96);
+          color: var(--text);
+          border-color: var(--line);
+        }
+        [data-theme="dark"] .nav button:hover,
+        [data-theme="dark"] .nav a:hover {
+          background: #1a1d24;
+          border-color: var(--accent-line);
+        }
+        [data-theme="dark"] .nav .nav-cta {
+          background: linear-gradient(180deg, #e8bb49, #c89520);
+          color: #1a1300;
+          border-color: rgba(230,180,69,0.35);
+          box-shadow: 0 6px 18px rgba(230,180,69,0.2);
+        }
+
+        /* Panels & sections */
+        [data-theme="dark"] .hero-copy,
+        [data-theme="dark"] .hero-side,
+        [data-theme="dark"] .workspace,
+        [data-theme="dark"] .section,
+        [data-theme="dark"] .footer {
+          border-color: rgba(255,255,255,0.04);
+        }
+
+        /* Cards */
+        [data-theme="dark"] .mini-card,
+        [data-theme="dark"] .side-card,
+        [data-theme="dark"] .inspector-block,
+        [data-theme="dark"] .trace-step,
+        [data-theme="dark"] .standard-card,
+        [data-theme="dark"] .stack-card,
+        [data-theme="dark"] .system-card,
+        [data-theme="dark"] .ask-card,
+        [data-theme="dark"] .asset-card,
+        [data-theme="dark"] .contact-card,
+        [data-theme="dark"] .contact-meta-card,
+        [data-theme="dark"] .evidence-item,
+        [data-theme="dark"] .metric,
+        [data-theme="dark"] .workspace-topbar {
+          background: rgba(22,24,30,0.88);
+          border-color: var(--line-2);
+        }
+        [data-theme="dark"] .posture-badge {
+          background: rgba(22,24,30,0.92);
+          border-color: var(--line);
+        }
+
+        /* Buttons */
+        [data-theme="dark"] .btn {
+          background: rgba(26,28,35,0.96);
+          border-color: var(--line);
+          color: var(--text);
+        }
+        [data-theme="dark"] .btn:hover {
+          background: #1a1d24;
+          border-color: var(--accent-line);
+        }
+        [data-theme="dark"] .btn.primary {
+          background: linear-gradient(180deg, #e8bb49, #c89520);
+          color: #1a1300;
+          border-color: rgba(230,180,69,0.35);
+          box-shadow: 0 12px 30px rgba(230,180,69,0.22);
+        }
+
+        /* Inputs */
+        [data-theme="dark"] .input,
+        [data-theme="dark"] .textarea,
+        [data-theme="dark"] .search-input {
+          background: rgba(26,28,35,0.96);
+          color: var(--text);
+          border-color: var(--line);
+        }
+        [data-theme="dark"] .input:focus,
+        [data-theme="dark"] .textarea:focus {
+          border-color: rgba(230,180,69,0.5);
+        }
+
+        /* Workspace (graph) */
+        [data-theme="dark"] .rail,
+        [data-theme="dark"] .graph-stage,
+        [data-theme="dark"] .inspector {
+          background: var(--panel-strong);
+          border-color: var(--line-2);
+        }
+        [data-theme="dark"] .graph-stage {
+          background:
+            linear-gradient(#1f232b 1px, transparent 1px),
+            linear-gradient(90deg, #1f232b 1px, transparent 1px),
+            linear-gradient(180deg, #13151b, #0f1116);
+          background-size: 34px 34px, 34px 34px, cover;
+        }
+        [data-theme="dark"] .edge { stroke: #3a3f49; }
+        [data-theme="dark"] .edge.active { stroke: rgba(230,180,69,0.82); }
+        [data-theme="dark"] .rail-item,
+        [data-theme="dark"] .node-card {
+          background: rgba(22,24,30,0.92);
+          border-color: var(--line-2);
+          color: var(--text);
+        }
+        [data-theme="dark"] .rail-item:hover,
+        [data-theme="dark"] .node-card:hover {
+          background: #1a1d24;
+          border-color: var(--accent-line);
+        }
+        [data-theme="dark"] .rail-item.active,
+        [data-theme="dark"] .node-card.active {
+          background: rgba(230,180,69,0.08);
+          border-color: rgba(230,180,69,0.32);
+          box-shadow: 0 14px 36px rgba(230,180,69,0.14);
+        }
+
+        /* Eyebrows & accent-soft callouts */
+        [data-theme="dark"] .rail-title,
+        [data-theme="dark"] .inspector-eyebrow,
+        [data-theme="dark"] .section-eyebrow,
+        [data-theme="dark"] h1 .accent,
+        [data-theme="dark"] .accent,
+        [data-theme="dark"] .contact-meta-value a {
+          color: #e6b445;
+        }
+        [data-theme="dark"] .pill {
+          background: rgba(230,180,69,0.1);
+          border-color: rgba(230,180,69,0.26);
+          color: #e6b445;
+        }
+        [data-theme="dark"] .hero-corner-badge {
+          background: linear-gradient(180deg, rgba(230,180,69,0.14), rgba(230,180,69,0.06));
+          border-color: rgba(230,180,69,0.24);
+        }
+        [data-theme="dark"] .brand-mark {
+          background: linear-gradient(180deg, #e8bb49, #c89520);
+          border-color: rgba(230,180,69,0.35);
+          box-shadow: 0 0 0 6px rgba(230,180,69,0.1);
+        }
+        [data-theme="dark"] .receipt-item,
+        [data-theme="dark"] .node-fix {
+          background: rgba(230,180,69,0.09);
+          border-color: rgba(230,180,69,0.2);
+          color: #e6b445;
+        }
+        [data-theme="dark"] .trace-num {
+          background: rgba(230,180,69,0.1);
+          border-color: rgba(230,180,69,0.22);
+          color: #e6b445;
+        }
+        [data-theme="dark"] .asset-type {
+          background: rgba(230,180,69,0.1);
+          color: #e6b445;
+        }
+
+        /* Status/danger/success tags */
+        [data-theme="dark"] .status {
+          background: rgba(111,155,125,0.12);
+          border-color: rgba(111,155,125,0.26);
+          color: #88ba96;
+        }
+        [data-theme="dark"] .failure-tag {
+          background: rgba(195,123,123,0.1);
+          border-color: rgba(195,123,123,0.22);
+        }
+        [data-theme="dark"] .failure-layer { color: var(--text); }
+        [data-theme="dark"] .failure-mode { color: #d9888a; }
+        [data-theme="dark"] .break-badge {
+          background: rgba(195,123,123,0.14);
+          border-color: rgba(195,123,123,0.26);
+          color: #d9888a;
+        }
+        [data-theme="dark"] .form-error {
+          background: rgba(195,123,123,0.12);
+          border-color: rgba(195,123,123,0.26);
+          color: #d9888a;
+        }
+        [data-theme="dark"] .form-success-card {
+          background: rgba(111,155,125,0.1);
+          border-color: rgba(111,155,125,0.24);
+        }
+        [data-theme="dark"] .form-success-title { color: #a9cdb6; }
+        [data-theme="dark"] .form-success-body { color: #88ba96; }
+
+        /* CRE promo — dark */
+        [data-theme="dark"] .cre-promo-box {
+          background: rgba(230,180,69,0.06);
+          border-color: rgba(230,180,69,0.32);
+        }
+        [data-theme="dark"] .cre-promo:hover .cre-promo-box {
+          border-color: #e6b445;
+          background: rgba(230,180,69,0.1);
+        }
+        [data-theme="dark"] .cre-promo-eyebrow,
+        [data-theme="dark"] .cre-promo-arrow { color: #e6b445; }
+        [data-theme="dark"] .cre-promo-chip {
+          background: rgba(26,28,35,0.96);
+          border-color: var(--line);
+          color: var(--muted);
+        }
+        [data-theme="dark"] .cre-promo-chip.primary {
+          background: rgba(230,180,69,0.1);
+          border-color: rgba(230,180,69,0.32);
+          color: #e6b445;
+        }
       `}</style>
 
       <div className="app">
@@ -655,6 +900,14 @@ export default function App() {
             <button onClick={() => scrollToRef(doctrineRef)}>How it works</button>
             <button onClick={() => scrollToRef(platformRef)}>Platform</button>
             <a href="/cre/" style={{ textDecoration: "none" }}>CRE →</a>
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              {theme === "dark" ? "☀" : "☾"}
+            </button>
             <button className="nav-cta" onClick={() => scrollToRef(contactRef)}>Talk to us →</button>
           </nav>
         </header>
@@ -759,22 +1012,16 @@ export default function App() {
 
             <div className="side-card">
               <div className="side-top">
-                <h3>Live run</h3>
+                <h3>What SwarmCore records</h3>
               </div>
               <p>
-                {runState.loading
-                  ? "Creating a live run and loading receipts…"
-                  : runState.run
-                  ? `Receipt issued: ${runState.run.id}`
-                  : runState.error
-                  ? "Backend offline — receipts unavailable."
-                  : "Select a breakpoint below to create a live run."}
+                Every run produces a signed receipt chain: model + version, memory loaded, tools used, retrieval scope, verifier pass, final decision lineage. Scroll down to see the receipt types per breakpoint.
               </p>
             </div>
           </aside>
         </section>
 
-        <section className="workspace" ref={graphRef} aria-label="Chain Integrity Map — interactive graph">
+        <section id="graph" className="workspace" ref={graphRef} aria-label="Chain Integrity Map — interactive graph">
           <div className="workspace-topbar">
             <span>swarm-core / chain integrity map</span>
             <span>graph · execution surface · receipt inspector</span>
@@ -883,20 +1130,9 @@ export default function App() {
               </div>
 
               <div className="inspector-block">
-                <div className="inspector-label">Live run</div>
-                <div className="inspector-copy">
-                  {runState.loading
-                    ? "Creating run..."
-                    : runState.run
-                    ? `${runState.run.id} · ${runState.run.run_type} · ${runState.run.status}`
-                    : runState.error || "No live run yet"}
-                </div>
-              </div>
-
-              <div className="inspector-block">
                 <div className="inspector-label">Receipts SwarmCore logs</div>
                 <div className="receipt-list">
-                  {(runState.receipts.length ? runState.receipts.map((item) => item.receipt_type) : active.receipts).map((item, idx) => (
+                  {active.receipts.map((item, idx) => (
                     <div key={`${item}-${idx}`} className="receipt-item">
                       {item}
                     </div>
@@ -907,14 +1143,7 @@ export default function App() {
               <div className="inspector-block">
                 <div className="inspector-label">Run trace</div>
                 <div className="trace-list">
-                  {(runState.steps.length
-                    ? runState.steps.map((step) => [
-                        String(step.sequence).padStart(2, "0"),
-                        step.title,
-                        step.payload_json ? JSON.stringify(step.payload_json) : "No payload",
-                      ])
-                    : active.steps
-                  ).map(([num, title, text]) => (
+                  {active.steps.map(([num, title, text]) => (
                     <div key={`${num}-${title}`} className="trace-step">
                       <div className="trace-row">
                         <div className="trace-num">{num}</div>
@@ -931,7 +1160,7 @@ export default function App() {
           </div>
         </section>
 
-        <div ref={doctrineRef}>
+        <div id="doctrine" ref={doctrineRef}>
           <div className="two-col">
             <section className="section" aria-label="Why SwarmCore exists">
               <div className="section-eyebrow">Why SwarmCore exists</div>
@@ -971,7 +1200,7 @@ export default function App() {
             </section>
           </div>
 
-          <section className="section" ref={platformRef} aria-label="SwarmCore platform surface">
+          <section id="platform" className="section" ref={platformRef} aria-label="SwarmCore platform surface">
             <div className="section-eyebrow">Platform surface</div>
             <h2>SwarmCore is a real operating surface. Not a manifesto.</h2>
             <p className="section-copy">
@@ -986,32 +1215,18 @@ export default function App() {
               ))}
             </div>
 
-            <a href="/cre/" style={{ textDecoration: "none", display: "block", marginTop: 32 }}>
-              <div style={{
-                background: "#fffdf8",
-                border: "1px solid #c8951a",
-                borderRadius: 12,
-                padding: "28px 32px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 24,
-                cursor: "pointer",
-                transition: "border-color 0.15s, transform 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.borderColor = "#a37010"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.borderColor = "#c8951a"; }}
-              >
+            <a href="/cre/" className="cre-promo" style={{ textDecoration: "none", display: "block", marginTop: 32 }}>
+              <div className="cre-promo-box">
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c8951a", marginBottom: 8 }}>Micro-domain · CRE</div>
-                  <h3 style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", marginBottom: 8 }}>Built for CRE firms — 4B junior, 9B senior, principal control.</h3>
-                  <p style={{ color: "#555", fontSize: 15, lineHeight: 1.6, marginBottom: 16 }}>Capital markets intake. Lease abstraction. Email triage. Pipeline hygiene. Real tasks, real tiers, real authority boundaries.</p>
+                  <div className="cre-promo-eyebrow">Micro-domain · CRE</div>
+                  <h3 className="cre-promo-title">Built for CRE firms — 4B junior, 9B senior, principal control.</h3>
+                  <p className="cre-promo-body">Capital markets intake. Lease abstraction. Email triage. Pipeline hygiene. Real tasks, real tiers, real authority boundaries.</p>
                   <div style={{ display: "flex", gap: 10 }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: "#c8951a", border: "1px solid #e8c96a", background: "#fffdf8", padding: "5px 12px", borderRadius: 6 }}>See the firm →</span>
-                    <a href="/cre/graph/" onClick={e => e.stopPropagation()} style={{ fontSize: 12, fontWeight: 600, color: "#555", border: "1px solid #e8e3d8", background: "#fff", padding: "5px 12px", borderRadius: 6, textDecoration: "none" }}>Intelligence graph →</a>
+                    <span className="cre-promo-chip primary">See the firm →</span>
+                    <a href="/cre/graph/" onClick={e => e.stopPropagation()} className="cre-promo-chip">Intelligence graph →</a>
                   </div>
                 </div>
-                <div style={{ fontSize: 28, color: "#c8951a", flexShrink: 0, fontWeight: 300 }}>→</div>
+                <div className="cre-promo-arrow">→</div>
               </div>
             </a>
           </section>
@@ -1072,7 +1287,44 @@ export default function App() {
             </section>
           </div>
 
-          <section className="section" ref={contactRef}>
+          <section id="founder" className="section" aria-label="Who built this">
+            <div className="section-eyebrow">Who built this</div>
+            <h2>Built by a dealmaker who already ran the system at scale.</h2>
+            <div className="founder-layout">
+              <div className="founder-copy">
+                <p className="section-copy">
+                  SwarmCore is built by <strong>Donovan Mackey</strong> — 30 years on a national commercial real estate platform, $8B in closed transactions, industrial STNL, cold storage, supply chain logistics. The agent pipeline is literally the brokerage deal machine, automated. Every breakpoint SwarmCore seals maps to a real intake, triage, retrieval, or verification step we've already run in production for two decades.
+                </p>
+                <p className="section-copy">
+                  This isn't a research lab making up failure modes. It's an operator shipping the audit layer they wish existed when the stakes were a closing table and a signed PSA.
+                </p>
+              </div>
+              <div className="founder-proof">
+                <div className="proof-card">
+                  <div className="proof-label">Founder track record</div>
+                  <div className="proof-value">$8B closed</div>
+                  <div className="proof-sub">30 yrs · national CRE platform</div>
+                </div>
+                <div className="proof-card">
+                  <div className="proof-label">Legal entity</div>
+                  <div className="proof-value">Caballerz Network LLC</div>
+                  <div className="proof-sub">DBA Swarm &amp; Bee · D-U-N-S 138652395</div>
+                </div>
+                <div className="proof-card">
+                  <div className="proof-label">Compute fleet</div>
+                  <div className="proof-value">Sovereign</div>
+                  <div className="proof-sub">RTX PRO 6000 Blackwell · owned, not rented</div>
+                </div>
+                <div className="proof-card">
+                  <div className="proof-label">Verticals live</div>
+                  <div className="proof-value">CRE · Medical · Aviation</div>
+                  <div className="proof-sub">Provenance-stamped training data at pound-weight scale</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" className="section" ref={contactRef}>
             <div className="section-eyebrow">Contact</div>
             <h2>Tell us what you want to build.</h2>
             <p className="section-copy">
@@ -1190,13 +1442,21 @@ export default function App() {
 
         <footer className="footer" aria-label="Site footer">
           <div className="footer-brand">
-            <strong>Swarm & Bee</strong>
+            <strong>Swarm &amp; Bee</strong>
             <a href="mailto:build@swarmandbee.ai">build@swarmandbee.ai</a>
+            <span className="footer-legal">
+              © 2026 Caballerz Network LLC DBA Swarm &amp; Bee · D-U-N-S 138652395 · Florida
+            </span>
           </div>
-          <div className="footer-brand" style={{ textAlign: "right" }}>
-            <a href="https://x.com/swarmandbee" target="_blank" rel="noreferrer">
+          <div className="footer-brand footer-brand-right">
+            <a href="https://x.com/swarmandbee" target="_blank" rel="noopener noreferrer">
               x.com/swarmandbee
             </a>
+            <span className="footer-links">
+              <a href="/privacy/">Privacy</a>
+              <span aria-hidden="true"> · </span>
+              <a href="/terms/">Terms</a>
+            </span>
             <span>SwarmCore by design</span>
           </div>
         </footer>
